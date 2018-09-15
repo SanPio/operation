@@ -5,14 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        count: 0,
+        time: ''
     },
     mutations: {
-        increment ( state ) {
-            state.count ++ ;
-        },
-        reduce ( state ) {
-            state.count -- ;
+       
+        getTime ( state ) {
+            var myDate = new Date();
+            state.time = myDate.getFullYear() + '年' + (myDate.getMonth() + 1 ) + '月' + myDate.getDate() + '日' +  myDate.getHours() + '时' + myDate.getMinutes() + '分' + myDate.getSeconds() + '秒';
         }
     }
 })

@@ -19,10 +19,16 @@
                     <el-submenu index="1">
                         <template slot="title">
                             <img :src="homeImg" alt="">
-                            <span>首页</span>
+                            <span>
+                                首页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </span>
                         </template>     
-                        <el-menu-item index="1-1">选项1</el-menu-item>
-                        <el-menu-item index="1-2">选项2</el-menu-item>                      
+                        <el-menu-item index="1-1">
+                            选项1
+                        </el-menu-item>
+                        <el-menu-item index="1-2">
+                            选项2
+                        </el-menu-item>                      
                     </el-submenu>
 
 
@@ -31,10 +37,16 @@
                     <el-submenu index="2">
                         <template slot="title">
                             <img :src="backImg" alt="">
-                            <span>后台管理</span>
+                            <span>
+                                后台管理
+                            </span>
                         </template>     
-                        <el-menu-item index="2-1">选项1</el-menu-item>
-                        <el-menu-item index="2-2">选项2</el-menu-item> 
+                        <el-menu-item index="2-1">
+                            选项1
+                        </el-menu-item>
+                        <el-menu-item index="2-2">
+                            选项2
+                        </el-menu-item> 
                     </el-submenu>
 
 
@@ -43,26 +55,44 @@
                     <el-submenu index="3">
                         <template slot="title">
                             <img :src="dataImg" alt="">
-                            <span>数据统计</span>
+                            <span>
+                                数据统计
+                            </span>
                         </template>     
-                        <el-menu-item index="3-1">选项1</el-menu-item>
-                        <el-menu-item index="3-2">选项2</el-menu-item> 
+                        <el-menu-item index="3-1">
+                            选项1
+                        </el-menu-item>
+                        <el-menu-item index="3-2">
+                            选项2
+                        </el-menu-item> 
                     </el-submenu>
                     <el-submenu index="4">
                         <template slot="title">
                             <img :src="userMangeImg" alt="">
-                            <span>用户管理</span>
+                            <span>
+                                用户管理
+                            </span>
                         </template>     
-                        <el-menu-item index="3-1">选项1</el-menu-item>
-                        <el-menu-item index="3-2">选项2</el-menu-item> 
+                        <el-menu-item index="3-1">
+                            选项1
+                        </el-menu-item>
+                        <el-menu-item index="3-2">
+                            选项2
+                        </el-menu-item> 
                     </el-submenu>
                     <el-submenu index="5">
                         <template slot="title">
                             <img :src="channelImg" alt="">
-                            <span>渠道管理</span>
+                            <span>
+                                渠道管理
+                            </span>
                         </template>     
-                        <el-menu-item index="3-1">选项1</el-menu-item>
-                        <el-menu-item index="3-2">选项2</el-menu-item> 
+                        <el-menu-item index="3-1">
+                            选项1
+                        </el-menu-item>
+                        <el-menu-item index="3-2">
+                            选项2
+                        </el-menu-item> 
                     </el-submenu>
                     <!-- <el-menu-item index="2">
                         <i class="el-icon-menu"></i>
@@ -96,7 +126,8 @@
             <el-container>
                 <el-header>
                     <el-row>
-                        当前时间：2018 年 9 月 13 日 10 时 30 分 30 秒
+                        <!-- 当前时间：2018 年 9 月 13 日 10 时 30 分 30 秒 -->
+                        当前时间：{{ myTime }}
                     </el-row>
                     <el-row>
                         <span>
@@ -105,9 +136,12 @@
                         <el-button>
                             修改密码
                         </el-button>
-                        <el-button>
-                            注销
-                        </el-button>
+                        <router-link to="/login">
+                            <el-button>
+                                注销
+                            </el-button>
+                        </router-link>
+                        
   
                     </el-row>
 
@@ -122,7 +156,10 @@
         </el-container>
     </div>
 </template>
+
+
 <script>
+
 import Store from '@/store'
 export default {
     name: 'Home',
@@ -134,27 +171,29 @@ export default {
            dataImg: require('../../assets/data.png'),
            userMangeImg: require('../../assets/user.png'),
            channelImg: require('../../assets/channel.png'),
+     
         }
     },
     computed: {
-        msg(){
-            return Store.state.count
+        //获取本地时间
+        myTime () {
+            return Store.state.time
         }
     },
+    mounted () {
+       
+        this.timer = setInterval(this.getMyTime,1000)
+    },
     methods: {
-        jia () {
-            Store.commit('increment')
-        },
-
-        jian () {
-            Store.commit('reduce')
-        },
-     
+        
         handleOpen(key, keyPath) {
             console.log(key, keyPath);
         },
         handleClose(key, keyPath) {
             console.log(key, keyPath);
+        },
+        getMyTime () {
+            Store.commit('getTime')
         }
  
     }
@@ -194,11 +233,17 @@ export default {
             }
         }
         .el-menu{
-           width: 300px;
+            width: 300px;
+            .el-submenu{
+                span {
+                    font-size: 16px;
+                }
+            }
            .el-menu-item{
                padding-left: 72px;
            }
         }
+        
 
     }
     

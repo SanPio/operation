@@ -49,11 +49,23 @@ export default {
       outline: none;
     }
     html,body,#app{width: 100%;height:100%;background: #fff;}
-     ::-webkit-scrollbar {
-    width: 0;   /* 滚动条宽度为0 */
-    height: 0; /* 滚动条高度为0 */
-    display: none; /* 滚动条隐藏 */
-}
+        ::-webkit-scrollbar {
+        width: 0;   /* 滚动条宽度为0 */
+        height: 0; /* 滚动条高度为0 */
+        display: none; /* 滚动条隐藏 */
+    }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #999;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color:    #b8b8b8;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:    #b8b8b8;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        color:    #b8b8b8;
+    }
 
     
 </style>
