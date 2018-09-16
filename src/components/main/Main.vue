@@ -91,7 +91,7 @@
                                 渠道管理
                             </span>
                         </template>     
-                        <el-menu-item index="5-1" @click="hahah(123)">
+                        <el-menu-item index="5-1" @click="hahah('/main/home')">
                             渠道详情
                         </el-menu-item>
                         
@@ -140,8 +140,13 @@
                 </el-header>
                 <el-main>
                     <div>
-
+                        <p>
+                           当前位置:主页 
+                        </p>
+                        <router-view/>
+                        <router-link to="/main/home">Home</router-link>
                     </div>
+                    
                 </el-main>
             </el-container>
         </el-container>
@@ -154,7 +159,7 @@
 import Store from '@/store'
 
 export default {
-    name: 'Home',
+    name: 'Main',
     data(){
         return {
             logo: require('../../assets/logo.png'),
@@ -193,7 +198,12 @@ export default {
 
 
         hahah(val){
-            console.log(val)
+            this.$router.push({
+                path:val,
+                // query:{//通过query 传递参数
+                // goodsDetail:需要传递的参数,
+                // }
+            });
         }
  
     }
