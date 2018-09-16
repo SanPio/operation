@@ -153,7 +153,7 @@ export default {
                     width: 114px;
                     
                     img {
-                        margin: 12px 0 0 32px;
+                        margin: 12px 0 0 24px;
                     }
                 }
 

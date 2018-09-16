@@ -13,25 +13,19 @@
                 @open="handleOpen"
                 @close="handleClose"
                 background-color="#11183f"
-              
                 text-color="#fff"
+                :unique-opened="uniqueOpened"
+              
                 active-text-color="#ffd04b">
-                    <el-submenu index="1">
-                        <template slot="title">
-                            <img :src="homeImg" alt="">
-                            <span>
-                                首页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </span>
-                        </template>     
-                        <el-menu-item index="1-1">
-                            选项1
-                        </el-menu-item>
-                        <el-menu-item index="1-2">
-                            选项2
-                        </el-menu-item>                      
-                    </el-submenu>
-
-
+                   
+                    <el-menu-item index="1">
+                        <img :src="homeImg" alt="">
+                        <span slot="title">
+                            首页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                 
+                    </el-menu-item>
+                    
 
 
                     <el-submenu index="2">
@@ -42,11 +36,20 @@
                             </span>
                         </template>     
                         <el-menu-item index="2-1">
-                            选项1
+                            账号管理
                         </el-menu-item>
                         <el-menu-item index="2-2">
-                            选项2
+                            权限管理
                         </el-menu-item> 
+                        <el-menu-item index="2-3">
+                            角色管理
+                        </el-menu-item>
+                        <el-menu-item index="2-4">
+                            操作记录
+                        </el-menu-item>
+                        <el-menu-item index="2-5">
+                            密码修改
+                        </el-menu-item>
                     </el-submenu>
 
 
@@ -60,11 +63,9 @@
                             </span>
                         </template>     
                         <el-menu-item index="3-1">
-                            选项1
+                            数据信息
                         </el-menu-item>
-                        <el-menu-item index="3-2">
-                            选项2
-                        </el-menu-item> 
+                       
                     </el-submenu>
                     <el-submenu index="4">
                         <template slot="title">
@@ -73,12 +74,15 @@
                                 用户管理
                             </span>
                         </template>     
-                        <el-menu-item index="3-1">
-                            选项1
+                        <el-menu-item index="4-1">
+                            用户信息
                         </el-menu-item>
-                        <el-menu-item index="3-2">
-                            选项2
+                        <el-menu-item index="4-2">
+                            订单信息
                         </el-menu-item> 
+                        <el-menu-item index="4-3">
+                            邀请明细
+                        </el-menu-item>
                     </el-submenu>
                     <el-submenu index="5">
                         <template slot="title">
@@ -87,25 +91,12 @@
                                 渠道管理
                             </span>
                         </template>     
-                        <el-menu-item index="3-1">
-                            选项1
+                        <el-menu-item index="5-1" @click="hahah(123)">
+                            渠道详情
                         </el-menu-item>
-                        <el-menu-item index="3-2">
-                            选项2
-                        </el-menu-item> 
+                        
                     </el-submenu>
-                    <!-- <el-menu-item index="2">
-                        <i class="el-icon-menu"></i>
-                        <span slot="title">导航二</span>
-                    </el-menu-item>
-                    <el-menu-item index="3" disabled>
-                        <i class="el-icon-document"></i>
-                        <span slot="title">导航三</span>
-                    </el-menu-item>
-                    <el-menu-item index="4">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">导航四</span>
-                    </el-menu-item> -->
+               
                 </el-menu>
             </el-col>
            
@@ -161,17 +152,20 @@
 <script>
 
 import Store from '@/store'
+
 export default {
     name: 'Home',
     data(){
         return {
-           logo: require('../../assets/logo.png'),
-           homeImg: require('../../assets/home-page.png'),
-           backImg: require('../../assets/Backstage.png'),
-           dataImg: require('../../assets/data.png'),
-           userMangeImg: require('../../assets/user.png'),
-           channelImg: require('../../assets/channel.png'),
-     
+            logo: require('../../assets/logo.png'),
+            homeImg: require('../../assets/home-page.png'),
+            backImg: require('../../assets/Backstage.png'),
+            dataImg: require('../../assets/data.png'),
+            userMangeImg: require('../../assets/user.png'),
+            channelImg: require('../../assets/channel.png'),
+            uniqueOpened: true,
+            routerOpen: true,
+           
         }
     },
     computed: {
@@ -194,6 +188,12 @@ export default {
         },
         getMyTime () {
             Store.commit('getTime')
+        },
+
+
+
+        hahah(val){
+            console.log(val)
         }
  
     }
@@ -241,6 +241,9 @@ export default {
             }
            .el-menu-item{
                padding-left: 72px;
+               span{
+                   font-size: 16px;
+               }
            }
         }
         
