@@ -3,24 +3,34 @@ import Router from 'vue-router'
 import Login from '@/components/login/Login'
 import Main from '@/components/main/Main'
 import Home from "@/components/main/Home";
-
+import ChannelDetail from "@/components/main/ChannelDetail";
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    //登录
     {
-      path: '/',
+      path: '/login',
       name: 'Login',
       component: Login
     },
-    
+    //系统主体
     {
-      path: '/main',
-      name: 'Main',
+      path: '/',
       component: Main,
       children: [
-         { path: '/main/home', component: Home },
-    // { path: '/home/reg', component: Reg }
+          { path: '',
+            redirect: '/home',
+          },
+
+          { //主页
+            path: '/home',
+            component: Home 
+          },
+          { //渠道详情
+            path: '/channeldetail',
+            component: ChannelDetail 
+          },
       ]
     }
   ]

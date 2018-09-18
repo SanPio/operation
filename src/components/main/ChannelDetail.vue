@@ -1,0 +1,183 @@
+<template>
+    <div id="box">
+        <header>
+           
+                <span>
+                    渠道详情
+                </span>
+                <el-button type="success" plain>
+                    数据导出
+                </el-button>
+        </header>
+        <div id="top">
+            <ul id="top-head">
+                <li v-for="item in headTop" :key="item" >
+                    {{ item }}
+                </li>
+            </ul>
+            <ul id="top-bot">
+                <li>
+                    <el-input
+                        placeholder="请输入内容"
+                        prefix-icon="el-icon-search"
+                        v-model="distributors">
+                    </el-input> 
+                </li>
+                <li>
+                    <el-input
+                        placeholder="请输入内容"
+                        prefix-icon="el-icon-search"
+                        v-model="user">
+                    </el-input> 
+                </li>
+
+                <li>
+                    <div class="block">
+                        
+                        <el-date-picker
+                        v-model="starTime"
+                        type="date"
+                        placeholder="选择日期">
+                        </el-date-picker>
+                    </div>
+                </li>
+                <li>
+                    <div class="block">
+                      
+                        <el-date-picker
+                        v-model="endTime"
+                        type="date"
+                        placeholder="选择日期">
+                        </el-date-picker>
+                    </div>
+                </li>
+                <li v-for="(item, index) in headBot" :key="index" class="top-bot-num">
+                    {{ item }}
+                </li>
+                <li>
+                    <el-button type="primary" plain>
+                        查询
+                    </el-button>
+                </li>
+            </ul>
+        </div>
+  
+        
+    </div>
+</template>
+<script>
+export default {
+    name: 'ChannelDetail',
+    data () {
+        return {
+            headTop: [ 
+                '渠道商搜索',
+                '用户搜索',
+                '起始日期',
+                '截止日期',
+                '新增绑定手机人数',
+                '模拟跟单数量',
+                '绑定MT4账号数量',
+                '累计付费人数',
+                '累计付费金额',
+                '搜索'
+            ],
+            distributors: '张三',
+            user: '李四',
+            starTime: '',
+            endTime: '',
+            headBot: [
+                20,
+                30,
+                40,
+                50,
+                60
+            ]
+        }
+    },
+
+    methods: {
+
+    }
+}
+</script>
+<style lang="scss" scoped>
+    #box {
+        width: 100%;
+        height: 100vh;
+        background-color: #fff;
+        box-sizing: border-box;
+        padding: 16px;
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            margin: 16px 0;
+
+            span {
+                font-size: 15px;
+                font-weight: bold;
+                line-height: 30px;
+            }
+
+            .el-button { 
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
+
+        #top {
+            width: 100%;
+
+            ul {
+                display: flex;
+                box-sizing: border-box;
+
+                li {
+                    width: 10%;
+                    border: 1px solid #d7d7d7;
+                    border-right: none;
+                    border-top: none;
+                }
+                li:nth-last-child(1){
+                    border-right: 1px solid #d7d7d7;
+                }
+            }
+            #top-head {
+                height: 40px;
+                line-height: 40px;
+                font-size: 12px;
+
+                li{
+                    border-top: 1px solid #d7d7d7;
+                }
+            }
+
+            #top-bot {
+                height: 50px;
+
+                .top-bot-num {
+                    line-height: 50px;
+                    font-weight: bold;
+                }
+                .el-input{
+                    width: 90%;
+                    height: 30px;
+                    font-size: 12px;
+                    margin-top: 10px;
+                } 
+                .el-input__prefix{
+                    top:-10px;
+                }
+                .el-button {
+                    width: 70%;
+                    height: 30px;
+                    line-height: 6px;
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+</style>
+
+

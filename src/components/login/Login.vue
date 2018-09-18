@@ -82,8 +82,13 @@ export default {
     },
 
     mounted () {
-
+        //时间显示
         this.timer = setInterval(this.getMyTime,1000);
+    },
+
+    beforeDestroy() {
+        //清除计时器
+        clearInterval(this.timer)
     },
 
     methods: {
@@ -138,7 +143,6 @@ export default {
             .title {
                 background: none;
                 color: #fff;
-               
                 p {
                     font-size: 28px;
                     line-height: 90px;
@@ -146,10 +150,10 @@ export default {
                 }
             }
 
-            .account, .password{
+            .account, .password {
                 margin-bottom: 40px;
 
-                .left{
+                .left {
                     width: 114px;
                     
                     img {
@@ -162,7 +166,7 @@ export default {
                     width: 378px;
                     height: 60px;
 
-                    input{
+                    input {
                         width: 100%;
                         height: 100%;
                         border: none;
