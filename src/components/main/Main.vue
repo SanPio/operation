@@ -13,15 +13,15 @@
                 <!-- 导航列表 -->
                 <el-col :span="24">
                     <el-menu
-                    default-active="1"
+                    :default-active="navSelected"
                     class="el-menu-vertical-demo"
                     @open="handleOpen"
-                    @close="handleClose"
+                    @select="handleSelect"
                     background-color="#11183f"
                     text-color="#fff"
                     :unique-opened="uniqueOpened"
                     active-text-color="#ffd04b">
-                        <el-menu-item index="1" @click="routeTo('/home',0,'','首页')">
+                        <el-menu-item index="1">
                             <img :src="imgCli[0] ? homeImgCli : homeImg" alt="">
                             <span slot="title">
                                 首页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -35,16 +35,16 @@
                                     后台管理
                                 </span>
                             </template>     
-                            <el-menu-item index="2-1" @click="routeTo('/home',1)">
+                            <el-menu-item index="2-1">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;账号管理
                             </el-menu-item>
-                            <el-menu-item index="2-2" @click="routeTo('/home',1)">
+                            <el-menu-item index="2-2">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;权限管理
                             </el-menu-item> 
-                            <el-menu-item index="2-3" @click="routeTo('/home',1)">
+                            <el-menu-item index="2-3">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;角色管理
                             </el-menu-item>
-                            <el-menu-item index="2-4" @click="routeTo('/home',1)">
+                            <el-menu-item index="2-4">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;操作记录
                             </el-menu-item>          
                         </el-submenu>
@@ -56,7 +56,7 @@
                                     数据统计
                                 </span>
                             </template>     
-                            <el-menu-item index="3-1" @click="routeTo('/home',2)">
+                            <el-menu-item index="3-1">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;数据信息
                             </el-menu-item>
                         
@@ -69,13 +69,13 @@
                                     用户管理
                                 </span>
                             </template>     
-                            <el-menu-item index="4-1" @click="routeTo('/home',3)">
+                            <el-menu-item index="4-1">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;用户信息
                             </el-menu-item>
-                            <el-menu-item index="4-2" @click="routeTo('/home',3)">
+                            <el-menu-item index="4-2">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;订单信息
                             </el-menu-item> 
-                            <el-menu-item index="4-3" @click="routeTo('/home',3)">
+                            <el-menu-item index="4-3">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;邀请明细
                             </el-menu-item>
                         </el-submenu>
@@ -87,10 +87,10 @@
                                     渠道运营
                                 </span>
                             </template>   
-                            <el-menu-item index="5-1" @click="routeTo('/home',4,'渠道运营','渠道管理')">
+                            <el-menu-item index="5-1">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;渠道管理
                             </el-menu-item>    
-                            <el-menu-item index="5-2" @click="routeTo('/channeldetail',4,'渠道运营','渠道详情')" >
+                            <el-menu-item index="5-2">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;渠道详情
                             </el-menu-item>  
                         </el-submenu>
@@ -101,12 +101,11 @@
                 <!-- 头部 -->
                 <el-header>
                     <el-row>
-                        <!-- 当前时间：2018 年 9 月 13 日 10 时 30 分 30 秒 -->
                         当前时间：{{ myTime }}
                     </el-row>
                     <el-row>
                         <span>
-                            尊敬的  哈哈 ，您好
+                            尊敬的 哈哈 ，您好
                         </span>
                         <el-button>
                             修改密码
@@ -126,7 +125,6 @@
                             <span>
                                当前位置： 
                             </span>
-                            
                             <span v-if="locTitle" class="loc-title">
                                 {{ locTitle }}
                             </span>
@@ -179,39 +177,87 @@
                 dataImgCli: require('../../assets/data-2.png'),
                 userMangeImgCli: require('../../assets/user-2.png'),
                 channelImgCli: require('../../assets/channel-2.png'),
-                imgCli: [true,false,false,false,false],
+                imgCli: [false,false,false,false,false],
                 uniqueOpened: true, // 展开一个列表
                 version: 'v1.0',    // 版本号码
-                locTitle: '',
-                locDetails: '首页'
-            
+                locTitle: '',// 当前位置
+                locDetails: '',
+                imgCliInd: 0,
+                navSelected:"1"
             }
         },
 
         computed: {
             //获取本地时间
             myTime () {
-                return Store.state.time
+                return Store.state.time;
             }
+        },
+
+        created () {
+
+            if ( sessionStorage.locTitle ) {
+                this.locTitle = sessionStorage.locTitle;
+            }else {
+                this.locTitle = '';
+            }
+            if ( sessionStorage.locDetails ) {
+                this.locDetails = sessionStorage.locDetails;
+            }else {
+                this.locDetails = '首页';
+            }
+            if ( sessionStorage.imgCliInd ) {
+                this.$set( this.imgCli,sessionStorage.imgCliInd,true);
+            }else {
+                this.$set( this.imgCli,0,true);
+            }
+            if ( sessionStorage.navSelected ) {
+                this.navSelected = sessionStorage.navSelected;
+            }else {
+                this.navSelected = '1';
+            }
+
         },
 
         mounted () {
         
-            this.timer = setInterval(this.getMyTime,1000)
+            this.timer = setInterval(this.getMyTime,1000);
         },
 
         beforeDestroy () {
-            clearInterval(this.timer)
+            clearInterval(this.timer);
         },
 
         methods: {
             
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
+            // nav导航选择
+            handleSelect(key,keyPath){
+                sessionStorage.setItem('navSelected', key);
+                if ( key == '1' ) {
+                    this.routeTo('/home',0,'渠道运营','渠道详情');
+                }else if ( key == '2-1') {
+                    this.routeTo('/home',1,'渠道运营','账号管理');
+                }else if ( key == '2-2') {
+                    this.routeTo('/home',1,'渠道运营','权限管理');
+                }else if ( key == '2-3') {
+                    this.routeTo('/home',1,'渠道运营','角色管理');
+                }else if ( key == '2-4') {
+                    this.routeTo('/home',1,'后台管理','操作记录');
+                }else if ( key == '3-1') {
+                    this.routeTo('/home',2,'数据统计','数据信息');
+                }else if ( key == '4-1') {
+                    this.routeTo('/home',3,'用户管理','用户信息');
+                }else if ( key == '4-2') {
+                    this.routeTo('/home',3,'用户管理','订单信息');
+                }else if ( key == '4-3') {
+                    this.routeTo('/home',3,'用户管理','邀请明细');
+                }else if ( key == '5-1') {
+                    this.routeTo('/home',4,'渠道运营','渠道管理');
+                }else if ( key == '5-2') {
+                    this.routeTo('/channeldetail',4,'渠道运营','渠道详情');
+                }
+                
 
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
             },
 
             getMyTime () {
@@ -230,9 +276,14 @@
                 //导航图标变色
                 this.imgCli = [false,false,false,false,false,];
                 this.$set(this.imgCli,ind,true);
-                
                 this.locTitle = locTit;
                 this.locDetails = locdeta;
+                sessionStorage.setItem('locTitle', locTit);
+                sessionStorage.setItem('locDetails', locdeta);
+                sessionStorage.setItem('imgCliInd', ind);
+                
+
+
             }
     
         }

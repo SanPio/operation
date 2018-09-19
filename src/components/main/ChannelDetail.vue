@@ -1,7 +1,6 @@
 <template>
     <div id="box">
-        <header>
-           
+        <header> 
                 <span>
                     渠道详情
                 </span>
@@ -37,6 +36,8 @@
                         <el-date-picker
                         v-model="starTime"
                         type="date"
+                        @change="starChoose"
+                        value-format="yyyy-MM-dd"
                         placeholder="选择日期">
                         </el-date-picker>
                     </div>
@@ -47,6 +48,8 @@
                         <el-date-picker
                         v-model="endTime"
                         type="date"
+                        @change="endChoose"
+                        value-format="yyyy-MM-dd"
                         placeholder="选择日期">
                         </el-date-picker>
                     </div>
@@ -61,45 +64,277 @@
                 </li>
             </ul>
         </div>
-  
+        <div id="center">
+            <el-row class="cen-top">
+                <el-col :span="1" >
+                    <span style="line-height:30px">
+                        清单明细  
+                    </span>  
+                </el-col>
+            </el-row>
+            <el-row class="cen-bot">
+                <el-col :span="1" :offset='1'>
+                    序号
+                </el-col>
+                <el-col :span="21">
+                    <el-row>
+                        <el-col :span="3" v-for="item in centerTit" :key="item">
+                            {{ item }}
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
+            <el-row class="cen-list" v-for="(item, index) in info" :key="index">
+                <el-col :span="1" :offset='1'>
+                    {{ index + 1 }}
+                </el-col>
+                <el-col :span="21">
+                    <el-row>
+                   
+                        <el-col :span="3" >
+                            {{ item.date }}
+                        </el-col>
+                        <el-col :span="3" >
+                            {{ item.qudao }}
+                        </el-col>
+                        <el-col :span="3" >
+                            {{ item.yonghu }}
+                        </el-col>
+                        <el-col :span="3" >
+                            {{ item.zhuce }}
+                        </el-col>
+                        <el-col :span="3" >
+                            {{ item.phone }}
+                        </el-col>
+                        <el-col :span="3" >
+                            {{ item.moni }}
+                        </el-col>
+                        <el-col :span="3" >
+                            {{ item.mt4 }}
+                        </el-col>
+                        <el-col :span="3" >
+                            {{ item.money }}
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
+        </div>
+        <el-row id="footer">
+            <el-col :span="12" :offset='6'>
+                <el-pagination
+                background
+                layout="prev, pager, next"
+                prev-text="上一页"
+                next-text="下一页"
+                @current-change="handleCurrentChange"
+                :page-size="12"
+                :total="152">
+                </el-pagination>
+            </el-col>
+        </el-row>
         
     </div>
 </template>
 <script>
-export default {
-    name: 'ChannelDetail',
-    data () {
-        return {
-            headTop: [ 
-                '渠道商搜索',
-                '用户搜索',
-                '起始日期',
-                '截止日期',
-                '新增绑定手机人数',
-                '模拟跟单数量',
-                '绑定MT4账号数量',
-                '累计付费人数',
-                '累计付费金额',
-                '搜索'
-            ],
-            distributors: '张三',
-            user: '李四',
-            starTime: '',
-            endTime: '',
-            headBot: [
-                20,
-                30,
-                40,
-                50,
-                60
-            ]
+
+    import Store from '@/store'
+
+    export default {
+
+        name: 'ChannelDetail',
+
+        data () {
+            return {
+                headTop: [ 
+                    '渠道商搜索',
+                    '用户搜索',
+                    '起始日期',
+                    '截止日期',
+                    '新增绑定手机人数',
+                    '模拟跟单数量',
+                    '绑定MT4账号数量',
+                    '累计付费人数',
+                    '累计付费金额',
+                    '搜索'
+                ],
+                distributors: '张三',
+                user: '李四',
+                starTime: '',
+                endTime: '',
+                pageNum: 1,
+                headBot: [
+                    20,
+                    30,
+                    40,
+                    50,
+                    60
+                ],
+                centerTit: [
+                    '日期',
+                    '渠道商名称',
+                    '用户ID',
+                    '注册时间',
+                    '绑定手机号码',
+                    '累计模拟跟单数量',
+                    '绑定MT4账号数量',
+                    '累计付费金额'
+                ],
+                info: [
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    },
+                    {
+                        date: '111',
+                        qudao: '张三',
+                        yonghu: '56456',
+                        zhuce: '98年',
+                        phone: '13333333333',
+                        moni: '564456',
+                        mt4: '456465',
+                        money: '￥56464'
+                    }
+
+                ]
+            }
+        },
+
+        created () {
+            Store.commit( 'initLocDate' )
+            this.starTime = Store.state.initDate;
+            this.endTime = Store.state.initDate;
+        },
+        
+        methods: {
+            // 分页选择
+            handleCurrentChange ( val ) {
+                // console.log( val )
+            },
+
+            // 开始日期
+            starChoose ( val ) {
+                this.starTime = val;
+                let starDate = new Date( this.starTime );
+                let endDate = new Date( this.endTime );
+                if ( endDate < starDate ) {
+                    this.starTime = this.endTime;
+                    this.endTime = val;
+                }else {
+                     this.starTime = val;
+                }
+               
+            },
+
+            // 结束日期
+            endChoose ( val ) {
+                this.endTime = val;
+                let starDate = new Date( this.starTime );
+                let endDate = new Date( this.endTime );
+                if ( endDate < starDate ) {
+                    this.endTime = this.starTime;
+                    this.starTime = val;
+                }else {
+                     this.endTime = val;
+                }
+            }
         }
-    },
-
-    methods: {
-
     }
-}
 </script>
 <style lang="scss" scoped>
     #box {
@@ -108,11 +343,12 @@ export default {
         background-color: #fff;
         box-sizing: border-box;
         padding: 16px;
+        position: relative;
 
         header {
             display: flex;
             justify-content: space-between;
-            margin: 16px 0;
+            margin-bottom: 16px;
 
             span {
                 font-size: 15px;
@@ -139,6 +375,7 @@ export default {
                     border-right: none;
                     border-top: none;
                 }
+
                 li:nth-last-child(1){
                     border-right: 1px solid #d7d7d7;
                 }
@@ -160,15 +397,18 @@ export default {
                     line-height: 50px;
                     font-weight: bold;
                 }
+
                 .el-input{
                     width: 90%;
                     height: 30px;
                     font-size: 12px;
                     margin-top: 10px;
                 } 
+
                 .el-input__prefix{
                     top:-10px;
                 }
+
                 .el-button {
                     width: 70%;
                     height: 30px;
@@ -177,7 +417,46 @@ export default {
                 }
             }
         }
+
+        #center {
+
+            .cen-top{
+                margin: 14px 0 4px 0 ;
+            }
+
+            .cen-bot{
+                height: 34px;
+                line-height: 34px;
+            }
+
+            .cen-list{
+                color: #666;
+                height: 24px;
+                line-height: 24px;
+            }
+        }
+
+        #footer {
+            position: absolute;
+            bottom: 10px;
+            left: 20%;
+        }
     }
+//ele修改
+  .el-row {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+
+
 </style>
 
 
