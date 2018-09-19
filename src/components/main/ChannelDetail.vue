@@ -119,19 +119,22 @@
                 </el-col>
             </el-row>
         </div>
-        <el-row id="footer">
-            <el-col :span="12" :offset='6'>
-                <el-pagination
-                background
-                layout="prev, pager, next"
-                prev-text="上一页"
-                next-text="下一页"
-                @current-change="handleCurrentChange"
-                :page-size="12"
-                :total="152">
-                </el-pagination>
-            </el-col>
-        </el-row>
+        <div id="footer">
+            <el-row>
+                <el-col :span="12" :offset='6'>
+                    <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    prev-text="上一页"
+                    next-text="下一页"
+                    @current-change="handleCurrentChange"
+                    :page-size="12"
+                    :total="152">
+                    </el-pagination>
+                </el-col>
+            </el-row>
+        </div>
+        
         
     </div>
 </template>
@@ -157,8 +160,8 @@
                     '累计付费金额',
                     '搜索'
                 ],
-                distributors: '张三',
-                user: '李四',
+                distributors: '',
+                user: '',
                 starTime: '',
                 endTime: '',
                 pageNum: 1,
@@ -300,7 +303,7 @@
             this.starTime = Store.state.initDate;
             this.endTime = Store.state.initDate;
         },
-        
+
         methods: {
             // 分页选择
             handleCurrentChange ( val ) {
@@ -437,9 +440,10 @@
         }
 
         #footer {
+            width: 100%;
             position: absolute;
             bottom: 10px;
-            left: 20%;
+            // left: 20%;
         }
     }
 //ele修改

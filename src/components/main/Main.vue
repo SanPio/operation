@@ -15,7 +15,6 @@
                     <el-menu
                     :default-active="navSelected"
                     class="el-menu-vertical-demo"
-                    @open="handleOpen"
                     @select="handleSelect"
                     background-color="#11183f"
                     text-color="#fff"
