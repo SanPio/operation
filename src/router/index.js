@@ -4,6 +4,7 @@ import Login from '@/components/login/Login'
 import Main from '@/components/main/Main'
 import Home from "@/components/main/Home";
 import ChannelDetail from "@/components/main/ChannelDetail";
+
 Vue.use(Router)
 
 export default new Router({
@@ -14,6 +15,7 @@ export default new Router({
       name: 'Login',
       component: Login
     },
+    
     //系统主体
     {
       path: '/',

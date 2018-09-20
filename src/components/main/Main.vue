@@ -7,7 +7,7 @@
 
                 <!-- logo -->
                 <el-row type="flex" class="row-bg" justify="center">
-                    <img :src="logo" alt="" >
+                    <img :src="logo" alt="" id="logo" @click="logoload">
                 </el-row>
 
                 <!-- 导航列表 -->
@@ -233,13 +233,13 @@
             handleSelect(key,keyPath){
                 sessionStorage.setItem('navSelected', key);
                 if ( key == '1' ) {
-                    this.routeTo('/home',0,'渠道运营','渠道详情');
+                    this.routeTo('/home',0,'','首页');
                 }else if ( key == '2-1') {
-                    this.routeTo('/home',1,'渠道运营','账号管理');
+                    this.routeTo('/home',1,'后台管理','账号管理');
                 }else if ( key == '2-2') {
-                    this.routeTo('/home',1,'渠道运营','权限管理');
+                    this.routeTo('/home',1,'后台管理','权限管理');
                 }else if ( key == '2-3') {
-                    this.routeTo('/home',1,'渠道运营','角色管理');
+                    this.routeTo('/home',1,'后台管理','角色管理');
                 }else if ( key == '2-4') {
                     this.routeTo('/home',1,'后台管理','操作记录');
                 }else if ( key == '3-1') {
@@ -280,15 +280,20 @@
                 sessionStorage.setItem('locTitle', locTit);
                 sessionStorage.setItem('locDetails', locdeta);
                 sessionStorage.setItem('imgCliInd', ind);
-                
-
-
+            },
+            
+            logoload() {
+                location.reload() 
             }
-    
+            
         }
     }
 </script>
 <style lang="scss" scoped>   
+
+    #logo{
+        cursor:pointer;
+    }
     .el-header {
         background-color: #fff;
         color: #333;
