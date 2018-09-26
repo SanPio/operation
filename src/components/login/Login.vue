@@ -23,15 +23,15 @@
                     <img :src="passwordImg" alt="">
                 </div>
                 <div class="right">
-                    <input type="password" placeholder="请输入密码" v-model="psd" @focus="errBtnNone">
+                    <input type="password" placeholder="请输入密码" maxlength="16" v-model="psd" @focus="errBtnNone">
                 </div>
             </li>
             <li class="login">
-                <el-button type="primary" v-if="!loging" @click="loging = !loging">
+                <el-button type="primary" v-if="!loging&&!errShow" @click="login">
                     登录
                 </el-button>
                 <router-link to="/home">
-                    <el-button type="primary" :loading="true" v-if="loging">
+                    <el-button type="primary" :loading="true" v-if="loging&&!errShow" >
                         登录中...
                     </el-button>
                 </router-link>
@@ -56,6 +56,7 @@ export default {
             backgroundImg: require('../../assets/Sign in-bg.jpg'),
             accoutImg: require('../../assets/Sign-in-icon1.png'),
             passwordImg: require('../../assets/Sign-in-icon2.png'),
+            loading:false,
             loging: false,
             errShow: false,
             account: '',
@@ -77,10 +78,6 @@ export default {
         }
     },
 
-    created () {
-
-    },
-
     mounted () {
         //时间显示
         this.timer = setInterval(this.getMyTime,1000);
@@ -92,17 +89,57 @@ export default {
     },
 
     methods: {
+
+        //登录
+        login(){
+            this.loging = true;
+            let postData = this.$qs.stringify({
+                employeeName: this.account,
+                employeePassword: this.psd
+            });
+            this.$http({
+                method: 'post',
+                url: this.$path +'web/emp/operateLogin',
+                data:postData
+            }).then( res =>{
+                this.loging = false;
+
+                if ( res.data.data.str === '登录成功') { 
+
+                    sessionStorage.setItem("token", "TRUE");
+                    this.$router.push({
+                        path: '/' ,
+                        // query:{//通过query 传递参数
+                        // goodsDetail:需要传递的参数,
+                        // }
+                    });
+
+                }else {
+                    this.errShow = true
+                    this.account = '';
+                    this.psd = '';
+                }
+            }).catch( err => {
+                console.log( err )
+            })
+
+ 
+        },
+
+        
         
         getMyTime () {
             Store.commit('getTime')
         },
 
         errBtn () {
+            
             this.errShow = false;
             this.loging = false;
         },
 
         errBtnNone () {
+            
             this.errShow = false;
         }
     }

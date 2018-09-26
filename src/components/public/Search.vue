@@ -80,8 +80,8 @@
 
         data() {
             return {
-                distributors: '渠道商',
-                user: '用户',
+                distributors: '',
+                user: '',
                 starTime: '',
                 endTime: '',
             }
@@ -92,6 +92,8 @@
             this.starTime = Store.state.initDate;
             this.endTime = Store.state.initDate;
         },
+        
+   
 
         methods: {
             // 开始日期

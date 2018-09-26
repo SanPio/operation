@@ -7,16 +7,16 @@
     style="width: 100%">
 
         <!-- 头部 -->
-        <v-header :title='headerTitle' @exportData='exportData' v-if="!loading"></v-header>
+        <v-header :title='headerTitle' @exportData='exportData' ></v-header>
 
         <!-- 查询  -->
-        <search :headTop='headTop'  @searchInfoChange='searchInfoChange' v-if="!loading"></search>
+        <search :headTop='headTop' :headBot='headBot' @searchInfoChange='searchInfoChange'></search>
 
         <!-- 列表 -->
-        <list :listTop='listTop' :listBot='info' v-if="!loading"></list>
+        <list :listTop='listTop' :listBot='info' ></list>
 
         <!-- 分页 -->
-        <pageing @pageChang='pageChang' v-if="!loading"></pageing>
+        <pageing @pageChang='pageChang'   :total='total'></pageing>
         
         
     </div>
@@ -55,7 +55,7 @@
                 pageNum: 1, 
                 pageSize: 15,
                 loading: false, 
-                headBot: [ 20,40,60,80,100 ],
+                headBot: [ ],
                 listTop: [
                     '日期',
                     '渠道商名称',
@@ -66,7 +66,8 @@
                     '绑定MT4账号数量',
                     '累计付费金额'
                 ],
-                info: [ ]  
+                info: [ ],
+                total:0  
             }
         },
 
@@ -81,27 +82,73 @@
             Store.commit( 'initLocDate' )
             this.starTime = Store.state.initDate;
             this.endTime = Store.state.initDate;
+            this.queryInfo()
         },
 
         methods: {
 
             // 导出数据
             exportData(){
-                console.log( '导出数据' )
+               
+            //     let postData = this.$qs.stringify({
+            //         channelName: this.distributors,
+            //         userId: this.user,
+            //         startTime: this.starTime, 
+            //         endTime: this.endTime,
+                  
+            //     });
+            //    this.$http.get(this.$path+'web/emp/exportSummaryDataToCVS',{ 
+            //     params : { 
+            //         channelName: this.distributors,
+            //         userId: this.user,
+            //         startTime: this.starTime, 
+            //         endTime: this.endTime,
+            //     }
+            // }).then((res) => { 
+            //     console.log(res)
+            // })
+            setTimeout(()=>{
+window.location.href = `${this.$path}web/emp/exportSummaryDataToCVS?channelName=${this.distributors}&userId=${this.user}&startTime=${this.starTime}&endTime=${this.endTime}`;  
+            },300)
+          //  window.location.href = `${this.$path}web/emp/exportSummaryDataToCVS?channelName=${this.distributors}&userId=${this.user}&startTime=${this.starTime}&endTime=${this.endTime}`;
+            setTimeout(()=>{
+window.location.href = `${this.$path}web/emp/exportSummaryDataDetailsToCVS?channelName=${this.distributors}&userId=${this.user}&startTime=${this.starTime}&endTime=${this.endTime}`;  
+            },100)
+            
+              // this.$http({
+                //     method: 'post',
+                //     url: this.$path +'web/emp/exportSummaryDataToCVS',
+                //     data:postData
+                // }).then( res =>{
+                //     console.log(res)
+                // }).catch( err => {
+                //     console.log(err)
+                // })
+                //  this.$http({
+                //     method: 'post',
+                //     url: this.$path +'web/emp/exportSummaryDataDetailsToCVS',
+                //     data:postData
+                // }).then( res =>{
+                //     console.log(res)
+                // }).catch( err => {
+                //     console.log(err)
+                // })
             },
 
             // 搜素
             searchInfoChange ( params ) {
-                this.distributors = params.distributors;
-                this.user = params.user;
-                this.starTime = params.starTime;
-                this.endTime = params.endTime;
-                this.loading = params.loading;
-                this.queryInfo();
+                // this.loading = true;
+                // this.distributors = params.distributors;
+                // this.user = params.user;
+                // this.starTime = params.starTime;
+                // this.endTime = params.endTime;
+                // this.loading = params.loading;
+                // this.queryInfo();
             },
 
             // 分页
             pageChang( params ) {
+                this.loading = true;
                 console.log( params )
                 this.pageNum = params.pageNum;
                 this.pageSize = params.pageSize;
@@ -110,13 +157,103 @@
 
             // 查询
             queryInfo () {
-                console.log( this.distributors )
-                console.log( this.user )
-                console.log( this.starTime )
-                console.log( this.endTime )
-                console.log( this.loading )
-                console.log( this.pageNum )
-                console.log( this.pageSize )
+                let postData = this.$qs.stringify({
+                    channelName: this.distributors,
+                    userId: this.user,
+                    startTime: this.starTime, 
+                    endTime: this.endTime,
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize
+                });
+                console.log(postData)
+                this.$http({
+                    method: 'post',
+                    url: this.$path +'web/emp/summaryData',
+                    data:postData
+                }).then( res =>{
+                    console.log(res)
+                    this.loading = false;
+                    this.info = [];
+                    this.headBot = [];
+                    this.total = res.data.data.data.total;
+                    if ( res.data.data.data.countPhoneByTime ) {
+                        this.headBot.push( res.data.data.data.countPhoneByTime )
+                    }else {
+                        this.headBot.push( 0 )
+                    }
+                    if ( res.data.data.data.countSimulationByTime ) {
+                        this.headBot.push( res.data.data.data.countSimulationByTime )
+                    }else {
+                        this.headBot.push( 0 )
+                    }
+                    if ( res.data.data.data.countMT4ByTime ) {
+                        this.headBot.push( res.data.data.data.countMT4ByTime )
+                    }else {
+                        this.headBot.push( 0 )
+                    }
+                    if ( res.data.data.data.countPaySuccess ) {
+                        this.headBot.push( res.data.data.data.countPaySuccess )
+                    }else {
+                        this.headBot.push( 0 )
+                    }
+                    if ( res.data.data.data.selectSumPaySuccessMoney ) {
+                        this.headBot.push( res.data.data.data.selectSumPaySuccessMoney )
+                    }else {
+                        this.headBot.push( 0 )
+                    }
+
+                    if( res.data.data.data.list ) {
+                            // this.info = res.data.data.data.list;
+                        for (let i= 0; i < res.data.data.data.list.length; i ++) {
+                            let obj = {};
+                            if( res.data.data.data.list[i].date ){
+                                obj.date = res.data.data.data.list[i].date;
+                            }else{
+                                obj.date = '---'
+                            }
+                            if( res.data.data.data.list[i].channelName ){
+                                obj.channelName = res.data.data.data.list[i].channelName;
+                            }else{
+                                obj.channelName = '---'
+                            }
+                            if( res.data.data.data.list[i].userId ){
+                                obj.userId = res.data.data.data.list[i].userId;
+                            }else{
+                                obj.userId = '---'
+                            }
+                            if( res.data.data.data.list[i].registeredDate ){
+                                obj.registeredDate = res.data.data.data.list[i].registeredDate;
+                            }else{
+                                obj.registeredDate = '---'
+                            }
+                            if( res.data.data.data.list[i].phone ){
+                                obj.phone = res.data.data.data.list[i].phone;
+                            }else{
+                                obj.phone = '---'
+                            }
+                            if( res.data.data.data.list[i].simulationDocumentary ){
+                                obj.simulationDocumentary = res.data.data.data.list[i].simulationDocumentary;
+                            }else{
+                                obj.simulationDocumentary = '0'
+                            }
+
+                            if( res.data.data.data.list[i].bindMT4 ){
+                                obj.bindMT4 = res.data.data.data.list[i].bindMT4;
+                            }else{
+                                obj.bindMT4 = '0'
+                            }
+                            if( res.data.data.data.list[i].sumMoney ){
+                                obj.sumMoney = res.data.data.data.list[i].sumMoney;
+                            }else{
+                                obj.sumMoney = '0'
+                            }
+                            this.info.push( obj )
+                        }   
+                    }
+                    // console.log( this.info )
+                }).catch( err => {
+                    console.log( err )
+                })
             }   
         }
     }
@@ -124,7 +261,8 @@
 <style lang="scss" scoped>
     #box {
         width: 100%;
-        height: 100vh;
+        height:100%;
+        // min-height:600px;
         background-color: #fff;
         box-sizing: border-box;
         padding: 14px;

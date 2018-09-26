@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 占位 -->
-        <div style="height:34px"></div>
+        <div style="height:36px"></div>
         <div id="footer">
             <el-row>
                 <el-col :span="12" :offset='5'> 
@@ -29,8 +29,18 @@
                 pageNum: 1,
                 pageSize: 15,
                 currentPage: 1,// 分页
-                total: 256,
+            
             }
+        },
+
+        props: {
+            total: {
+                type: Number,
+                default: function () {
+                    return 0               
+                }
+            }
+            
         },
 
         methods: {

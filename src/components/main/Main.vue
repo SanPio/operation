@@ -135,8 +135,8 @@
                             </span>
                         </el-header>
                         <!-- 主视口 -->
-                        <el-main >
-                            <router-view />
+                        <el-main style="height:100%" >
+                            <router-view  style="height:100%"/>
                         </el-main>
                         <!-- 底部 -->
                         <el-footer style="height:40px;font-size:10px;line-height:40px;color:#999">
