@@ -18,7 +18,8 @@
         <!-- 分页 -->
         <pageing @pageChang='pageChang'   :total='total'></pageing>
         
-        
+     
+
     </div>
 </template>
 <script>
@@ -89,61 +90,19 @@
 
             // 导出数据
             exportData(){
-               
-            //     let postData = this.$qs.stringify({
-            //         channelName: this.distributors,
-            //         userId: this.user,
-            //         startTime: this.starTime, 
-            //         endTime: this.endTime,
-                  
-            //     });
-            //    this.$http.get(this.$path+'web/emp/exportSummaryDataToCVS',{ 
-            //     params : { 
-            //         channelName: this.distributors,
-            //         userId: this.user,
-            //         startTime: this.starTime, 
-            //         endTime: this.endTime,
-            //     }
-            // }).then((res) => { 
-            //     console.log(res)
-            // })
-            setTimeout(()=>{
-window.location.href = `${this.$path}web/emp/exportSummaryDataToCVS?channelName=${this.distributors}&userId=${this.user}&startTime=${this.starTime}&endTime=${this.endTime}`;  
-            },300)
-          //  window.location.href = `${this.$path}web/emp/exportSummaryDataToCVS?channelName=${this.distributors}&userId=${this.user}&startTime=${this.starTime}&endTime=${this.endTime}`;
-            setTimeout(()=>{
-window.location.href = `${this.$path}web/emp/exportSummaryDataDetailsToCVS?channelName=${this.distributors}&userId=${this.user}&startTime=${this.starTime}&endTime=${this.endTime}`;  
-            },100)
-            
-              // this.$http({
-                //     method: 'post',
-                //     url: this.$path +'web/emp/exportSummaryDataToCVS',
-                //     data:postData
-                // }).then( res =>{
-                //     console.log(res)
-                // }).catch( err => {
-                //     console.log(err)
-                // })
-                //  this.$http({
-                //     method: 'post',
-                //     url: this.$path +'web/emp/exportSummaryDataDetailsToCVS',
-                //     data:postData
-                // }).then( res =>{
-                //     console.log(res)
-                // }).catch( err => {
-                //     console.log(err)
-                // })
+                window.open( `${this.$path}web/emp/exportSummaryDataToCVS?channelName=${this.distributors}&userId=${this.user}&startTime=${this.starTime}&endTime=${this.endTime}`);    
+                window.open( `${this.$path}web/emp/exportSummaryDataDetailsToCVS?channelName=${this.distributors}&userId=${this.user}&startTime=${this.starTime}&endTime=${this.endTime}`);
             },
 
             // 搜素
             searchInfoChange ( params ) {
-                // this.loading = true;
-                // this.distributors = params.distributors;
-                // this.user = params.user;
-                // this.starTime = params.starTime;
-                // this.endTime = params.endTime;
-                // this.loading = params.loading;
-                // this.queryInfo();
+                this.loading = true;
+                this.distributors = params.distributors;
+                this.user = params.user;
+                this.starTime = params.starTime;
+                this.endTime = params.endTime;
+                this.loading = params.loading;
+                this.queryInfo();
             },
 
             // 分页
