@@ -18,8 +18,6 @@
         <!-- 分页 -->
         <pageing @pageChang='pageChang'   :total='total'></pageing>
         
-     
-
     </div>
 </template>
 <script>
