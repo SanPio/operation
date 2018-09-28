@@ -7,8 +7,8 @@ import ChannelDetail from "@/components/main/ChannelDetail";
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
+
+  const routes = [
     //登录
     {
       path: '/login',
@@ -36,4 +36,21 @@ export default new Router({
       ]
     }
   ]
+
+
+const router = new Router({
+  routes: routes
 })
+
+router.beforeEach((to, from, next) => {
+  let token = sessionStorage.getItem('token');
+  if ( token !== "TRUE" && to.path != '/login' ) {
+    next({ path: '/login' });
+  }else {
+    next();
+  }
+
+ 
+})
+
+export default router

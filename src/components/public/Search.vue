@@ -101,12 +101,14 @@
                 this.starTime = val;
                 let starDate = new Date( this.starTime );
                 let endDate = new Date( this.endTime );
-                if ( endDate < starDate ) {
+
+                if ( endDate < starDate && this.endTime ) {
                     this.starTime = this.endTime;
                     this.endTime = val;
                 }else {
-                     this.starTime = val;
+                    this.starTime = val;
                 }
+              
                
             },
 

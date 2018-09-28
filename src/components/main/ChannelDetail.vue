@@ -106,7 +106,6 @@
             // 分页
             pageChang( params ) {
                 this.loading = true;
-                console.log( params )
                 this.pageNum = params.pageNum;
                 this.pageSize = params.pageSize;
                 this.queryInfo();
@@ -122,13 +121,11 @@
                     pageNum: this.pageNum,
                     pageSize: this.pageSize
                 });
-                console.log(postData)
                 this.$http({
                     method: 'post',
                     url: this.$path +'web/emp/summaryData',
                     data:postData
                 }).then( res =>{
-                    console.log(res)
                     this.loading = false;
                     this.info = [];
                     this.headBot = [];
@@ -207,7 +204,7 @@
                             this.info.push( obj )
                         }   
                     }
-                    // console.log( this.info )
+
                 }).catch( err => {
                     console.log( err )
                 })
