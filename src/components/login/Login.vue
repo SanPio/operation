@@ -7,7 +7,7 @@
         <ul id="contant">
             <li class="title">
                 <p>
-                    小铭跟单运营系统
+                    小铭跟单系统
                 </p>
             </li>
             <li class="account clearfix">
