@@ -104,7 +104,7 @@
                     </el-row>
                     <el-row>
                         <span>
-                            尊敬的 哈哈 ，您好
+                            尊敬的 {{ userName }}，您好
                         </span>
                         <el-button>
                             修改密码
@@ -176,6 +176,7 @@
                 dataImgCli: require('../../assets/data-2.png'),
                 userMangeImgCli: require('../../assets/user-2.png'),
                 channelImgCli: require('../../assets/channel-2.png'),
+                userName: '',
                 imgCli: [false,false,false,false,false],
                 uniqueOpened: true, // 展开一个列表
                 version: 'v1.0',    // 版本号码
@@ -194,7 +195,11 @@
         },
 
         created () {
-
+            if ( sessionStorage.userName ) {
+                this.userName = sessionStorage.userName;
+            }else {
+                this.userName = '管理员';
+            }
             if ( sessionStorage.locTitle ) {
                 this.locTitle = sessionStorage.locTitle;
             }else {
@@ -239,7 +244,7 @@
                 }else if ( key == '2-2') {
                     this.routeTo('/home',1,'后台管理','权限管理');
                 }else if ( key == '2-3') {
-                    this.routeTo('/home',1,'后台管理','角色管理');
+                    this.routeTo('/rolemanage',1,'后台管理','角色管理');
                 }else if ( key == '2-4') {
                     this.routeTo('/home',1,'后台管理','操作记录');
                 }else if ( key == '3-1') {
@@ -251,7 +256,7 @@
                 }else if ( key == '4-3') {
                     this.routeTo('/home',3,'用户管理','邀请明细');
                 }else if ( key == '5-1') {
-                    this.routeTo('/home',4,'渠道运营','渠道管理');
+                    this.routeTo('/channelmanage',4,'渠道运营','渠道管理');
                 }else if ( key == '5-2') {
                     this.routeTo('/channeldetail',4,'渠道运营','渠道详情');
                 }

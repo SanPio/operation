@@ -2,8 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login/Login'
 import Main from '@/components/main/Main'
-import Home from "@/components/main/Home";
-import ChannelDetail from "@/components/main/ChannelDetail";
+import Home from "@/components/main/Home"
+import ChannelDetail from "@/components/main/ChannelDetail"
+import RoleManage from "@/components/main/role_manage/RoleManage"
+import ChannelManage from "@/components/main/channelMange/ChannelManage"
 
 Vue.use(Router)
 
@@ -29,10 +31,21 @@ Vue.use(Router)
             path: '/home',
             component: Home 
           },
+
+          { //角色管理
+            path: '/rolemanage',
+            component: RoleManage 
+          },
+
+          { //渠道管理
+            path: '/channelmanage',
+            component: ChannelManage 
+          },
+
           { //渠道详情
             path: '/channeldetail',
             component: ChannelDetail 
-          },
+          }
       ]
     }
   ]

@@ -3,8 +3,8 @@
         <span>
             {{ title }}
         </span>
-        <el-button type="success" plain @click="exportData">
-            数据导出
+        <el-button :type="btnType" plain @click="exportData">
+            {{ btnInfo }}
         </el-button>
     </header>
 
@@ -17,7 +17,14 @@ export default {
             type: String,
             default: '渠道详情',
         },
-
+        btnType: {
+            type: String,
+            default: 'success',
+        },
+        btnInfo: {
+            type: String,
+            default: '数据导出',
+        },
         
     },
 

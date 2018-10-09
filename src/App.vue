@@ -6,13 +6,13 @@
   </div>
 </template>
 
-<script>
+<script >
 export default {
   name: 'App'
 }
 </script>
 
-<style>
+<style >
     body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0}
     html{color:#000;overflow-y:scroll;overflow:-moz-scrollbars-vertical}
     body,button,input,select,textarea{font-size:12px;font-family:arial,'Hiragino Sans GB','Microsoft Yahei','微软雅黑','宋体',\5b8b\4f53,Tahoma,Arial,Helvetica,STHeiti}
@@ -35,6 +35,7 @@ export default {
     .block{display:block}
     .inline{display:inline}
     .error{color:#F00;font-size:12px}
+    .pointer{cursor: pointer;}
     label,button{cursor:pointer}
     .clearfix:after{content:'\20';display:block;height:0;clear:both}
     .clearfix{zoom:1}.clear{clear:both;height:0;line-height:0;font-size:0;visibility:hidden;overflow:hidden}
@@ -66,6 +67,28 @@ export default {
     :-ms-input-placeholder { /* Internet Explorer 10+ */
         color:    #b8b8b8;
     }
+    .el-message-box__btns button:nth-child(2){
+        margin-left:60px;
+    }
+    .el-message-box__header .el-message-box__title span{
+        color:#307EFF;
+        font-weight: bold;
+    }
+    .el-dialog{
+        border-radius: 10px;
 
-    
+    }
+   .el-dialog .el-dialog__body{
+               padding-bottom: 0; 
+    }
+    .el-dialog .el-dialog__body .el-form-item__label{
+        text-align: left;
+    }
+    .el-dialog__title{
+            color: #307EFF;
+            font-weight: bold;
+        }
+      .el-inpdiv .el-input__inner{
+                border:none;
+        }
 </style>

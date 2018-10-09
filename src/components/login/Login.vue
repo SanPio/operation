@@ -107,6 +107,7 @@ export default {
                 if ( res.data.data.str === '登录成功') { 
 
                     sessionStorage.setItem("token", "TRUE");
+                    sessionStorage.setItem("userName", this.account);
                     this.$router.push({
                         path: '/' ,
                         // query:{//通过query 传递参数
