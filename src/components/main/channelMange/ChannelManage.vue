@@ -26,7 +26,9 @@
                 <span>
                     日期
                 </span>
-                <img :src="defaultSort" alt="" class="pointer">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort(0)">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort(0)">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort(0)">
             </li>
             <li>
                 <span>
@@ -37,44 +39,54 @@
                 <span>
                     注册用户数
                 </span>
-                <img :src="defaultSort" alt="" class="pointer">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort(1)">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort(1)">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort(1)">
             </li>
             <li>
                 <span>
                     跟单用户数
                 </span>
-                <img :src="defaultSort" alt="" class="pointer">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort(2)">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort(2)">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort(2)">
             </li>
              <li>
                 <span>
                     绑定MT4用户数
                 </span>
-                <img :src="defaultSort" alt="" class="pointer">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort(3)">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort(3)">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort(3)">
             </li>
             <li>
                 <span>
                     付费用户数
                 </span>
-                <img :src="defaultSort" alt="" class="pointer">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[4] === 0" @click="bigToSmallSort(4)">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[4] === 1" @click="toSort(4)">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[4] === 2" @click="toSort(4)">
             </li>
              <li>
                 <span>
                     续费用户数
                 </span>
-                <img :src="defaultSort" alt="" class="pointer">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[5] === 0" @click="bigToSmallSort(5)">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[5] === 1" @click="toSort(5)">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[5] === 2" @click="toSort(5)">
             </li>
             <li>
                 <span>
                     累计付费金额
                 </span>
-                <img :src="defaultSort" alt="" class="pointer">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[6] === 0" @click="bigToSmallSort(6)">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[6] === 1" @click="toSort(6)">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[6] === 2" @click="toSort(6)">
             </li>
              <li>
                 <span>
                     渠道链接
                 </span>
-                <img :src="defaultSort" alt="" class="pointer">
-            </li>
             <li>
                 <span>
                     操作
@@ -204,14 +216,17 @@ export default {
                 '累计购买会额',
                 '操作'
             ],
-            headBot: [ 20,30,40,50,60,70],
+            headBot: [ 20, 30, 40, 50, 60, 70 ],
             channelName: '',
             starTime: '',    
             endTime: '',
             defaultSort: require('../../../assets/def_sort.png'),
+            bigToSmall: require('../../../assets/big_small.png'),
+            smallToBig: require('../../../assets/small_big.png'),
+            sortImgShow: [ 0, 0, 0, 0, 0, 0, 0 ],   
             info: [ 'a','b','ac','c','d','e','ad','asd','asd','fasw'],
             total: 0,
-            delChannelName: '' ,
+            delChannelName: '',
 
             adddialogFormVisible: false,
             setdialogFormVisible: false,
@@ -264,29 +279,41 @@ export default {
             console.log('请求')
         },
 
-        // 删除
-        open ( ind ) {
-            this.$confirm(`<p style="text-align:center;font-weight:bold;">您确定删除<span style="color:red">${this.info[ind]}</span>渠道商信息？</p><p style="text-align:center;font-size:12px;">为了您的数据安全，再次向您确认信息</p>`, '提示', {
-                type: 'warning',
-                dangerouslyUseHTMLString: true,
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                center: true
-            }).then(() => {
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                });
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                });
-            });
+        // 删除  // 此功能暂不开放
+        // open ( ind ) {
+        //     this.$confirm(`<p style="text-align:center;font-weight:bold;">您确定删除<span style="color:red">${this.info[ind]}</span>渠道商信息？</p><p style="text-align:center;font-size:12px;">为了您的数据安全，再次向您确认信息</p>`, '提示', {
+        //         type: 'warning',
+        //         dangerouslyUseHTMLString: true,
+        //         confirmButtonText: '确定',
+        //         cancelButtonText: '取消',
+        //         center: true
+        //     }).then(() => {
+        //         this.$message({
+        //             type: 'success',
+        //             message: '删除成功!'
+        //         });
+        //     }).catch(() => {
+        //         this.$message({
+        //             type: 'info',
+        //             message: '已取消删除'
+        //         });
+        //     });
             
+        // },
+
+        // 删除 
+        open( ind ) {
+            this.$alert('您暂无此权限，请联系管理员！', '提示', {
+                type: 'warning',
+                confirmButtonText: '确定',
+                center: true
+            })   
         },
+
+
         // 修改
         openSet( ind ) {
+            
             console.log(ind);
             this.setdialogFormVisible = true
 
@@ -338,6 +365,29 @@ export default {
                 // });
                 // 保存失败执行
                 // this.$message.error('错了哦，保存失败请重试！');     
+        },
+
+        // 大小排序
+        bigToSmallSort ( ind ) {
+
+            this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
+            this.$set( this.sortImgShow, ind, 1 );
+
+        },
+
+        // 逆向排序
+        toSort ( ind ) {
+            if ( this.sortImgShow[ ind ] === 1) {
+
+                this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
+                this.$set( this.sortImgShow, ind, 2);
+
+            }else if ( this.sortImgShow[ ind ] === 2 ) {
+                
+                this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
+                this.$set( this.sortImgShow, ind, 1 );
+
+            }
         }
     },
 }

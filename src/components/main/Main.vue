@@ -30,7 +30,7 @@
                         <el-submenu index="2">
                             <template slot="title">
                                 <img :src="imgCli[1] ? backImgCli : backImg" alt="">
-                                <span>
+                                <span :class="{'yellowColor':itemChoose == 2}">
                                     后台管理
                                 </span>
                             </template>     
@@ -51,7 +51,7 @@
                         <el-submenu index="3">
                             <template slot="title">
                                 <img :src="imgCli[2] ? dataImgCli : dataImg" alt="">
-                                <span>
+                                <span :class="{'yellowColor':itemChoose == 3}">
                                     数据统计
                                 </span>
                             </template>     
@@ -64,7 +64,7 @@
                         <el-submenu index="4">
                             <template slot="title">
                                 <img :src="imgCli[3] ? userMangeImgCli :userMangeImg" alt="">
-                                <span>
+                                <span :class="{'yellowColor':itemChoose == 4}">
                                     用户管理
                                 </span>
                             </template>     
@@ -82,7 +82,7 @@
                         <el-submenu index="5">
                             <template slot="title">
                                 <img :src="imgCli[4] ? channelImgCli : channelImg" alt="">
-                                <span>
+                                <span :class="{'yellowColor':itemChoose == 5}">
                                     渠道运营
                                 </span>
                             </template>   
@@ -109,11 +109,11 @@
                         <el-button>
                             修改密码
                         </el-button>
-                        <router-link to="/login">
-                            <el-button>
-                                注销
-                            </el-button>
-                        </router-link>
+                        
+                        <el-button @click="logOut">
+                            注销
+                        </el-button>
+                  
                     </el-row>  
                 </el-header>
                 <!-- 主体内容 -->
@@ -183,7 +183,8 @@
                 locTitle: '',// 当前位置
                 locDetails: '',
                 imgCliInd: 0,
-                navSelected:"1"
+                navSelected:"1",
+                itemChoose: 0
             }
         },
 
@@ -239,26 +240,37 @@
                 sessionStorage.setItem('navSelected', key);
                 if ( key == '1' ) {
                     this.routeTo('/home',0,'','首页');
+                    this.itemChoose = 0;
                 }else if ( key == '2-1') {
                     this.routeTo('/home',1,'后台管理','账号管理');
+                    this.itemChoose = 2;
                 }else if ( key == '2-2') {
                     this.routeTo('/home',1,'后台管理','权限管理');
+                    this.itemChoose = 2;
                 }else if ( key == '2-3') {
                     this.routeTo('/rolemanage',1,'后台管理','角色管理');
+                    this.itemChoose = 2;
                 }else if ( key == '2-4') {
                     this.routeTo('/home',1,'后台管理','操作记录');
+                    this.itemChoose = 2;
                 }else if ( key == '3-1') {
                     this.routeTo('/home',2,'数据统计','数据信息');
+                    this.itemChoose = 3;
                 }else if ( key == '4-1') {
                     this.routeTo('/home',3,'用户管理','用户信息');
+                    this.itemChoose = 4;
                 }else if ( key == '4-2') {
                     this.routeTo('/home',3,'用户管理','订单信息');
+                    this.itemChoose = 4;
                 }else if ( key == '4-3') {
                     this.routeTo('/home',3,'用户管理','邀请明细');
+                    this.itemChoose = 4;
                 }else if ( key == '5-1') {
                     this.routeTo('/channelmanage',4,'渠道运营','渠道管理');
+                    this.itemChoose = 5;
                 }else if ( key == '5-2') {
                     this.routeTo('/channeldetail',4,'渠道运营','渠道详情');
+                    this.itemChoose = 5;
                 }
                 
 
@@ -286,9 +298,21 @@
                 sessionStorage.setItem('locDetails', locdeta);
                 sessionStorage.setItem('imgCliInd', ind);
             },
-            
-            logoload() {
+
+            // 刷新
+            logoload () {
                 location.reload() 
+            },
+
+            // 登出
+            logOut () {
+                sessionStorage.clear()
+                this.$router.push({
+                    path: '/login',
+                    // query:{//通过query 传递参数
+                    // goodsDetail:需要传递的参数,
+                    // }
+                });
             }
             
         }
@@ -337,7 +361,10 @@
 
         .el-menu {
             width: 300px;
-
+            
+            .yellowColor{
+                color: rgb(255, 208, 75);
+            }
             .el-submenu {
 
                 img{

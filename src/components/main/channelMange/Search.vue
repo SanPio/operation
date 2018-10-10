@@ -96,8 +96,9 @@
                 let endDate = new Date( this.endTime );
 
                 if ( endDate < starDate && this.endTime ) {
-                    this.starTime = this.endTime;
-                    this.endTime = val;
+                    // this.starTime = this.endTime;
+                    // this.endTime = val;
+                    this.endTime = this.starTime;
                 }else {
                     this.starTime = val;
                 }
@@ -111,8 +112,9 @@
                 let starDate = new Date( this.starTime );
                 let endDate = new Date( this.endTime );
                 if ( endDate < starDate ) {
-                    this.endTime = this.starTime;
-                    this.starTime = val;
+                    // this.endTime = this.starTime;
+                    // this.starTime = val;
+                    this.starTime = this.endTime;
                 }else {
                      this.endTime = val;
                 }
