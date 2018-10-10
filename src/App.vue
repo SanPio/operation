@@ -91,4 +91,20 @@ export default {
       .el-inpdiv .el-input__inner{
                 border:none;
         }
+      /*    渠道详情tab页样式修改 */
+      #channel_detail .el-tabs__item{
+          background-color: #fff;
+          border:none;
+          margin-right: 1px;
+          border-radius: 11px 11px 0 0;
+          overflow:hidden;
+      }
+     #channel_detail .is-active{
+        background-color: #307EFF;
+        color:#fff;
+       }
+       #channel_detail .el-tabs__header {
+          background-color: #f2f2f2; 
+       }
+      
 </style>

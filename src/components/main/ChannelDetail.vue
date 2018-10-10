@@ -7,17 +7,130 @@
     style="width: 100%">
 
         <!-- 头部 -->
-        <v-header :title='headerTitle' @exportData='exportData' ></v-header>
+        <!-- <v-header :title='headerTitle' @exportData='exportData' ></v-header> -->
 
         <!-- 查询  -->
-        <search :headTop='headTop' :headBot='headBot' @searchInfoChange='searchInfoChange'></search>
+        <!-- <search :headTop='headTop' :headBot='headBot' @searchInfoChange='searchInfoChange'></search> -->
 
         <!-- 列表 -->
-        <list :listTop='listTop' :listBot='info' ></list>
+        <!-- <list :listTop='listTop' :listBot='info' ></list> -->
 
         <!-- 分页 -->
-        <pageing @pageChang='pageChang'   :total='total'></pageing>
-        
+        <!-- <pageing @pageChang='pageChang'   :total='total'></pageing> -->
+        <!-- <div style="width: calc(100% + 15px);height:15px;background:#f2f2f2;position:absolute;top:0;left:-15px"></div> -->
+            
+        <el-tabs type="border-card" id="channel_detail">
+
+            <el-tab-pane label="代理详情">
+
+                <!-- 查询  -->
+                <search :headTop='headTop' :headBot='headBot' @searchInfoChange='searchInfoChange'></search> 
+
+                <!-- 列表标题 -->
+                <p class="list-title">清单明细</p>
+
+                <!-- 列表详情 -->
+                <ul class="list-tit clearfix">
+                    <li >
+                        <span>
+                            序号
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            日期
+                        </span>
+                        <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort(0)">
+                        <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort(0)">
+                        <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort(0)">
+                    </li>
+                    <li >
+                        <span>
+                            渠道商名称
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            用户ID
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            注册时间
+                        </span>
+                        <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort(1)">
+                        <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort(1)">
+                        <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort(1)">
+                    </li>
+                    <li>
+                        <span>
+                            绑定手机号码                           
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            累计模拟跟单数量
+                        </span>
+                        <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort(2)">
+                        <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort(2)">
+                        <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort(2)">
+                    </li>
+                    <li>
+                        <span>
+                            绑定MT4账号数量
+                        </span>
+                        <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort(3)">
+                        <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort(3)">
+                        <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort(3)">
+                    </li>
+                    <li>
+                        <span>
+                            累计付费金额
+                        </span>
+                        <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[4] === 0" @click="bigToSmallSort(4)">
+                        <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[4] === 1" @click="toSort(4)">
+                        <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[4] === 2" @click="toSort(4)">
+                    </li>
+                </ul>
+                <ul class="contant">
+                    <li class="info-list clearfix" v-for="(item, index) in info" :key="index" >
+                        <p> 
+                            {{ index + 1 }}
+                        </p>
+                        <p>
+                            {{ item.date }}
+                        </p>
+                        <p>
+                            {{ item.channelName }}
+                        </p>
+                        <p>
+                            {{ item.userId }}
+                        </p>
+                        <p>
+                            {{ item.registeredDate }}
+                        </p>
+                        <p>
+                            {{ item.phone }}
+                        </p>
+                        <p>
+                            {{ item.simulationDocumentary }}
+                        </p>
+                        <p>
+                            {{ item.bindMT4 }}
+                        </p>
+                        <p>
+                            {{ item.sumMoney }}
+                        </p>
+                    </li>
+                </ul>    
+ 
+
+
+
+            </el-tab-pane>
+            <el-tab-pane label="用户详情">用户详情</el-tab-pane> 
+        </el-tabs>
+       
     </div>
 </template>
 <script>
@@ -34,7 +147,10 @@
 
         data () {
             return {
-                headerTitle:"渠道详情",
+                defaultSort: require('../../assets/def_sort.png'),
+                bigToSmall: require('../../assets/big_small.png'),
+                smallToBig: require('../../assets/small_big.png'),
+                tabPosition: 'top',
                 headTop: [ 
                     '渠道商搜索',
                     '用户搜索',
@@ -54,7 +170,7 @@
                 pageNum: 1, 
                 pageSize: 15,
                 loading: false, 
-                headBot: [ ],
+                headBot: [ 0, 0, 0, 0, 0 ],
                 listTop: [
                     '日期',
                     '渠道商名称',
@@ -66,7 +182,8 @@
                     '累计付费金额'
                 ],
                 info: [ ],
-                total: 0  
+                total: 0,
+                sortImgShow: [ 0, 0, 0, 0, 0, 0, 0 ],  
             }
         },
 
@@ -85,7 +202,9 @@
         },
 
         methods: {
-
+            formatter(row, column) {
+                return row.address;
+            },
             // 导出数据
             exportData(){
                 window.open( `${this.$path}web/emp/exportSummaryDataToCVS?channelName=${this.distributors}&userId=${this.user}&startTime=${this.starTime}&endTime=${this.endTime}`);    
@@ -111,6 +230,29 @@
                 this.queryInfo();
             },
 
+            // 大小排序
+            bigToSmallSort ( ind ) {
+
+                this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
+                this.$set( this.sortImgShow, ind, 1 );
+
+            },
+
+            // 逆向排序
+            toSort ( ind ) {
+                if ( this.sortImgShow[ ind ] === 1) {
+
+                    this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
+                    this.$set( this.sortImgShow, ind, 2);
+
+                }else if ( this.sortImgShow[ ind ] === 2 ) {
+                    
+                    this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
+                    this.$set( this.sortImgShow, ind, 1 );
+
+                }
+            },
+
             // 查询
             queryInfo () {
                 let postData = this.$qs.stringify({
@@ -126,6 +268,7 @@
                     url: this.$path +'web/emp/summaryData',
                     data:postData
                 }).then( res =>{
+                    console.log(res)
                     this.loading = false;
                     this.info = [];
                     this.headBot = [];
@@ -219,10 +362,69 @@
         // min-height:600px;
         background-color: #fff;
         box-sizing: border-box;
-        padding: 14px;
+        // padding: 14px;
         position: relative;
+
+        #channel_detail .list-title{
+            text-align: left;
+            height: 60px;
+            line-height: 60px;
+            font-weight: bold;
+        }
+
+        .list-tit{
+            margin-top: 10px;
+            line-height: 20px;
+            li {
+                float: left;
+                width: 11%;
+                height: 30px;
+                line-height: 30px;
+                span{
+                    vertical-align: middle;
+                    color: #333;
+                }
+                img{
+                    margin-left: 3px;
+                    height: 16px;
+                    vertical-align: middle;
+                    
+                }
+            }
+        }
+        .info-list{
+            color: #666;
+            p {
+                float: left;
+                width: 11%;
+                height: 24px;
+                line-height: 24px;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
     //ele修改
+    .el-tabs{
+        border:none;
+        box-shadow:none;
+        -webkit-box-shadow:none;
+    
+    }
+    #channel_detail{
+        .is-active{
+           color: red;
+       }
+    }
     .el-row {
         &:last-child {
         margin-bottom: 0;
