@@ -106,5 +106,15 @@ export default {
        #channel_detail .el-tabs__header {
           background-color: #f2f2f2; 
        }
+     #box .el-tabs{
+         height:81vh;
+     }
+    #box .el-tabs .el-tabs__item{
+         height: 34px;
+         line-height: 34px;
+     }
+        #box .el-tabs__content{
+            min-height: calc(100% - 64px);
+        } 
       
 </style>

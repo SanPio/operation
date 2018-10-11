@@ -213,6 +213,7 @@
             }
             if ( sessionStorage.imgCliInd ) {
                 this.$set( this.imgCli,sessionStorage.imgCliInd,true);
+                this.itemChoose = Number( sessionStorage.imgCliInd ) +1;
             }else {
                 this.$set( this.imgCli,0,true);
             }
