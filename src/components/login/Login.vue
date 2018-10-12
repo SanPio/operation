@@ -105,9 +105,10 @@ export default {
                 this.loging = false;
 
                 if ( res.data.data.str === '登录成功') { 
-
+                    console.log(res)
                     sessionStorage.setItem("token", "TRUE");
                     sessionStorage.setItem("userName", this.account);
+                    sessionStorage.setItem("userId", res.data.data);
                     this.$router.push({
                         path: '/' ,
                         // query:{//通过query 传递参数

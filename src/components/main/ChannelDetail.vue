@@ -19,7 +19,9 @@
                 <search :headTop='headTop' :headBot='headBot' @searchInfoChange='searchInfoChange'></search> 
 
                 <!-- 列表标题 -->
-                <p class="list-title">清单明细</p>
+                <p class="list-title">
+                    清单明细
+                </p>
 
                 <!-- 列表详情 -->
                 <ul class="list-tit clearfix">
@@ -121,7 +123,9 @@
 
 
             </el-tab-pane>
-            <el-tab-pane label="用户详情">用户详情</el-tab-pane> 
+            <el-tab-pane label="用户详情">
+                用户详情
+            </el-tab-pane> 
         </el-tabs>
        
     </div>
@@ -291,10 +295,10 @@
                     let obj = {
                         bindMT4: newArr[i].bindMT4,
                         channelName: newArr[i].channelName,
-                        date: newArr[i].date.getFullYear() + '-' +(newArr[i].date.getMonth()+1) + '-' + newArr[i].date.getDate(),
+                        date: newArr[i].date.getFullYear() + '-' +(newArr[i].date.getMonth() > 8 ?  newArr[i].date.getMonth()+1 : '0' + (newArr[i].date.getMonth()+1) )+ '-' + (newArr[i].date.getDate() > 9 ?newArr[i].date.getDate() : '0' + newArr[i].date.getDate() ),
                         inviterUser: newArr[i].inviterUser,
                         phone: newArr[i].phone,
-                        registeredDate: newArr[i].registeredDate.getFullYear() + '-' +(newArr[i].registeredDate.getMonth()+1) + '-' + newArr[i].registeredDate.getDate(),
+                        registeredDate: newArr[i].registeredDate.getFullYear() + '-' +( newArr[i].registeredDate.getMonth() > 8 ? newArr[i].registeredDate.getMonth()+1 : '0' + (newArr[i].registeredDate.getMonth()+1) ) + '-' + ( newArr[i].registeredDate.getDate() > 9 ? newArr[i].registeredDate.getDate() : '0'+ newArr[i].registeredDate.getDate() ),
                         simulationDocumentary: newArr[i].simulationDocumentary,
                         sumMoney: newArr[i].sumMoney,
                         userId: newArr[i].userId,
@@ -451,7 +455,6 @@
         min-height:100%;
         background-color: #fff;
         box-sizing: border-box;
-        // padding: 14px;
         position: relative;
        
         #channel_detail .list-title{
@@ -505,16 +508,6 @@
                 line-height: 24px;
             }
         }
-
-
-
-
-
-
-
-
-
-
 
     }
     //ele修改
