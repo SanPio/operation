@@ -208,7 +208,7 @@
 
             // 搜素
             searchInfoChange ( params ) {
-                this.info= [];
+                
                 this.loading = true;
                 this.distributors = params.distributors;
                 this.user = params.user;
@@ -348,6 +348,7 @@
 
             // 查询
             queryInfo () {
+                this.info= [];
                 let postData = this.$qs.stringify({
                     channelName: this.distributors,
                     userId: this.user,

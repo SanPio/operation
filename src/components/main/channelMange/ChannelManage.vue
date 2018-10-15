@@ -256,7 +256,10 @@ export default {
         }
     },
     created () {
+        
         this.userId = sessionStorage.uesrId;
+        this.queryInfo( this.channelName, this.starTime, this.endTime, this.pageNum, this.pageSize );
+
     },
     methods: {
 
@@ -267,7 +270,7 @@ export default {
             this.starTime = params.starTime;
             this.endTime = params.endTime;
             this.loading = params.loading;
-            // console.log(this.starTime)
+            this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
             this.queryInfo( this.channelName, this.starTime, this.endTime, this.pageNum, this.pageSize );
         },
 
@@ -276,13 +279,12 @@ export default {
             this.loading = true;
             this.pageNum = params.pageNum;
             this.pageSize = params.pageSize;
-
             this.queryInfo( this.channelName, this.starTime, this.endTime, this.pageNum, this.pageSize );
         },
 
         // 信息搜索
         queryInfo ( channelName, startTime, endTime, pageNum, pageSize) {
-         
+            this.info = [];
             let postData = this.$qs.stringify({
                 channelName: channelName,
                 startTime: startTime,
@@ -298,7 +300,8 @@ export default {
             }).then( res => {
                 
                 console.log( res.data.data.data)
-
+                //  结束loading图
+                this.loading = false;
                 let data = res.data.data.data;
                 
                 //  顶部汇总条
@@ -317,8 +320,7 @@ export default {
                 //  明细列表
                 this.info = data.channelManagementDetails;
 
-                //  结束loading图
-                this.loading = false;
+                
             }).catch( req => {
                 console.log( req )
             })
@@ -536,16 +538,7 @@ export default {
         isDate(key,val){
             let newArr = [];
             for( let i = 0; i < this.info.length; i ++){
-                // "accumulatedPaymentAmount":1,
-                // "channelName":"渠道商001",
-                // "day":"2018/08/15",
-                // "documentaryUserNumber":0,
-                // "id":0,
-                // "invitUrl":"baidu.com",
-                // "numberOfBindOfMT4":0,
-                // "numberOfPaidUsers":0,
-                // "numberOfRegisteredUsers":1,
-                // "renewalUserNumber":1
+  
                 let obj ={
                     accumulatedPaymentAmount: this.info[i].accumulatedPaymentAmount,
                     channelName: this.info[i].channelName,
@@ -599,11 +592,8 @@ export default {
                     }  
                 }
             }
-            // this.arr = [];
-            // this.arr = newarr
-            // console.log(this.arr)
-            console.log(arr)
-                this.info = []
+    
+            this.info = []
             return arr
         },
 

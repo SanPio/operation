@@ -350,7 +350,7 @@
         background-color: #11183f;
         color: #fff;
         width: 300px;
-
+        overflow:-moz-scrollbars-none;
         .el-row {
 
             img {
@@ -390,7 +390,7 @@
         display: flex;
         flex-direction: column;
         flex: 1;
-
+        overflow:-moz-scrollbars-none;
         .el-container {
             display: flex;
             flex-direction: column;
