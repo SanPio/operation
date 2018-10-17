@@ -6,6 +6,7 @@ import Home from "@/components/main/Home"
 import ChannelDetail from "@/components/main/ChannelDetail"
 import RoleManage from "@/components/main/role_manage/RoleManage"
 import ChannelManage from "@/components/main/channelMange/ChannelManage"
+import UserInfo from "@/components/main/user_info/UserInfo"
 
 Vue.use(Router)
 
@@ -35,6 +36,12 @@ Vue.use(Router)
           { //角色管理
             path: '/rolemanage',
             component: RoleManage 
+          },
+
+          
+          { //用户信息
+            path: '/user_info',
+            component: UserInfo 
           },
 
           { //渠道管理

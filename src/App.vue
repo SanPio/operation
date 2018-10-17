@@ -49,12 +49,13 @@ export default {
       cursor:none;
       outline: none;
     }
-    html,body,#app{width: 100%;height:100%;background: #fff;}
+    html,body,#app{width: 100vw;height:100vh;background: #fff;min-width: 100%;min-height:100%;}
         ::-webkit-scrollbar {
         width: 0;   /* 滚动条宽度为0 */
         height: 0; /* 滚动条高度为0 */
         display: none; /* 滚动条隐藏 */
     }
+  
     ::-webkit-input-placeholder { /* WebKit browsers */
     color:    #999;
     }

@@ -12,7 +12,7 @@
 <script>
 export default {
     name: 'Header',
-     props: {
+    props: {
         title: {
             type: String,
             default: '渠道详情',

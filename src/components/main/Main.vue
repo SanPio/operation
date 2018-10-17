@@ -258,7 +258,7 @@
                     this.routeTo('/home',2,'数据统计','数据信息');
                     this.itemChoose = 3;
                 }else if ( key == '4-1') {
-                    this.routeTo('/home',3,'用户管理','用户信息');
+                    this.routeTo('/user_info',3,'用户管理','用户信息');
                     this.itemChoose = 4;
                 }else if ( key == '4-2') {
                     this.routeTo('/home',3,'用户管理','订单信息');
