@@ -7,6 +7,7 @@ import ChannelDetail from "@/components/main/ChannelDetail"
 import RoleManage from "@/components/main/role_manage/RoleManage"
 import ChannelManage from "@/components/main/channelMange/ChannelManage"
 import UserInfo from "@/components/main/user_info/UserInfo"
+import InvitDetail from "@/components/main/invit_detail/InvitDetail"
 
 Vue.use(Router)
 
@@ -42,6 +43,11 @@ Vue.use(Router)
           { //用户信息
             path: '/user_info',
             component: UserInfo 
+          },
+          
+          { //邀请明细
+            path: '/invitdetail',
+            component: InvitDetail 
           },
 
           { //渠道管理

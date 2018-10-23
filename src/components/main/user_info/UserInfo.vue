@@ -104,7 +104,7 @@
                     </p>
                     <div class="operation left">
                         <p>
-                            <el-button type="primary" plain >
+                            <el-button type="primary" @click="toInvitDetail(item.userId)">
                                 邀请明细
                             </el-button> 
                             <el-button type="primary" plain >
@@ -207,7 +207,6 @@ export default {
             }).then( res => {
 
                 //  结束loading图
-                
                 this.loading = false;
                 this.info.push( res.data.data.data )
             }).catch( req => {
@@ -217,21 +216,26 @@ export default {
         },
 
         // 邀请明细
-        toInvitDetail ( ind ) {
-
+        toInvitDetail( userId ) {
+            this.$router.push({
+                path: '/invitdetail',
+                query:{//通过query 传递参数
+                    userId: userId //需要传递的参数,
+                }
+            });
         },
         // 增值服务
-        toInvitDetail ( ind ) {
+        // toInvitDetail ( ind ) {
 
-        },
+        // },
         // 跟单配置记录
-        toInvitDetail ( ind ) {
+        // toInvitDetail ( ind ) {
 
-        },
+        // },
         // 账号绑定记录
-        toInvitDetail ( ind ) {
+        // toInvitDetail ( ind ) {
 
-        }
+        // }
     },
 }
 </script>

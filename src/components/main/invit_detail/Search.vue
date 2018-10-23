@@ -63,7 +63,7 @@
             headBot: {
                 type: Array,
                 default: function () {
-                    return [0,0,0,0,0]                   
+                    return [0,0,0,0,0,0]                   
                 }
             },
             headTop: {

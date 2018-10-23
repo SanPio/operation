@@ -74,9 +74,6 @@
                             <el-menu-item index="4-2">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;订单信息
                             </el-menu-item> 
-                            <el-menu-item index="4-3">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;邀请明细
-                            </el-menu-item>
                         </el-submenu>
 
                         <el-submenu index="5">
@@ -262,9 +259,6 @@
                     this.itemChoose = 4;
                 }else if ( key == '4-2') {
                     this.routeTo('/home',3,'用户管理','订单信息');
-                    this.itemChoose = 4;
-                }else if ( key == '4-3') {
-                    this.routeTo('/home',3,'用户管理','邀请明细');
                     this.itemChoose = 4;
                 }else if ( key == '5-1') {
                     this.routeTo('/channelmanage',4,'渠道运营','渠道管理');

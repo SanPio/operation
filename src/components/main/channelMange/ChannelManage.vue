@@ -87,6 +87,7 @@
                 <span>
                     渠道链接
                 </span>
+            </li>
             <li>
                 <span>
                     操作

@@ -49,7 +49,8 @@ export default {
 
         .el-button { 
             font-size: 12px;
-            padding: 8px;
+            padding: 8px 0;
+            width: 80px;
         }
     }
 </style>
