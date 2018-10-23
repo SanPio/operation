@@ -207,6 +207,7 @@ export default {
             }).then( res => {
 
                 //  结束loading图
+                
                 this.loading = false;
                 this.info.push( res.data.data.data )
             }).catch( req => {
