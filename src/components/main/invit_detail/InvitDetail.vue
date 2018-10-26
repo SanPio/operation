@@ -165,7 +165,8 @@ export default {
     
     created () {
         this.userId = this.$route.query.userId;
-        console.log(this.userId)
+        // console.log(this.userId)
+        this.queryInfo( '', '', 1, 15, '', this.userId )
     },
 
     methods: {
@@ -186,16 +187,51 @@ export default {
             this.loading = true;
             this.pageNum = params.pageNum;
             this.pageSize = params.pageSize;
-            this.queryInfo( this.userName, this.starTime, this.endTime, this.pageNum, this.pageSize );
+            this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName,);
         },
 
-        //
-        queryInfo ( userName, starTime, endTime, pageNum, pageSize ) {
+        //数据请求
+        queryInfo (  starTime, endTime, pageNum, pageSize, userName, userId  ) {
             console.log( userName )
             console.log( starTime )
             console.log( endTime )
             console.log( pageNum )
             console.log( pageSize )
+            let postData = this.$qs.stringify({
+                    startTime: starTime,
+                    endTime: endTime,
+                    inviterName: userName, 
+                    inviterId: userId,
+                    pageNum: pageNum,
+                    pageSize: pageSize
+                });
+                console.log( postData )
+                // this.$http({
+                //     method: 'post',
+                //     url: this.$path +'web/emp/inviterData',
+                //     data:postData
+                // }).then( res => {
+
+                //     console.log( res.data.data.data )
+                //     // 汇总表
+                //     let data = res.data.data.data
+                    
+                //         this.headBot.push( data.countPhoneByTime ); // 新增绑定数量
+                //         this.headBot.push( data.countPhoneByTime ); // 新增绑定数量
+                    
+                      
+                    
+                // }).catch( req => {
+
+                // })
+
+
+
+
+
+
+
+
         },
 
         // 返回到用户信息
