@@ -5,7 +5,7 @@
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.8)"
     style="width: 100%">
-        <!-- 头部标题 -->
+       
        <!-- 头部 -->
         <v-header :title='headerTitle' :btnType='btnType' :btnInfo='btnInfo' @exportData='returnHis' ></v-header>
 
@@ -336,16 +336,10 @@ export default {
         padding: 14px;
         position: relative;
         min-height: 82vh;
-        header {
-            text-align: left;
-            font-size: 15px;
-            font-weight: bold;
-            line-height: 30px;
-        }
+       
         .list-top{
             text-align: left;
             margin-top: 20px;
-
         }
 
         .list-tit{

@@ -112,7 +112,7 @@
                             </el-button> 
                         </p>
                         <p>
-                            <el-button type="primary" plain >
+                            <el-button type="primary" plain @click="toIncrement(item.userId)">
                                 增值服务
                             </el-button> 
                             <el-button type="primary" plain >
@@ -225,9 +225,14 @@ export default {
             });
         },
         // 增值服务
-        // toInvitDetail ( ind ) {
-
-        // },
+        toIncrement ( userId ) {
+            this.$router.push({
+                path: '/increment',
+                query:{//通过query 传递参数
+                    userId: userId //需要传递的参数,
+                }
+            });
+        },
         // 跟单配置记录
         // toInvitDetail ( ind ) {
 

@@ -8,7 +8,7 @@ import RoleManage from "@/components/main/role_manage/RoleManage"
 import ChannelManage from "@/components/main/channelMange/ChannelManage"
 import UserInfo from "@/components/main/user_info/UserInfo"
 import InvitDetail from "@/components/main/invit_detail/InvitDetail"
-
+import Increment from "@/components/main/increment/Increment"
 Vue.use(Router)
 
 
@@ -48,6 +48,11 @@ Vue.use(Router)
           { //邀请明细
             path: '/invitdetail',
             component: InvitDetail 
+          },
+
+          { //VIP增值业务
+            path: '/increment',
+            component: Increment 
           },
 
           { //渠道管理
