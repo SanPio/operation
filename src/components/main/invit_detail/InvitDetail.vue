@@ -17,55 +17,55 @@
             清单明细
         </p>
         <ul class="list-tit clearfix">
-            <li>
+            <li class="num">
                 <span>
                     序号
                 </span>
             </li>
-            <li>
+            <li class="inviterName"> 
                 <span>
                     引荐人
                 </span>
             </li>
-            <li>
+            <li class="registeredDate">
                 <span>
                     注册时间
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort( 0, 'day' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort( 0, 'day' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort( 0, 'day' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow === 0" @click="bigToSmallSort">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow === 1" @click="toSort">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow === 2" @click="toSort">
             </li>
-            <li>
+            <li class="wxNickName">
                 <span>
                     用户昵称
                 </span>
             </li>
-            <li>
+            <li class="phone">
                 <span>
                     绑定手机号码
                 </span>
             </li>
-             <li>
+             <li class="firstMoney">
                 <span>
                     首冲金额
                 </span>
             </li>
-            <li>
+            <li class="renewalMoney">
                 <span>
                     续费金额
                 </span>
             </li>
-             <li>
+             <li class="sumMoney">
                 <span>
                     合计金额
                 </span>
             </li>
-            <li>
+            <li class="countFollowByTime">
                 <span>
-                    累计模拟跟单数量
+                    累计真实跟单数量（模拟）
                 </span>
             </li>
-             <li>
+             <li class="bindMT4">
                 <span>
                     绑定MT4数量
                 </span>
@@ -73,38 +73,36 @@
         </ul>
         <ul class="contant">
             <li class="info-list clearfix" v-for="(item, index) in info" :key="index" >
-                <p> 
+                <p class="num"> 
                     {{ index + 1 }}
                 </p>
-                <p> 
-                    {{ item.day }}
+                <p class="inviterName"> 
+                    {{ item.inviterName }}
                 </p>
-                <p> 
-                    {{ item.channelName}}
+                <p class="registeredDate"> 
+                    {{ item.registeredDate}}
                 </p>
-                <p> 
-                    {{ item.numberOfRegisteredUsers }}
+                <p class="wxNickName"> 
+                    {{ item.wxNickName }}
                 </p>
-                <p> 
-                    {{ item.documentaryUserNumber }}
+                <p class="phone"> 
+                    {{ item.phone }}
                 </p>
-                <p> 
-                    {{ item.numberOfBindOfMT4 }}
+                <p class="firstMoney"> 
+                    {{ item.firstMoney }}
                 </p>
-                <p> 
-                    {{ item.renewalUserNumber }}
+                <p class="renewalMoney"> 
+                    {{ item.renewalMoney }}
                 </p>
-                <p> 
-                    {{ item.accumulatedPaymentAmount }}
+                <p class="sumMoney"> 
+                    {{ item.sumMoney }}
                 </p>
-                <p> 
-                    {{ item.numberOfPaidUsers }}
+                <p class="countFollowByTime"> 
+                    {{ item.countFollowByTime }}
                 </p>
-                <p> 
-                    {{ item.invitUrl }}
+                <p class="bindMT4"> 
+                    {{ item.bindMT4 }}
                 </p>
-                
-                
             </li>
         </ul>
         
@@ -144,10 +142,10 @@ export default {
                 '累计付费金额',
                 '操作'
             ],
-            headBot:[0,'0/0',0,0,0],
-            sortImgShow: [ 0 ],   
+            headBot: [ '', '', '', '', '' ],
+            sortImgShow: 0,   
             userId: 0,
-            info: [1],
+            info: [ ],
             userName: '', 
             starTime: '', 
             endTime: '',
@@ -166,7 +164,7 @@ export default {
     created () {
         this.userId = this.$route.query.userId;
         // console.log(this.userId)
-        this.queryInfo( '', '', 1, 15, '', this.userId )
+        this.queryInfo( '2018-08-01', '2018-11-01', 1, 15, '', this.userId )
     },
 
     methods: {
@@ -179,7 +177,7 @@ export default {
             this.endTime = params.endTime;
             this.loading = params.loading;
             console.log(params)
-            this.queryInfo( this.userName, this.starTime, this.endTime, this.pageNum, this.pageSize );
+            this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName );
         },
 
         // 分页
@@ -187,16 +185,12 @@ export default {
             this.loading = true;
             this.pageNum = params.pageNum;
             this.pageSize = params.pageSize;
-            this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName,);
+            this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName );
         },
 
         //数据请求
         queryInfo (  starTime, endTime, pageNum, pageSize, userName, userId  ) {
-            console.log( userName )
-            console.log( starTime )
-            console.log( endTime )
-            console.log( pageNum )
-            console.log( pageSize )
+            
             let postData = this.$qs.stringify({
                     startTime: starTime,
                     endTime: endTime,
@@ -205,33 +199,55 @@ export default {
                     pageNum: pageNum,
                     pageSize: pageSize
                 });
-                console.log( postData )
-                // this.$http({
-                //     method: 'post',
-                //     url: this.$path +'web/emp/inviterData',
-                //     data:postData
-                // }).then( res => {
+                console.log(postData)
+                this.$http({
+                    method: 'post',
+                    url: this.$path +'web/emp/inviterData',
+                    data:postData
+                }).then( res => {
 
-                //     console.log( res.data.data.data )
-                //     // 汇总表
-                //     let data = res.data.data.data
+                    console.log( res )
+                    this.loading = false;
+                    this.sortImgShow = 0;
+                    this.headBot = [ ];
+                    // 汇总表
+                    let data = res.data.data.data
+                        // 头部列表
+                        if( data.countPhoneByTime ){// 新增绑定数量
+                            this.headBot.push( data.countPhoneByTime ); 
+                        }else{
+                            this.headBot.push( 0 );
+                        }
+                        if( data.countFollowByTime ){// 累计跟单
+                            this.headBot.push( data.countFollowByTime ); 
+                        }else{
+                            this.headBot.push( '0(0)' );
+                        }
+                        if( data.countMT4ByTime ){// MT4
+                            this.headBot.push( data.countMT4ByTime ); 
+                        }else{
+                            this.headBot.push( 0 );
+                        }
+                        if( data.countPaySuccess ){// 累计付费人数
+                            this.headBot.push( data.countPaySuccess ); 
+                        }else{
+                            this.headBot.push( 0 );
+                        }
+                        if( data.selectSumPaySuccessMoney ){// 累计付费金额
+                            this.headBot.push( data.selectSumPaySuccessMoney ); 
+                        }else{
+                            this.headBot.push( 0 );
+                        }
+                       
+                        // 数据总数
+                        this.total = data.total;
+                        
+                        // 列表内容
+                        this.info = data.inviterList;
                     
-                //         this.headBot.push( data.countPhoneByTime ); // 新增绑定数量
-                //         this.headBot.push( data.countPhoneByTime ); // 新增绑定数量
-                    
-                      
-                    
-                // }).catch( req => {
-
-                // })
-
-
-
-
-
-
-
-
+                }).catch( req => {
+                    console.log( req )
+                })
         },
 
         // 返回到用户信息
@@ -242,83 +258,67 @@ export default {
         },
 
         // 默认反向排序
-        bigToSmallSort ( ind, key) {
+        bigToSmallSort ( ) {
 
-            this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
-            this.$set( this.sortImgShow, ind, 1 );
-            this.toSort(ind,key);
+            this.sortImgShow = 1;
+            this.toSort();
         },  
 
         // 逆向排序
         toSort ( ind, key ) {
-            if ( this.sortImgShow[ ind ] === 1) {
+            if ( this.sortImgShow === 1) {
 
-                this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
-                this.$set( this.sortImgShow, ind, 2);
-                
-                if( key == "day" ){
-                    
-                    this.isDate(key,1);
-                
-                }else{
-                    this.info = this.ZtoAsort(this.info, key);
-                }
-            
-            }else if ( this.sortImgShow[ ind ] === 2 ) {
-                
-                this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
-                this.$set( this.sortImgShow, ind, 1 );
+                this.sortImgShow = 2
+                 this.isDate(1);
 
-                // this.info = this.ZtoAsort(this.info, key);  
-                if( key == "day" ){
-                    this.isDate(key,2);
-                    
-                }else{
-                    this.info = this.AtoZsort(this.info, key);
-                }          
+            }else if ( this.sortImgShow === 2 ) {
                 
+                this.sortImgShow = 1
+                this.isDate(2);
+  
             }
         },
 
         // 日期排序
-        isDate(key,val){
+        isDate(val){
             let newArr = [];
             for( let i = 0; i < this.info.length; i ++){
   
                 let obj ={
-                    accumulatedPaymentAmount: this.info[i].accumulatedPaymentAmount,
-                    channelName: this.info[i].channelName,
-                    channelId: this.info[i].channelId,
-                    day: new Date(this.info[i].day),
-                    documentaryUserNumber: this.info[i].documentaryUserNumber,
-                    id: this.info[i].id,
-                    invitUrl: this.info[i].invitUrl,
-                    numberOfBindOfMT4: this.info[i].numberOfBindOfMT4,
-                    numberOfPaidUsers: this.info[i].numberOfPaidUsers,
-                    numberOfRegisteredUsers: this.info[i].numberOfRegisteredUsers,
-                    renewalUserNumber: this.info[i].renewalUserNumber,
+                    "bindMT4": this.info[i].bindMT4,
+					"countFollowByTime": this.info[i].countFollowByTime,
+					"firstMoney": this.info[i].firstMoney,
+					"invitationCode": this.info[i].invitationCode,
+					"inviterName": this.info[i].inviterName,
+					"phone": this.info[i].phone,
+					"registeredDate": new Date(this.info[i].registeredDate),
+					"renewalMoney": this.info[i].renewalMoney,
+					"sumDocumentary": this.info[i].sumDocumentary,
+					"sumMoney": this.info[i].sumMoney,
+					"wxNickName": this.info[i].wxNickName
+                    
                 }
                 newArr.push( obj );
             }
             if( val === 1){
-                newArr = this.ZtoAsort(newArr, key);
+                newArr = this.ZtoAsort(newArr, 'registeredDate');
             }else{
-                newArr = this.AtoZsort(newArr, key);
+                newArr = this.AtoZsort(newArr, 'registeredDate');
             }
 
             for (let i = 0; i < newArr.length; i++ ) {
                 let obj = {
-                    accumulatedPaymentAmount: newArr[i].accumulatedPaymentAmount,
-                    channelName: newArr[i].channelName,
-                    channelId: newArr[i].channelId,
-                    day: newArr[i].day.getFullYear() + '-' +(newArr[i].day.getMonth() > 8 ? newArr[i].day.getMonth()+1 : '0' +(newArr[i].day.getMonth()+1) ) + '-' +(newArr[i].day.getDate() > 9 ? newArr[i].day.getDate() : '0' + newArr[i].day.getDate()),
-                    documentaryUserNumber: newArr[i].documentaryUserNumber,
-                    id: newArr[i].id,
-                    invitUrl: newArr[i].invitUrl,
-                    numberOfBindOfMT4: newArr[i].numberOfBindOfMT4,
-                    numberOfPaidUsers: newArr[i].numberOfPaidUsers,
-                    numberOfRegisteredUsers: newArr[i].numberOfRegisteredUsers,
-                    renewalUserNumber: newArr[i].renewalUserNumber,
+                    "bindMT4": newArr[i].bindMT4,
+					"countFollowByTime": newArr[i].countFollowByTime,
+					"firstMoney": newArr[i].firstMoney,
+					"invitationCode": newArr[i].invitationCode,
+					"inviterName": newArr[i].inviterName,
+					"phone": newArr[i].phone,
+					"registeredDate": newArr[i].registeredDate.getFullYear() + '-' +(newArr[i].registeredDate.getMonth() > 8 ? newArr[i].registeredDate.getMonth()+1 : '0' +(newArr[i].registeredDate.getMonth()+1) ) + '-' +(newArr[i].registeredDate.getDate() > 9 ? newArr[i].registeredDate.getDate() : '0' + newArr[i].registeredDate.getDate()),
+					"renewalMoney": newArr[i].renewalMoney,
+					"sumDocumentary": newArr[i].sumDocumentary,
+					"sumMoney": newArr[i].sumMoney,
+					"wxNickName": newArr[i].wxNickName
                 }
                 this.info.push(obj);
             } 
@@ -326,8 +326,7 @@ export default {
 
         // 正向排序
         AtoZsort( arr, key ) {
-            // console.log(arr[key]);
-            
+
             for(var i = 0; i < arr.length-1; i++ ) {
                 for(var j = 0; j < arr.length - i -1 ; j ++){
                     
@@ -383,7 +382,7 @@ export default {
             line-height: 20px;
             li {
                 float: left;
-                width: 10%;
+              
                 height: 30px;
                 line-height: 30px;
                 span{
@@ -402,7 +401,7 @@ export default {
             color: #666;
             p {
                 float: left;
-                width: 9%;
+                
                 height: 24px;
                 line-height: 24px;
             }
@@ -415,6 +414,36 @@ export default {
                     margin-right: 0;
                 }
             }
+        }
+        .num{
+            width: 5%;
+        } 
+        .inviterName{
+            width: 10%;
+        }
+        .registeredDate{
+            width: 10%;
+        }
+        .wxNickName{
+            width: 10%;
+        }
+        .phone{
+            width: 10%;
+        }
+        .firstMoney{
+            width: 10%;
+        }
+        .renewalMoney{
+            width: 10%;
+        }
+         .sumMoney{
+            width: 10%;
+        }
+        .countFollowByTime{
+            width: 15%;
+        }
+        .bindMT4{
+            width: 10%;
         }
     }
 </style>
