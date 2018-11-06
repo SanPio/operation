@@ -39,16 +39,16 @@
                         VIP
                     </p>
                      <p class="left">
-                        0
+                        {{ vipInfo.lastupdatetime }}
                     </p>
                     <p class="left">
-                        0
+                        {{ vipInfo.memberovertime }}
                     </p>
                     <p class="left">
-                        0
+                        {{ vipInfo.totalMoneyByVipName }}
                     </p>
                     <p class="left">
-                        0
+                        {{ vipInfo.totalMoney }}
                     </p>
                     <p class="left">
                         <el-button type="primary" plain @click="vipVisible">
@@ -61,16 +61,16 @@
                         V认证   
                     </p>
                      <p class="left">
-                        0
+                        {{ vAuthInfo.lastupdatetime }}
                     </p>
                     <p class="left">
-                        0
+                        {{ vAuthInfo.memberovertime }}
                     </p>
                     <p class="left">
-                        0
+                        {{ vAuthInfo.totalMoneyByVipName }}
                     </p>
                     <p class="left">
-                        0
+                        {{ vAuthInfo.totalMoney }}
                     </p>
                     <p class="left">
                         <el-button type="primary" plain @click="vAuthenticationVisible">
@@ -95,9 +95,9 @@
                         <span>
                             信号源名称
                         </span>
-                        <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort( 0, 'day' )">
+                        <!-- <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort( 0, 'day' )">
                         <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort( 0, 'day' )">
-                        <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort( 0, 'day' )">
+                        <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort( 0, 'day' )"> -->
                     </p>
                     <p class="left">
                         <span>
@@ -133,31 +133,31 @@
                     </p>
                     <p class="left">
                         <span>
-                            {{  item.name }}
+                            {{  item.vipName }}
                         </span>
                     </p>
                     <p class="left">
                         <span>
-                            {{  item.modate }}
+                            {{  item.lastupdatetime }}
                         </span>
                     </p>
                     <p class="left">
                         <span>
-                            {{  item.jiedate }}
+                            {{  item.memberovertime }}
                         </span>
                     </p>
                     <p class="left">
                         <span>
-                            {{  item.money }}
+                            {{  item.totalMoneyByVipName }}
                         </span>
                     </p>
                     <p class="left">
                         <span>
-                            {{  item.pay }}
+                            {{  item.totalMoney }}
                         </span>
                     </p>
                     <p class="left">
-                        <el-button type="primary" plain @click="fiveStarVisible( index )">
+                        <el-button type="primary" plain @click="fiveStarVisible( item.optionId )">
                             明细
                         </el-button> 
                     </p>
@@ -173,10 +173,10 @@
         <el-dialog title="VIP增值服务明细" :visible.sync="vipDialogTableVisible">
             <el-table :data="vipMsgDetail"
             center=true>
-                <el-table-column  property="num" label="序号" width="100"></el-table-column>
-                <el-table-column  property="date" label="购买日期" width="140"></el-table-column>
+                <el-table-column  property="rowNum" label="序号" width="100"></el-table-column>
+                <el-table-column  property="dateTime" label="购买日期" width="140"></el-table-column>
                 <el-table-column  property="time" label="购买时长" width="140"></el-table-column>
-                <el-table-column  property="pay" label="购买金额" width="140"></el-table-column>
+                <el-table-column  property="value" label="购买金额" width="140"></el-table-column>
                 <el-table-column  property="discount" label="折扣" width="140"></el-table-column>
                 <el-table-column  property="price" label="原价" width="140"></el-table-column>
             </el-table>
@@ -186,10 +186,10 @@
         <el-dialog title="V认证增值服务明细" :visible.sync="vDialogTableVisible">
             <el-table :data="vMsgDetail"
             center=true>
-                <el-table-column  property="num" label="序号" width="100"></el-table-column>
-                <el-table-column  property="date" label="购买日期" width="140"></el-table-column>
+                <el-table-column  property="rowNum" label="序号" width="100"></el-table-column>
+                <el-table-column  property="dateTime" label="购买日期" width="140"></el-table-column>
                 <el-table-column  property="time" label="购买时长" width="140"></el-table-column>
-                <el-table-column  property="pay" label="购买金额" width="140"></el-table-column>
+                <el-table-column  property="value" label="购买金额" width="140"></el-table-column>
                 <el-table-column  property="discount" label="折扣" width="140"></el-table-column>
                 <el-table-column  property="price" label="原价" width="140"></el-table-column>
             </el-table>
@@ -199,10 +199,10 @@
         <el-dialog title="五星信号源增值服务明细" :visible.sync="fiveStarDialogTableVisible">
             <el-table :data="fiveStarMsgDetail"
             center=true>
-                <el-table-column  property="num" label="序号" width="100"></el-table-column>
-                <el-table-column  property="date" label="购买日期" width="140"></el-table-column>
+                <el-table-column  property="rowNum" label="序号" width="100"></el-table-column>
+                <el-table-column  property="dateTime" label="购买日期" width="140"></el-table-column>
                 <el-table-column  property="time" label="购买时长" width="140"></el-table-column>
-                <el-table-column  property="pay" label="购买金额" width="140"></el-table-column>
+                <el-table-column  property="value" label="购买金额" width="140"></el-table-column>
                 <el-table-column  property="discount" label="折扣" width="140"></el-table-column>
                 <el-table-column  property="price" label="原价" width="140"></el-table-column>
             </el-table>
@@ -225,32 +225,13 @@ export default {
             headerTitle: 'VIP增值页面',
             btnType: 'success',
             btnInfo: '返回',
+            userId: '',
             defaultSort: require('../../../assets/def_sort.png'),
             bigToSmall: require('../../../assets/big_small.png'),
             smallToBig: require('../../../assets/small_big.png'),
-            fiveStarInfo: [
-                {
-                    name: '五星001',
-                    modate: '10/10',
-                    jiedate: '11/11',
-                    money: 0,
-                    pay: 2
-                },
-                {
-                    name: '五星001',
-                    modate: '10/10',
-                    jiedate: '11/11',
-                    money: 0,
-                    pay: 2
-                },
-                {
-                    name: '五星001',
-                    modate: '10/10',
-                    jiedate: '11/11',
-                    money: 0,
-                    pay: 2
-                },
-            ],
+            vAuthInfo: { },
+            vipInfo: { },
+            fiveStarInfo: [ ],
             sortImgShow: [ 0 ],   
             pageNum: 1, 
             pageSize: 15,
@@ -258,62 +239,15 @@ export default {
             // vip弹窗
             vipDialogTableVisible: false,
             vipMsgDetail: [
-                {
-                    num: 1,
-                    date: '10/10/10',
-                    time: '12/月',
-                    pay: 1000,
-                    discount: '8.5折',
-                    price: 2000,
-                }
+               
             ],
             // v认证弹窗
             vDialogTableVisible: false,
             vMsgDetail: [
-                {
-                    num: 1,
-                    date: '10/10/10',
-                    time: '12/月',
-                    pay: 1000,
-                    discount: '8.5折',
-                    price: 2000,
-                } ,
-                {
-                    num: 1,
-                    date: '10/10/10',
-                    time: '12/月',
-                    pay: 1000,
-                    discount: '8.5折',
-                    price: 2000,
-                } ,
-                {
-                    num: 1,
-                    date: '10/10/10',
-                    time: '12/月',
-                    pay: 1000,
-                    discount: '8.5折',
-                    price: 2000,
-                } ,
-                {
-                    num: 1,
-                    date: '10/10/10',
-                    time: '12/月',
-                    pay: 1000,
-                    discount: '8.5折',
-                    price: 2000,
-                } ,
-                {
-                    num: 1,
-                    date: '10/10/10',
-                    time: '12/月',
-                    pay: 1000,
-                    discount: '8.5折',
-                    price: 2000,
-                } ,
-                
+               
             ],
 
-            // v认证弹窗
+            // 五星弹窗
             fiveStarDialogTableVisible: false,
             fiveStarMsgDetail: [
               
@@ -327,7 +261,7 @@ export default {
     },
     created () {
         this.userId = this.$route.query.userId;
-        console.log(this.userId)
+        this.queryBasics( this.userId, 1, 15 )
     },
 
     methods: {
@@ -338,133 +272,80 @@ export default {
             });
         },
 
-        // 默认反向排序
-        bigToSmallSort ( ind, key) {
-
-            this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
-            this.$set( this.sortImgShow, ind, 1 );
-            this.toSort(ind,key);
-        },  
-
-        // 逆向排序
-        toSort ( ind, key ) {
-            if ( this.sortImgShow[ ind ] === 1) {
-
-                this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
-                this.$set( this.sortImgShow, ind, 2);
-                
-                if( key == "day" ){
-                    
-                    this.isDate(key,1);
-                
-                }else{
-                    this.info = this.ZtoAsort(this.info, key);
-                }
-            
-            }else if ( this.sortImgShow[ ind ] === 2 ) {
-                
-                this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
-                this.$set( this.sortImgShow, ind, 1 );
-
-                // this.info = this.ZtoAsort(this.info, key);  
-                if( key == "day" ){
-                    this.isDate(key,2);
-                    
-                }else{
-                    this.info = this.AtoZsort(this.info, key);
-                }          
-                
-            }
-        },
-
-        // 日期排序
-        isDate(key,val){
-            let newArr = [];
-            for( let i = 0; i < this.info.length; i ++){
   
-                let obj ={
-                    accumulatedPaymentAmount: this.info[i].accumulatedPaymentAmount,
-                    channelName: this.info[i].channelName,
-                    channelId: this.info[i].channelId,
-                    day: new Date(this.info[i].day),
-                    documentaryUserNumber: this.info[i].documentaryUserNumber,
-                    id: this.info[i].id,
-                    invitUrl: this.info[i].invitUrl,
-                    numberOfBindOfMT4: this.info[i].numberOfBindOfMT4,
-                    numberOfPaidUsers: this.info[i].numberOfPaidUsers,
-                    numberOfRegisteredUsers: this.info[i].numberOfRegisteredUsers,
-                    renewalUserNumber: this.info[i].renewalUserNumber,
-                }
-                newArr.push( obj );
-            }
-            if( val === 1){
-                newArr = this.ZtoAsort(newArr, key);
-            }else{
-                newArr = this.AtoZsort(newArr, key);
-            }
-
-            for (let i = 0; i < newArr.length; i++ ) {
-                let obj = {
-                    accumulatedPaymentAmount: newArr[i].accumulatedPaymentAmount,
-                    channelName: newArr[i].channelName,
-                    channelId: newArr[i].channelId,
-                    day: newArr[i].day.getFullYear() + '-' +(newArr[i].day.getMonth() > 8 ? newArr[i].day.getMonth()+1 : '0' +(newArr[i].day.getMonth()+1) ) + '-' +(newArr[i].day.getDate() > 9 ? newArr[i].day.getDate() : '0' + newArr[i].day.getDate()),
-                    documentaryUserNumber: newArr[i].documentaryUserNumber,
-                    id: newArr[i].id,
-                    invitUrl: newArr[i].invitUrl,
-                    numberOfBindOfMT4: newArr[i].numberOfBindOfMT4,
-                    numberOfPaidUsers: newArr[i].numberOfPaidUsers,
-                    numberOfRegisteredUsers: newArr[i].numberOfRegisteredUsers,
-                    renewalUserNumber: newArr[i].renewalUserNumber,
-                }
-                this.info.push(obj);
-            } 
-        },
-
-        // 正向排序
-        AtoZsort( arr, key ) {
-            // console.log(arr[key]);
-            
-            for(var i = 0; i < arr.length-1; i++ ) {
-                for(var j = 0; j < arr.length - i -1 ; j ++){
-                    
-                    if ( arr[j][key] > arr[j+1][key] ){
-                        let swap = arr[j];
-                        arr[j] = arr[j +1]
-                        arr[j +1] = swap
-                    }  
-                }
-            }
-    
-            this.info = []
-            return arr
-        },
-
-        // 反向排序
-        ZtoAsort( arr,key ) {
-            for(var i = 0; i < arr.length-1; i++ ) {
-                for(var j = 0; j < arr.length - i -1 ; j ++){
-                    
-                    if ( arr[j][key] < arr[j+1][key] ){
-                        let swap = arr[j];
-                        arr[j] = arr[j +1]
-                        arr[j +1] = swap
-                    }  
-                }
-            }
-            console.log(arr)
-                this.info = []
-            return arr
-        },
-
         // 基础信息
-        queryBasics( ){
+        queryBasics( userId, pageNum, pageSize ){
+            let postData = this.$qs.stringify({
+                userId: userId,
+                pageNum: pageNum,
+                pageSize: pageSize
+            });
 
+            this.$http({
+                method: 'post',
+                url: this.$path +'web/emp/vipData',
+                data:postData
+            }).then( res => {
+
+                this.loading = false;
+                let data = res.data.data.data ;
+                
+                    // vip 
+                if ( data.vipAndV.vip) {
+                    this.vipInfo = data.vipAndV.vip 
+                }else{
+                    this.vipInfo = {
+                        "lastupdatetime":"",
+                        "memberovertime":"",
+                        "totalMoney":'0.00',
+                        "totalMoneyByVipName":'0.00',
+                    }
+                }
+                    // V认证
+                if ( data.vipAndV.vAuth) {
+                    this.vAuthInfo = data.vipAndV.vAuth 
+                }else{
+                    this.vAuthInfo = {
+                        "lastupdatetime":"",
+                        "memberovertime":"",
+                        "totalMoney":'0.00',
+                        "totalMoneyByVipName":'0.00',
+                    }
+                }
+                    // 五星信号源
+                this.fiveStarInfo = data.fiveStarDetailsList
+                    // 总数
+                this.total = data.num
+            }).catch( req => {
+                console.log( req  )
+            })
         },
 
-        // 五星信号源信息
-        queryFiveStar( userName, operation, pageNum, pageSize ){
+        // 详细信息
+        queryDetails( userId, type, optionId ){
+            let postData = this.$qs.stringify({
+                userId: userId,
+                type: type,
+                optionId: optionId
+            });
 
+            this.$http({
+                method: 'post',
+                url: this.$path +'web/emp/vipDetailData',
+                data:postData
+            }).then( res => {
+                let data = res.data.data.data;
+                if( type == 2 ){ // vip 
+                    this.vipMsgDetail = data
+                }else if( type == 1 ) {
+                    this.vMsgDetail = data
+                }else if ( type == 3 ){
+                    this.fiveStarMsgDetail = data
+                }
+
+            }).catch( req => {
+                console.log( req )
+            })
         },
 
         // 分页
@@ -472,28 +353,24 @@ export default {
             this.loading = true;
             this.pageNum = params.pageNum;
             this.pageSize = params.pageSize;
-            this.queryFiveStar()
+            this.queryBasics( this.userId, this.pageNum, this.pageSize )
         },
         // vip弹窗
         vipVisible() {
+            this.queryDetails( this.userId, 2, 0 )
             this.vipDialogTableVisible = true;
+            
+
         },
         // V认证弹窗
         vAuthenticationVisible() {
+            this.queryDetails( this.userId, 1, 0 )
             this.vDialogTableVisible = true;
+            
         },
         // 五星弹窗
-        fiveStarVisible( ind ) {
-           this.fiveStarMsgDetail= [
-                {
-                    num: 1,
-                    date: '10/10/10',
-                    time: '15/月',
-                    pay: 1000,
-                    discount: '8.5折',
-                    price: 2000,
-                } 
-            ],
+        fiveStarVisible( optionId ) {
+            this.queryDetails( this.userId, 3, optionId )
             this.fiveStarDialogTableVisible = true;
         }
     }

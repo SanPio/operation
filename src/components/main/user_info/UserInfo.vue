@@ -104,7 +104,7 @@
                     </p>
                     <div class="operation left">
                         <p>
-                            <el-button type="primary" @click="toInvitDetail(item.userId)">
+                            <el-button type="primary" plain @click="toInvitDetail(item.userId)">
                                 邀请明细
                             </el-button> 
                             <el-button type="primary" plain >

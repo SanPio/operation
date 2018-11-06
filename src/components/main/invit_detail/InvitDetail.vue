@@ -164,7 +164,7 @@ export default {
     created () {
         this.userId = this.$route.query.userId;
         // console.log(this.userId)
-        this.queryInfo( '2018-08-01', '2018-11-01', 1, 15, '', this.userId )
+        this.queryInfo( '', '', 1, 15, '', this.userId )
     },
 
     methods: {
