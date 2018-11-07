@@ -107,7 +107,7 @@
                             <el-button type="primary" plain @click="toInvitDetail(item.userId)">
                                 邀请明细
                             </el-button> 
-                            <el-button type="primary" plain >
+                            <el-button type="primary" plain @click="toCollocation(item.userId)">
                                 跟单配置记录
                             </el-button> 
                         </p>
@@ -115,7 +115,7 @@
                             <el-button type="primary" plain @click="toIncrement(item.userId)">
                                 增值服务
                             </el-button> 
-                            <el-button type="primary" plain >
+                            <el-button type="primary" plain @click="toAccountBindList(item.userId)">
                                 账号绑定记录
                             </el-button> 
                         </p>
@@ -224,6 +224,7 @@ export default {
                 }
             });
         },
+
         // 增值服务
         toIncrement ( userId ) {
             this.$router.push({
@@ -233,14 +234,26 @@ export default {
                 }
             });
         },
+
         // 跟单配置记录
-        // toInvitDetail ( ind ) {
+        toCollocation ( userId ) {
+            this.$router.push({
+                path: '/collocation',
+                query:{//通过query 传递参数
+                    userId: userId //需要传递的参数,
+                }
+            });
+        },
 
-        // },
         // 账号绑定记录
-        // toInvitDetail ( ind ) {
-
-        // }
+        toAccountBindList ( userId ) {
+            this.$router.push({
+                path: '/accountBindList',
+                query:{//通过query 传递参数
+                    userId: userId //需要传递的参数,
+                }
+            });
+        }
     },
 }
 </script>

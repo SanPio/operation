@@ -9,6 +9,8 @@ import ChannelManage from "@/components/main/channelMange/ChannelManage"
 import UserInfo from "@/components/main/user_info/UserInfo"
 import InvitDetail from "@/components/main/invit_detail/InvitDetail"
 import Increment from "@/components/main/increment/Increment"
+import Collocation from "@/components/main/collocation/Collocation"
+import AccountBindList from "@/components/main/accountBindList/AccountBindList"
 Vue.use(Router)
 
 
@@ -53,6 +55,16 @@ Vue.use(Router)
           { //VIP增值业务
             path: '/increment',
             component: Increment 
+          },
+
+          { //账号绑定记录
+            path: '/accountBindList',
+            component: AccountBindList 
+          },
+
+          { //跟单配置记录
+            path: '/collocation',
+            component: Collocation 
           },
 
           { //渠道管理
