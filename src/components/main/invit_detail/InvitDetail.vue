@@ -172,7 +172,7 @@ export default {
         // 搜素
         searchInfoChange ( params ) {
             this.loading = true;
-            this.channelName = params.distributors;
+            this.userName = params.distributors;
             this.starTime = params.starTime;
             this.endTime = params.endTime;
             this.loading = params.loading;
