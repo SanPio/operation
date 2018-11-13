@@ -6,8 +6,58 @@
     element-loading-background="rgba(0, 0, 0, 0.8)"
     style="width: 100%">
 
-        <!-- 头部 -->
-        <v-header :title='headerTitle' :btnType='btnType' :btnInfo='btnInfo' @exportData='returnHis' ></v-header>
+        <div class="header clearfix">
+            <p class="left">
+                <span class="uesr-name">
+                    {{ nickName }}
+                </span>
+                <span>
+                    的跟单配置记录
+                </span>
+            </p>
+            <p class="right">
+                <el-button type="success" plain @click="toUserInfo">
+                    返回
+                </el-button>
+            </p>  
+        </div>
+        <p style="text-align:left;margin-top:10px;font-size:13px">
+            筛选
+        </p>
+        <div class="clearfix" id="hahha">
+
+                <div class="block left">
+                            
+                    <el-date-picker
+                    v-model="starTime"
+                    type="date"
+                    @change="starChoose"
+                    value-format="yyyy-MM-dd"
+                    placeholder="选择日期">
+                    </el-date-picker>
+                </div>
+                <div class="left" style="line-height:46px">
+                    一
+                </div>
+                <div class="block left">
+                
+                    <el-date-picker
+                    v-model="endTime"
+                    type="date"
+                    @change="endChoose"
+                    value-format="yyyy-MM-dd"
+                    placeholder="选择日期">
+                    </el-date-picker>
+                </div>
+                    
+               
+        </div>
+        
+
+
+
+
+        
             <!-- 标题 -->
         <ul class="title clearfix">
             <li class="num left">
@@ -146,7 +196,6 @@
     </div>
 </template>
 <script>
-import Header from "@/components/public/Header";
 import Pageing from "@/components/public/Pageing";
 export default {
 
@@ -158,36 +207,67 @@ export default {
             bigToSmall: require('../../../assets/big_small.png'),
             smallToBig: require('../../../assets/small_big.png'),
             loading: false,
-            btnType: 'success',
-            btnInfo: '返回',
-            headerTitle: '',
+            nickName: '',
             sortImgShow: [ 0, 0, 0, 0 ],
             total: 15,
             userId: '', 
             pageNum: '', 
             pageSize: '',
-            info: [  1, 2, 3, 5,  ]
+            info: [  1, 2, 3, 5,  ],
+            starTime: '',
+            endTime: '',
         }
     },
 
     components: {
-        'v-header': Header,
         Pageing
     },
 
     created () {
         this.userId = this.$route.query.userId;
+        this.nickName = this.$route.query.userName;
         this.query( this.userId, 1, 15 )
     },
 
     methods: {
 
         // 返回到用户信息
-        returnHis ( ) {
+        toUserInfo ( ) {
             this.$router.push({
                 path: '/user_info',
             });
         },
+
+         // 开始日期
+            starChoose ( val ) {
+                this.starTime = val;
+                let starDate = new Date( this.starTime );
+                let endDate = new Date( this.endTime );
+
+                if ( endDate < starDate && this.endTime ) {
+                    // this.starTime = this.endTime;
+                    // this.endTime = val;
+                    this.endTime = this.starTime;
+                }else {
+                    this.starTime = val;
+                }
+              
+               
+            },
+
+            // 结束日期
+            endChoose ( val ) {
+                this.endTime = val;
+                let starDate = new Date( this.starTime );
+                let endDate = new Date( this.endTime );
+                if ( endDate < starDate ) {
+                    // this.endTime = this.starTime;
+                    // this.starTime = val;
+                    this.starTime = this.endTime;
+                }else {
+                     this.endTime = val;
+                }
+            },
 
         // 分页
         pageChang( params ) {
@@ -350,6 +430,53 @@ export default {
         padding: 14px;
         position: relative;
         min-height: 82vh;
+        .header{
+            span{
+                font-size: 15px;
+                font-weight: bold;
+            }
+            .uesr-name{
+                color: #307eff;
+            }
+            .el-button { 
+                font-size: 12px;
+                padding: 8px 0;
+                width: 80px;
+            }
+        }
+        .block{
+            width: 140px;
+            height: 50px;
+            .el-input{
+                    width: 90%;
+                    height: 30px;
+                    font-size: 12px;
+                    margin-top: 10px;
+                } 
+
+                .el-input__prefix{
+                    top:-10px;
+                }
+
+        }
+        // #top-bot {
+        //         height: 50px;
+        //         .top-bot-num {
+        //             line-height: 50px;
+        //             font-weight: bold;
+        //         }
+
+        //         .el-input{
+        //             width: 90%;
+        //             height: 30px;
+        //             font-size: 12px;
+        //             margin-top: 10px;
+        //         } 
+
+        //         .el-input__prefix{
+        //             top:-10px;
+        //         }
+        //     }
         .title{
             
             margin-top: 14px;
