@@ -6,8 +6,55 @@
     element-loading-background="rgba(0, 0, 0, 0.8)"
     style="width: 100%">
 
-        <!-- 头部 -->
-        <v-header :title='headerTitle' :btnType='btnType' :btnInfo='btnInfo' @exportData='returnHis' ></v-header>
+        <div class="header clearfix">
+            <p class="left">
+                <span class="uesr-name">
+                    {{ nickName }}
+                </span>
+                <span>
+                    的跟单配置记录
+                </span>
+            </p>
+            <p class="right">
+                <el-button type="success" plain @click="toUserInfo">
+                    返回
+                </el-button>
+            </p>  
+        </div>
+        <p style="text-align:left;margin-top:10px;font-size:13px">
+            筛选
+        </p>
+        <div>
+           
+                    <div class="block">
+                        
+                        <el-date-picker
+                        v-model="starTime"
+                        type="date"
+                        @change="starChoose"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择日期">
+                        </el-date-picker>
+                    </div>
+               
+                    <div class="block">
+                      
+                        <el-date-picker
+                        v-model="endTime"
+                        type="date"
+                        @change="endChoose"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择日期">
+                        </el-date-picker>
+                    </div>
+               
+        </div>
+        
+
+
+
+
+        
             <!-- 标题 -->
         <ul class="title clearfix">
             <li class="num left">
@@ -146,7 +193,6 @@
     </div>
 </template>
 <script>
-import Header from "@/components/public/Header";
 import Pageing from "@/components/public/Pageing";
 export default {
 
@@ -158,9 +204,7 @@ export default {
             bigToSmall: require('../../../assets/big_small.png'),
             smallToBig: require('../../../assets/small_big.png'),
             loading: false,
-            btnType: 'success',
-            btnInfo: '返回',
-            headerTitle: '',
+            nickName: '',
             sortImgShow: [ 0, 0, 0, 0 ],
             total: 15,
             userId: '', 
@@ -171,19 +215,19 @@ export default {
     },
 
     components: {
-        'v-header': Header,
         Pageing
     },
 
     created () {
         this.userId = this.$route.query.userId;
+        this.nickName = this.$route.query.userName;
         this.query( this.userId, 1, 15 )
     },
 
     methods: {
 
         // 返回到用户信息
-        returnHis ( ) {
+        toUserInfo ( ) {
             this.$router.push({
                 path: '/user_info',
             });
@@ -350,6 +394,20 @@ export default {
         padding: 14px;
         position: relative;
         min-height: 82vh;
+        .header{
+            span{
+                font-size: 15px;
+                font-weight: bold;
+            }
+            .uesr-name{
+                color: #307eff;
+            }
+            .el-button { 
+                font-size: 12px;
+                padding: 8px 0;
+                width: 80px;
+            }
+        }
         .title{
             
             margin-top: 14px;

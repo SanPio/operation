@@ -107,7 +107,7 @@
                             <el-button type="primary" plain @click="toInvitDetail(item.userId)">
                                 邀请明细
                             </el-button> 
-                            <el-button type="primary" plain @click="toCollocation(item.userId)">
+                            <el-button type="primary" plain @click="toCollocation(item.userId,item.wxNickname)">
                                 跟单配置记录
                             </el-button> 
                         </p>
@@ -236,21 +236,25 @@ export default {
         },
 
         // 跟单配置记录
-        toCollocation ( userId ) {
+        toCollocation ( userId, userName ) {
+            
             this.$router.push({
                 path: '/collocation',
                 query:{//通过query 传递参数
-                    userId: userId //需要传递的参数,
+                    userId: userId, //需要传递的参数,
+                    userName: userName
                 }
             });
         },
 
         // 账号绑定记录
-        toAccountBindList ( userId ) {
+        toAccountBindList ( userId, userName) {
+           
             this.$router.push({
                 path: '/accountBindList',
                 query:{//通过query 传递参数
-                    userId: userId //需要传递的参数,
+                    userId: userId, //需要传递的参数,
+                    userName: userName
                 }
             });
         }
