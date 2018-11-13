@@ -315,6 +315,9 @@ export default {
             .name{
                 width: 9%;
                 line-height: 50px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
             .phone{
                 width: 8%;
