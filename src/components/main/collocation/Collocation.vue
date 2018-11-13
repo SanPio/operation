@@ -24,29 +24,32 @@
         <p style="text-align:left;margin-top:10px;font-size:13px">
             筛选
         </p>
-        <div>
-           
-                    <div class="block">
-                        
-                        <el-date-picker
-                        v-model="starTime"
-                        type="date"
-                        @change="starChoose"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择日期">
-                        </el-date-picker>
-                    </div>
-               
-                    <div class="block">
-                      
-                        <el-date-picker
-                        v-model="endTime"
-                        type="date"
-                        @change="endChoose"
-                        value-format="yyyy-MM-dd"
-                        placeholder="选择日期">
-                        </el-date-picker>
-                    </div>
+        <div class="clearfix" id="hahha">
+
+                <div class="block left">
+                            
+                    <el-date-picker
+                    v-model="starTime"
+                    type="date"
+                    @change="starChoose"
+                    value-format="yyyy-MM-dd"
+                    placeholder="选择日期">
+                    </el-date-picker>
+                </div>
+                <div class="left" style="line-height:46px">
+                    一
+                </div>
+                <div class="block left">
+                
+                    <el-date-picker
+                    v-model="endTime"
+                    type="date"
+                    @change="endChoose"
+                    value-format="yyyy-MM-dd"
+                    placeholder="选择日期">
+                    </el-date-picker>
+                </div>
+                    
                
         </div>
         
@@ -210,7 +213,9 @@ export default {
             userId: '', 
             pageNum: '', 
             pageSize: '',
-            info: [  1, 2, 3, 5,  ]
+            info: [  1, 2, 3, 5,  ],
+            starTime: '',
+            endTime: '',
         }
     },
 
@@ -232,6 +237,37 @@ export default {
                 path: '/user_info',
             });
         },
+
+         // 开始日期
+            starChoose ( val ) {
+                this.starTime = val;
+                let starDate = new Date( this.starTime );
+                let endDate = new Date( this.endTime );
+
+                if ( endDate < starDate && this.endTime ) {
+                    // this.starTime = this.endTime;
+                    // this.endTime = val;
+                    this.endTime = this.starTime;
+                }else {
+                    this.starTime = val;
+                }
+              
+               
+            },
+
+            // 结束日期
+            endChoose ( val ) {
+                this.endTime = val;
+                let starDate = new Date( this.starTime );
+                let endDate = new Date( this.endTime );
+                if ( endDate < starDate ) {
+                    // this.endTime = this.starTime;
+                    // this.starTime = val;
+                    this.starTime = this.endTime;
+                }else {
+                     this.endTime = val;
+                }
+            },
 
         // 分页
         pageChang( params ) {
@@ -408,6 +444,39 @@ export default {
                 width: 80px;
             }
         }
+        .block{
+            width: 140px;
+            height: 50px;
+            .el-input{
+                    width: 90%;
+                    height: 30px;
+                    font-size: 12px;
+                    margin-top: 10px;
+                } 
+
+                .el-input__prefix{
+                    top:-10px;
+                }
+
+        }
+        // #top-bot {
+        //         height: 50px;
+        //         .top-bot-num {
+        //             line-height: 50px;
+        //             font-weight: bold;
+        //         }
+
+        //         .el-input{
+        //             width: 90%;
+        //             height: 30px;
+        //             font-size: 12px;
+        //             margin-top: 10px;
+        //         } 
+
+        //         .el-input__prefix{
+        //             top:-10px;
+        //         }
+        //     }
         .title{
             
             margin-top: 14px;
