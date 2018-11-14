@@ -7,10 +7,26 @@
         element-loading-background="rgba(0, 0, 0, 0.8)"
         style="width: 100%">
         <!-- 头部 -->
-            <v-header :title='headerTitle' :btnInfo='btnInfo' @exportData='returnUserInfo' style="margin-left: 22px;"></v-header>
-            <p>筛选</p>
-            <search @searchInfoChange='searchInfoChange'></search>
-            <p>记录清单</p>
+            <div class="header clearfix">
+                <p class="left">
+                    <span class="uesr-name">
+                        {{ userName }}
+                    </span>
+                    <span>
+                        的账号绑定、解绑记录
+                    </span>
+                </p>               
+                <p class="right">
+                    <el-button type="success" plain @click="toUserInfo">
+                        返回
+                    </el-button>
+                </p>  
+            </div>
+            <div class="div">
+                    <p class="list">筛选</p>
+                    <search @searchInfoChange='searchInfoChange'></search>
+                    <p class="list">记录清单</p>
+                </div>
             <ul class="title">
                 <li>
                     <span>序号</span>
@@ -52,7 +68,7 @@
                 </li>
             </ul>
             <!-- 分页 -->
-            <pageing @pageChang='pageChang'  :total='total' style="width: 100%;position: absolute;bottom: -250px;"></pageing>
+            <pageing @pageChang='pageChang'  :total='total'></pageing>
         </div>
         
     <!-- </div> -->
@@ -93,7 +109,8 @@ export default {
     },
     created(){
         this.userId = this.$route.query.userId;
-        console.log(this.userId)
+        this.userName = this.$route.query.userName;
+        // console.log(this.userId)
         this.queryInfo( '', '', 1, 15, this.userId )
     },
     methods:{
@@ -138,7 +155,7 @@ export default {
             this.queryInfo(this.starTime, this.endTime, this.pageNum, this.pageSize, this.userId);
         },
         // 返回用户信息页
-        returnUserInfo(){
+        toUserInfo(){
             this.$router.push({
                 path:'/user_info'
             })
@@ -243,23 +260,18 @@ export default {
         padding: 14px;
         position: relative;
         min-height: 82vh;
-        >p{
-            text-align: left;
-            padding: 0 0 0 22px;
-            font-size: 14px;
-            color: #333333;
-        }
+        
         .title{
             width: 1085px;
             margin: 10px auto 0;
-            line-height: 50px;
+            line-height: 28px;
             background-color: #26b95a;
             overflow: hidden;
             li{
                 color: white;
                 float: left;
                 width: 180px;
-                line-height: 50px;
+                line-height: 28px;
                 box-sizing: border-box;
                 font-size: 14px;
                 img{
@@ -278,11 +290,33 @@ export default {
                 p{
                     float: left;
                     width: 180px;
-                    line-height: 40px;
+                    line-height: 26px;
                     color: #666666;
                 }
             }
         }
+        .header{
+            padding: 0 0 0 22px;
+            span{
+                font-size: 15px;
+                font-weight: bold;
+            }
+            .uesr-name{
+                color: #307eff;
+            }
+            .el-button { 
+                font-size: 12px;
+                padding: 8px 0;
+                width: 80px;
+            }
+            
+        }
+        .list{
+                text-align: left;
+                padding: 0 0 0 22px;
+                font-size: 14px;
+                color: #333333;
+            }
     }
     
 </style>
