@@ -21,7 +21,7 @@
                 </el-button>
             </p>  
         </div>
-        <p style="text-align:left;margin-top:10px;font-size:13px">
+        <p style="text-align:left;margin-top:10px;font-size:13px;width:100%">
             筛选
         </p>
         <div class="clearfix" id="hahha">
@@ -49,10 +49,37 @@
                     placeholder="选择日期">
                     </el-date-picker>
                 </div>
-                    
-               
+                <div class="left" style="margin-left:20px;width:200px;height:20px;border:1px solid #dcdfe6;margin-top:10px;border-radius:4px;padding-top:6px;"> 
+                    <el-radio v-model="radio" label="0">全选</el-radio>
+                    <el-radio v-model="radio" label="1">自定义</el-radio>
+                </div>
+                <div class="block left" id="select" style="padding-top:10px;width:500px;height:40px;text-align:left" v-if="radio == 1">
+                   <el-select
+                        v-model="customValue"
+                        multiple
+                        collapse-tags
+                        style="margin-left: 20px;width:200px"
+                        @visible-change="isSelctShow"
+                        placeholder="请选择">
+                        <el-option
+                        v-for="item in customOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                        </el-option>
+                    </el-select>
+                </div> 
         </div>
         
+        <ul class="clearfix show" >
+            <li v-for="(item, index) in customValue.slice(0,9)" :key="index" class="left">
+                <p class="sel-show">
+                    {{ item }}
+                    <img :src="delBtnImg" class="pointer" @click="delOption( index )">
+                </p>
+            </li>
+            <li v-if="customValue.length>9">...</li>
+        </ul>
 
 
 
@@ -207,6 +234,7 @@ export default {
             bigToSmall: require('../../../assets/big_small.png'),
             smallToBig: require('../../../assets/small_big.png'),
             loading: false,
+            delBtnImg: require('../../../assets/delbtn.png'),
             nickName: '',
             sortImgShow: [ 0, 0, 0, 0 ],
             total: 15,
@@ -216,6 +244,57 @@ export default {
             info: [  1, 2, 3, 5,  ],
             starTime: '',
             endTime: '',
+            customOptions: [{
+                value: '小铭跟单001',
+                label: '小铭跟单001'
+                }, {
+                value: '小铭跟单002',
+                label: '小铭跟单002'
+            },{
+                value: '小铭跟单003',
+                label: '小铭跟单003'
+                }, {
+                value: '小铭跟单004',
+                label: '小铭跟单004'
+            },{
+                value: '小铭跟单005',
+                label: '小铭跟单005'
+                }, {
+                value: '小铭跟单006',
+                label: '小铭跟单006'
+            },{
+                value: '小铭跟单007',
+                label: '小铭跟单007'
+                }, {
+                value: '小铭跟单008',
+                label: '小铭跟单008'
+            },{
+                value: '小铭跟单009',
+                label: '小铭跟单009'
+                }, {
+                value: '小铭跟单010',
+                label: '小铭跟单010'
+            },{
+                value: '小铭跟单011',
+                label: '小铭跟单011'
+                }, {
+                value: '小铭跟单012',
+                label: '小铭跟单012'
+            },{
+                value: '小铭跟单013',
+                label: '小铭跟单013'
+                }, {
+                value: '小铭跟单014',
+                label: '小铭跟单014'
+            },{
+                value: '小铭跟单015',
+                label: '小铭跟单015'
+                }, {
+                value: '小铭跟单016',
+                label: '小铭跟单016'
+            }],
+            radio: '',
+            customValue: ''
         }
     },
 
@@ -227,6 +306,20 @@ export default {
         this.userId = this.$route.query.userId;
         this.nickName = this.$route.query.userName;
         this.query( this.userId, 1, 15 )
+    },
+
+    watch: {
+        customValue( val ) {
+            console.log( val )
+        },
+        radio( val ) {
+            if( val == 0 ) {
+                // alert( " 全选 " )
+            }else if ( val == 1 ) {
+                // alert( '自定义' )
+            }
+            
+        }
     },
 
     methods: {
@@ -275,6 +368,18 @@ export default {
             this.pageNum = params.pageNum;
             this.pageSize = params.pageSize;
             this.query( this.userId, this.pageNum, this.pageSize )
+        },
+
+        // 删除信号源
+        delOption( index ) {
+            this.customValue.splice( index, 1 )
+        },
+
+        // 判断下拉框是否出现
+        isSelctShow( val ) {
+            if ( val === false ) {
+                alert( '触发事件，调接口')
+            }
         },
 
         // 数据请求
@@ -459,24 +564,29 @@ export default {
                 }
 
         }
-        // #top-bot {
-        //         height: 50px;
-        //         .top-bot-num {
-        //             line-height: 50px;
-        //             font-weight: bold;
-        //         }
-
-        //         .el-input{
-        //             width: 90%;
-        //             height: 30px;
-        //             font-size: 12px;
-        //             margin-top: 10px;
-        //         } 
-
-        //         .el-input__prefix{
-        //             top:-10px;
-        //         }
-        //     }
+        .show{
+            .sel-show{
+                background-color: #f2f2f2;
+                width: 70px;
+                margin-right: 20px;
+                padding: 4px 6px;
+                padding-right: 30px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                position: relative;
+                img{
+                    position: absolute;
+                    right: 4px;
+                    top: 5px;
+                    width:14px;
+                    height:14px;
+                }
+            }
+            p:nth-of-type(1){
+                margin-left: 8px;
+            }
+        }
         .title{
             
             margin-top: 14px;
