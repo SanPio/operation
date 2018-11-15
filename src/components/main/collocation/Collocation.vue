@@ -223,6 +223,7 @@
     </div>
 </template>
 <script>
+import Store from '@/store'
 import Pageing from "@/components/public/Pageing";
 export default {
 
@@ -237,64 +238,17 @@ export default {
             delBtnImg: require('../../../assets/delbtn.png'),
             nickName: '',
             sortImgShow: [ 0, 0, 0, 0 ],
-            total: 15,
+            total: 0,
             userId: '', 
             pageNum: '', 
             pageSize: '',
             info: [  1, 2, 3, 5,  ],
             starTime: '',
             endTime: '',
-            customOptions: [{
-                value: '小铭跟单001',
-                label: '小铭跟单001'
-                }, {
-                value: '小铭跟单002',
-                label: '小铭跟单002'
-            },{
-                value: '小铭跟单003',
-                label: '小铭跟单003'
-                }, {
-                value: '小铭跟单004',
-                label: '小铭跟单004'
-            },{
-                value: '小铭跟单005',
-                label: '小铭跟单005'
-                }, {
-                value: '小铭跟单006',
-                label: '小铭跟单006'
-            },{
-                value: '小铭跟单007',
-                label: '小铭跟单007'
-                }, {
-                value: '小铭跟单008',
-                label: '小铭跟单008'
-            },{
-                value: '小铭跟单009',
-                label: '小铭跟单009'
-                }, {
-                value: '小铭跟单010',
-                label: '小铭跟单010'
-            },{
-                value: '小铭跟单011',
-                label: '小铭跟单011'
-                }, {
-                value: '小铭跟单012',
-                label: '小铭跟单012'
-            },{
-                value: '小铭跟单013',
-                label: '小铭跟单013'
-                }, {
-                value: '小铭跟单014',
-                label: '小铭跟单014'
-            },{
-                value: '小铭跟单015',
-                label: '小铭跟单015'
-                }, {
-                value: '小铭跟单016',
-                label: '小铭跟单016'
-            }],
+            customOptions: [],
             radio: '',
-            customValue: ''
+            customValue: '',
+            optionNameList: ''
         }
     },
 
@@ -303,20 +257,42 @@ export default {
     },
 
     created () {
+            //  获取id和昵称
         this.userId = this.$route.query.userId;
         this.nickName = this.$route.query.userName;
+        Store.commit( 'initLocDate' )
+        this.starTime = Store.state.initDate;
+        this.endTime = Store.state.initDate;
+            // 初始化信号源
+        this.queryOption();
+
+            // 初始化数据
         this.query( this.userId, 1, 15 )
     },
 
     watch: {
+        starTime(val) {
+            this.radio = ''
+        },
+        endTime(val) {
+            this.radio = ''
+        },
         customValue( val ) {
-            console.log( val )
+
+            this.optionNameList = ''
+
+            for( let i = 0; i < val.length; i ++ ) {
+                this.optionNameList = this.optionNameList + val[i] + '-'
+            }
+
+            this.optionNameList.substr( 0, this.optionNameList.Length - 1)
+
         },
         radio( val ) {
             if( val == 0 ) {
-                // alert( " 全选 " )
+                this.query( this.userId, this.startTime, this.endTime, 0, '', 1, 15 ); 
             }else if ( val == 1 ) {
-                // alert( '自定义' )
+                this.query( this.userId, this.startTime, this.endTime, 0, this.optionNameList, 1, 15 ); 
             }
             
         }
@@ -381,29 +357,61 @@ export default {
                 alert( '触发事件，调接口')
             }
         },
+            // 加载信号源
+        queryOption() {
 
+            let postData = this.$qs.stringify({ });
+
+            this.$http({
+
+                method: 'post',
+                url: this.$path +'web/emp/optionListName',
+                data:postData
+
+            }).then( res => {
+
+                let data = res.data.data.data;
+
+                for (let i = 0; i < data.length; i ++ ) {
+                    let obj = {
+                        value: data[ i ],
+                        label: data[ i ]
+                    };
+                    this.customOptions.push( obj );
+                } 
+
+            }).catch( req => {
+                console.log( req )
+            }) 
+        },
         // 数据请求
-        query( userId, pageNum, pageSize ) {
-            // let postData = this.$qs.stringify({
-            //     userId: userId,
-            //     pageNum: pageNum,
-            //     pageSize: pageSize
-            // });
+        query( userId, startTime, endTime, isAllSelect, optionNameList, pageNum, pageSize ) {
+            let postData = this.$qs.stringify({
 
-            // this.$http({
+                userId: userId,
+                startTime: startTime,
+                endTime: endTime,
+                isAllSelect: isAllSelect,
+                optionNameList: optionNameList,
+                pageNum: pageNum,
+                pageSize: pageSize,
 
-            //     method: 'post',
-            //     url: this.$path +'web/emp/vipData',
-            //     data:postData
+            });
+           
+            this.$http({
 
-            // }).then( res => {
+                method: 'post',
+                url: this.$path +'web/emp/userOptionRecordData',
+                data:postData
 
-            //     this.loading = false;
-            //     console.log( res )
+            }).then( res => {
 
-            // }).catch( req => {
-            //     console.log( req )
-            // })    
+                this.loading = false;
+                console.log( res )
+
+            }).catch( req => {
+                console.log( req )
+            })    
         },
         // 默认反向排序
             bigToSmallSort ( ind, key) {
