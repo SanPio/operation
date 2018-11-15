@@ -69,6 +69,11 @@
                         </el-option>
                     </el-select>
                 </div> 
+                <div class="right">
+                    <el-button type="primary" plain @click="query">
+                        查询
+                    </el-button>
+                </div>
         </div>
         
         <ul class="clearfix show" >
@@ -172,47 +177,71 @@
             <li class="info-list clearfix" v-for="(item, index) in info" :key="index">
                 <p class="num left">
                     {{ index + 1 }}
-                </p>
                 <p class="date left">
-                    2018/08/08&nbsp;08:08
+                    {{ item.addTime }}
                 </p>
                 <p class="oper-type left">
-                    取消跟随
+                    <span v-if="item.type == 1">
+                        修改
+                    </span>
+                    <span v-if="item.type == 2">
+                        跟随
+                    </span>
+                    <span v-if="item.type == 3">
+                        取消跟随
+                    </span>
                 </p>
                 <p class="name left">
-                    小铭跟单001
+                    {{ item.signalName }}
                 </p>
                 <p class="follow-type left">
-                    <span v-if="false">
-                        0.5倍比例跟随  
+                    <span v-if="item.lotsType == 1">
+                        {{ item.lots }}倍比例跟随  
                     </span>
-                    <span>
-                         固定0.5标准手  
+                    <span v-if="item.lotsType == 0">
+                        固定{{ item.lots }}标准手  
                     </span>
                 </p>
                 <p class="follow-switch left">
-                    开
+                    
+                    <span v-if="item.nullity == 0">
+                        开 
+                    </span>
+                    <span v-if="item.nullity == 1">
+                        关
+                    </span>
                 </p>
                 <p class="reverse-switch left">
-                    关
+                    <span v-if="item.opposited == 0">
+                        关
+                    </span>
+                    <span v-if="item.opposited == 1">
+                        开
+                    </span>
                 </p>
                 <p class="target-profit left">
-                    500
+                    {{ item.takeProfits }}
                 </p>
                 <p class="stop-loss left">
-                    400
+                    {{ item.stopLoss }}
                 </p>
                 <p class="min-hands left">
-                    0.01标准手
+                    {{ item.minLotsCount}}标准手
                 </p>
                 <p class="accuracy left">
-                    舍弃尾数
+                    <span v-if="item.broundoff == 0">
+                        舍弃尾数
+                    </span>
+                    <span v-if="item.broundoff == 1">
+                        四舍五入
+                    </span>
+                    
                 </p>
                 <p class="operator left">
-                    原因
+                    {{ item.wxNickname }}
                 </p>
                 <p class="reason left">
-                    VIP到期
+                    {{ item.remark }}
                 </p>
             </li>
         </ul> 
@@ -242,7 +271,7 @@ export default {
             userId: '', 
             pageNum: '', 
             pageSize: '',
-            info: [  1, 2, 3, 5,  ],
+            info: [  ],
             starTime: '',
             endTime: '',
             customOptions: [],
@@ -286,15 +315,12 @@ export default {
             }
 
             this.optionNameList.substr( 0, this.optionNameList.Length - 1)
-
+            this.query( this.userId, this.starTime, this.endTime, 1, this.pageNum, this.pageSize ); 
         },
         radio( val ) {
             if( val == 0 ) {
-                this.query( this.userId, this.startTime, this.endTime, 0, '', 1, 15 ); 
-            }else if ( val == 1 ) {
-                this.query( this.userId, this.startTime, this.endTime, 0, this.optionNameList, 1, 15 ); 
-            }
-            
+                this.query( this.userId, this.starTime, this.endTime, 0, '', 1, 15 ); 
+            } 
         }
     },
 
@@ -343,7 +369,11 @@ export default {
             this.loading = true;
             this.pageNum = params.pageNum;
             this.pageSize = params.pageSize;
-            this.query( this.userId, this.pageNum, this.pageSize )
+            if( this.radio == 0 ) {
+                this.query( this.userId, this.starTime, this.endTime, 0, '', this.pageNum, this.pageSize ); 
+            }else if ( this.radio == 1 ) {
+                this.query( this.userId, this.starTime, this.endTime, 1, this.pageNum, this.pageSize ); 
+            }
         },
 
         // 删除信号源
@@ -354,7 +384,7 @@ export default {
         // 判断下拉框是否出现
         isSelctShow( val ) {
             if ( val === false ) {
-                alert( '触发事件，调接口')
+                this.query( this.userId, this.starTime, this.endTime, 1, this.optionNameList, 1, 15 ); 
             }
         },
             // 加载信号源
@@ -407,7 +437,10 @@ export default {
             }).then( res => {
 
                 this.loading = false;
-                console.log( res )
+                this.info = [];
+                let data = res.data.data.data
+                this.info = data.documentaryConfigurationRecordList;
+                this.total = data.totalNum
 
             }).catch( req => {
                 console.log( req )
