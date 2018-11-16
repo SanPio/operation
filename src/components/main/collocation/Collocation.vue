@@ -70,13 +70,13 @@
                     </el-select>
                 </div> 
                 <div class="right">
-                    <el-button type="primary" plain @click="query">
+                    <el-button type="primary" plain @click="queryInfo">
                         查询
                     </el-button>
                 </div>
         </div>
         
-        <ul class="clearfix show" >
+        <ul class="clearfix show" v-if="radio == 1">
             <li v-for="(item, index) in customValue.slice(0,9)" :key="index" class="left">
                 <p class="sel-show">
                     {{ item }}
@@ -102,9 +102,9 @@
                     时间
                 </span>
                 
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort( 0, 'date' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort( 0, 'date' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort( 0, 'date' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort( 0, 'addTime' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort( 0, 'addTime' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort( 0, 'addTime' )">
             </li>
             <li class="oper-type left">
                 <span>
@@ -120,9 +120,9 @@
                 <span>
                     跟随方式
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort( 1, 'date' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort( 1, 'date' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort( 1, 'date' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort( 1, 'lotsType' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort( 1, 'lotsType' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort( 1, 'lotsType' )">
             </li>
             <li class="follow-switch left">
                 <span>
@@ -138,17 +138,17 @@
                 <span>
                     止盈
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort( 2, 'date' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort( 2, 'date' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort( 2, 'date' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort( 2, 'takeProfits' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort( 2, 'takeProfits' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort( 2, 'takeProfits' )">
             </li>
             <li class="stop-loss left">
                 <span>
                     止损
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 3, 'date' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 3, 'date' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort( 3, 'date' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 3, 'stopLoss' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 3, 'stopLoss' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort( 3, 'stopLoss' )">
             </li>
             <li class="min-hands left">
                 <span>
@@ -192,7 +192,7 @@
                     </span>
                 </p>
                 <p class="name left">
-                    {{ item.signalName }}
+                    {{ item.signalName | changeName }}
                 </p>
                 <p class="follow-type left">
                     <span v-if="item.lotsType == 1">
@@ -238,7 +238,7 @@
                     
                 </p>
                 <p class="operator left">
-                    {{ item.wxNickname }}
+                    {{ item.wxNickname | changeName }}
                 </p>
                 <p class="reason left">
                     {{ item.remark }}
@@ -272,6 +272,9 @@ export default {
             pageNum: '', 
             pageSize: '',
             info: [  ],
+            infoStandby: [ ],
+            fixedList: [ ],
+            proportList: [ ],
             starTime: '',
             endTime: '',
             customOptions: [],
@@ -315,15 +318,17 @@ export default {
             }
 
             this.optionNameList.substr( 0, this.optionNameList.Length - 1)
-            this.query( this.userId, this.starTime, this.endTime, 1, this.pageNum, this.pageSize ); 
+           
         },
-        radio( val ) {
-            if( val == 0 ) {
-                this.query( this.userId, this.starTime, this.endTime, 0, '', 1, 15 ); 
-            } 
+       
+    },
+    filters: {
+        changeName( val ) {
+            if( val.length >7 ){
+               return val.substring(0, 7) + '...' 
+            }
         }
     },
-
     methods: {
 
         // 返回到用户信息
@@ -383,9 +388,9 @@ export default {
 
         // 判断下拉框是否出现
         isSelctShow( val ) {
-            if ( val === false ) {
-                this.query( this.userId, this.starTime, this.endTime, 1, this.optionNameList, 1, 15 ); 
-            }
+            // if ( val === false ) {
+            //     this.query( this.userId, this.starTime, this.endTime, 1, this.optionNameList, 1, 15 ); 
+            // }
         },
             // 加载信号源
         queryOption() {
@@ -414,6 +419,14 @@ export default {
                 console.log( req )
             }) 
         },
+
+        queryInfo(){
+            if( this.radio == 0){
+                this.query( this.userId, this.starTime, this.endTime, 0, '', 1, 15 );
+            }else if( this.radio == 1 ){
+                this.query( this.userId, this.starTime, this.endTime, 1, this.optionNameList, 1, 15 ); 
+            }   
+        },
         // 数据请求
         query( userId, startTime, endTime, isAllSelect, optionNameList, pageNum, pageSize ) {
             let postData = this.$qs.stringify({
@@ -435,12 +448,21 @@ export default {
                 data:postData
 
             }).then( res => {
-
+                console.log(res.data.data.data)
                 this.loading = false;
                 this.info = [];
+                this.infoStandby = [];
                 let data = res.data.data.data
                 this.info = data.documentaryConfigurationRecordList;
-                this.total = data.totalNum
+                this.infoStandby = data.documentaryConfigurationRecordList;
+                this.total = data.totalNum;
+                for(let i = 0; i < data.documentaryConfigurationRecordList.length; i ++ ){
+                    if( data.documentaryConfigurationRecordList[i].lotsType == 0){
+                        this.fixedList.push( data.documentaryConfigurationRecordList[i] ) // 固定
+                    }else{
+                        this.proportList.push( data.documentaryConfigurationRecordList[i] ) // 比例
+                    }
+                }
 
             }).catch( req => {
                 console.log( req )
@@ -449,7 +471,7 @@ export default {
         // 默认反向排序
             bigToSmallSort ( ind, key) {
 
-                this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
+                this.sortImgShow = [ 0, 0, 0, 0 ];
                 this.$set( this.sortImgShow, ind, 1 );
                 this.toSort(ind,key);
             },
@@ -460,26 +482,34 @@ export default {
             toSort ( ind, key ) {
                 if ( this.sortImgShow[ ind ] === 1) {
 
-                    this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
+                    this.sortImgShow = [ 0, 0, 0, 0 ];
                     this.$set( this.sortImgShow, ind, 2);
                     
-                    if( key == "date" || key == "registeredDate" ){
+                    if( key == "addTime" ){
                        
                         this.isDate(key,1);
-                    
+                    }else if(key == "lotsType" ){
+                        this.info = []
+                        
+                        this.info = this.fixedList.concat(this.proportList) 
+                
                     }else{
                         this.info = this.ZtoAsort(this.info, key);
                     }
                 
                 }else if ( this.sortImgShow[ ind ] === 2 ) {
                     
-                    this.sortImgShow = [ 0, 0, 0, 0, 0, 0, 0 ];
+                    this.sortImgShow = [ 0, 0, 0, 0 ];
                     this.$set( this.sortImgShow, ind, 1 );
 
-                    // this.info = this.ZtoAsort(this.info, key);  
-                    if( key == "date" || key == "registeredDate" ){
+                    if( key == "addTime" ){
                         this.isDate(key,2);
                         
+                    }else if(key == "lotsType" ){
+                        this.info = []
+                        
+                        this.info = this.proportList.concat(this.fixedList) 
+                  fixedList
                     }else{
                         this.info = this.AtoZsort(this.info, key);
                     }          
@@ -489,40 +519,15 @@ export default {
 
             // 日期排序
             isDate(key,val){
-                let newArr = [];
-                for( let i = 0; i < this.info.length; i ++){
-                    let obj ={
-                        bindMT4: this.info[i].bindMT4,
-                        channelName: this.info[i].channelName,
-                        date: new Date(this.info[i].date),
-                        inviterUser: this.info[i].inviterUser,
-                        phone: this.info[i].phone,
-                        registeredDate: new Date(this.info[i].registeredDate),
-                        simulationDocumentary: this.info[i].simulationDocumentary,
-                        sumMoney: this.info[i].sumMoney,
-                        userId: this.info[i].userId,
-                    }
-                    newArr.push( obj );
-                }
+                
                 if( val === 1){
-                    newArr = this.ZtoAsort(newArr, key);
+                    this.info = this.infoStandby
                 }else{
-                    newArr = this.AtoZsort(newArr, key);
-                }
-
-                for (let i = 0; i < newArr.length; i++ ) {
-                    let obj = {
-                        bindMT4: newArr[i].bindMT4,
-                        channelName: newArr[i].channelName,
-                        date: newArr[i].date.getFullYear() + '-' +(newArr[i].date.getMonth() > 8 ?  newArr[i].date.getMonth()+1 : '0' + (newArr[i].date.getMonth()+1) )+ '-' + (newArr[i].date.getDate() > 9 ?newArr[i].date.getDate() : '0' + newArr[i].date.getDate() ),
-                        inviterUser: newArr[i].inviterUser,
-                        phone: newArr[i].phone,
-                        registeredDate: newArr[i].registeredDate.getFullYear() + '-' +( newArr[i].registeredDate.getMonth() > 8 ? newArr[i].registeredDate.getMonth()+1 : '0' + (newArr[i].registeredDate.getMonth()+1) ) + '-' + ( newArr[i].registeredDate.getDate() > 9 ? newArr[i].registeredDate.getDate() : '0'+ newArr[i].registeredDate.getDate() ),
-                        simulationDocumentary: newArr[i].simulationDocumentary,
-                        sumMoney: newArr[i].sumMoney,
-                        userId: newArr[i].userId,
+                    this.info = []
+                    for( let i = 0; i < this.infoStandby.length; i ++) {
+                        this.info.unshift( this.infoStandby[i] )
                     }
-                    this.info.push(obj);
+                    
                 } 
             },
 
@@ -540,9 +545,7 @@ export default {
                         }  
                     }
                 }
-                // this.arr = [];
-                // this.arr = newarr
-                // console.log(this.arr)
+              
                 console.log(arr)
                  this.info = []
                 return arr
@@ -590,6 +593,11 @@ export default {
                 width: 80px;
             }
         }
+        #hahha .el-button { 
+            font-size: 12px;
+            padding: 8px 0;
+            width: 80px;
+        }
         .block{
             width: 140px;
             height: 50px;
@@ -603,6 +611,7 @@ export default {
                 .el-input__prefix{
                     top:-10px;
                 }
+                
 
         }
         .show{
@@ -648,8 +657,8 @@ export default {
             color: #666;
             li{
                 p{
-                    height: 32px;
-                    line-height: 32px;
+                    height: 28px;
+                    line-height: 28px;
                 }
             }
         }

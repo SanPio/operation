@@ -9,8 +9,8 @@
                     background
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page="currentPage"                    
-                    :page-sizes="[15, 30, 50,100 ]"
+                    :current-page="currentPage"
+                    :page-sizes="[15 ]"
                     :page-size="15"
                     layout="total, prev, pager, next, jumper"
                     :total="total">
