@@ -68,7 +68,7 @@
                 </li>
             </ul>
             <!-- 分页 -->
-            <pageing @pageChang='pageChang'  :total='total'></pageing>
+            <pageing @pageChang='pageChang'  :total='total' :currentPage="currentPage"></pageing>
         </div>
         
     <!-- </div> -->
@@ -99,7 +99,8 @@ export default {
             userId : 0 ,
             info:[],
             userName:'',
-            sortImgShow: 0
+            sortImgShow: 0,
+            currentPage:1
         }
     },
     components:{
@@ -134,11 +135,14 @@ export default {
                 // console.log(res.data.data.data.accountBindRecordList)
                 this.info = res.data.data.data.accountBindRecordList;
                 this.total = res.data.data.data.totalNum;
+                this.currentPage = 1;
+                this.pageNum=1;
                 this.userName = res.data.data.data.userName
             }).catch(err=>{
                 console.log(err)
             })
         },
+        
         // 分页
         pageChang( params ) {
             this.loading = true;
@@ -151,8 +155,9 @@ export default {
             this.starTime = params.starTime;
             this.endTime = params.endTime;
             this.loading = params.loading;
-            console.log(params)
+            this.currentPage = params.currentPage
             this.queryInfo(this.starTime, this.endTime, this.pageNum, this.pageSize, this.userId);
+            
         },
         // 返回用户信息页
         toUserInfo(){

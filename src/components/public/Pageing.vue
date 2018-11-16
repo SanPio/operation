@@ -9,10 +9,10 @@
                     background
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page="currentPage"
+                    :current-page="currentPage"                    
                     :page-sizes="[15, 30, 50,100 ]"
                     :page-size="15"
-                    layout="total, sizes, prev, pager, next, jumper"
+                    layout="total, prev, pager, next, jumper"
                     :total="total">
                     </el-pagination>
                 </el-col>
@@ -28,16 +28,24 @@
             return {
                 pageNum: 1,
                 pageSize: 15,
-                currentPage: 1,// 分页
-            
+                // currentPage: 1,// 分页   
+                // total:100    
             }
         },
+        
 
         props: {
             total: {
                 type: Number,
                 default: function () {
-                    return 0               
+                    return 0   
+                                
+                }
+            },
+            currentPage:{
+                type: Number,
+                default: function () {
+                    return 0        
                 }
             }
             
@@ -48,7 +56,7 @@
             handleCurrentChange(val) {
                 console.log(`当前页: ${val}`);
                 this.pageNum = val;
-                this.handlePage();
+                this.handlePage();                
             },
 
             // 每页显示条数
@@ -62,7 +70,7 @@
             handlePage(){
                 this.$emit( 'pageChang',{
                     'pageNum': this.pageNum,
-                    'pageSize': this.pageSize,
+                    'pageSize': this.pageSize
                 })
             }
         }
