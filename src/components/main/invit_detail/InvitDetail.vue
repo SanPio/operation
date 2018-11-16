@@ -77,13 +77,13 @@
                     {{ index + 1 }}
                 </p>
                 <p class="inviterName"> 
-                    {{ item.inviterName }}
+                    {{ item.inviterName | changeName }}
                 </p>
                 <p class="registeredDate"> 
                     {{ item.registeredDate}}
                 </p>
                 <p class="wxNickName"> 
-                    {{ item.wxNickName }}
+                    {{ item.wxNickName | changeName }}
                 </p>
                 <p class="phone"> 
                     {{ item.phone }}
@@ -166,7 +166,13 @@ export default {
         // console.log(this.userId)
         this.queryInfo( '', '', 1, 15, '', this.userId )
     },
-
+    filters: {
+        changeName( val ) {
+            if( val.length >7 ){
+               return val.substring(0, 12) + '...' 
+            }
+        }
+    },
     methods: {
 
         // 搜素
