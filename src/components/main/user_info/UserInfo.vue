@@ -160,6 +160,7 @@ export default {
         searchType(){
             this.searchValue = ''
         }
+        
     },
     filters: {
         textNull ( value ) {
@@ -178,6 +179,15 @@ export default {
         }
     },
     created () {
+        this.queryInfo( sessionStorage.type, sessionStorage.queryWord)
+         this.searchValue = sessionStorage.queryWord
+        if(sessionStorage.type==1){
+            this.searchType = '邀请码'
+        }else if(sessionStorage.type==2){
+            this.searchType = '手机号'
+        }else{
+            this.searchType = '用户ID'
+        }
         
     },
 
@@ -189,6 +199,8 @@ export default {
         query (){
             this.loading = true;
             this.queryInfo( this.searchType, this.searchValue);
+            sessionStorage.setItem("type", this.searchType)
+            sessionStorage.setItem("queryWord", this.searchValue)
         },
 
         // 请求数据
@@ -205,10 +217,14 @@ export default {
                 url: this.$path +'operatemanagement/user/userInfo',
                 data:postData
             }).then( res => {
-
+                console.log(res)
                 //  结束loading图
                 this.loading = false;
                 this.info.push( res.data.data.data )
+
+               
+                
+
             }).catch( req => {
                 console.log( req )
 

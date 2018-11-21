@@ -160,7 +160,7 @@ export default {
             
         },
         // 返回用户信息页
-        toUserInfo(){
+        toUserInfo(params){
             this.$router.push({
                 path:'/user_info'
             })
