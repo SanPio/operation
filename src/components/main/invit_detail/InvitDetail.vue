@@ -168,8 +168,10 @@ export default {
     },
     filters: {
         changeName( val ) {
-            if( val.length >7 ){
+            if( val.length >12){
                return val.substring(0, 12) + '...' 
+            }else{
+                return val
             }
         }
     },
