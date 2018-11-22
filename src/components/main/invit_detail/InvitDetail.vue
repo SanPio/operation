@@ -77,7 +77,7 @@
                     {{ index + 1 }}
                 </p>
                 <p class="inviterName"> 
-                    {{ item.inviterName  }}
+                    {{ item.inviterName | changeName  }}
                 </p>
                 <p class="registeredDate"> 
                     {{ item.registeredDate}}
@@ -168,11 +168,16 @@ export default {
     },
     filters: {
         changeName( val ) {
-            if( val.length >12){
-               return val.substring(0, 12) + '...' 
+            if ( val ){
+                 if( val.length >12){
+                    return val.substring(0, 12) + '...' 
+                }else{
+                    return val
+                }
             }else{
-                return val
+                return ''
             }
+           
         }
     },
     methods: {
