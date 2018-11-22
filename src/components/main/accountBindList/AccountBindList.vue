@@ -162,7 +162,11 @@ export default {
         // 返回用户信息页
         toUserInfo(params){
             this.$router.push({
-                path:'/user_info'
+                path:'/user_info',
+                query:{//通过query 传递参数
+                    type: sessionStorage.type, //需要传递的参数,
+                    queryWord: sessionStorage.queryWord
+                }
             })
         },
         // 默认反向排序

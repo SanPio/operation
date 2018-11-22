@@ -76,7 +76,7 @@
                         {{ index + 1 }}
                     </p>
                     <p class="id left">
-                        {{ item.userId | numberNull }}
+                        {{ item.uid | numberNull }}
                     </p>
                     <p class="invit left">
                         {{ item.invitationCode  | textNull }}
@@ -179,15 +179,19 @@ export default {
         }
     },
     created () {
-        this.queryInfo( sessionStorage.type, sessionStorage.queryWord)
-         this.searchValue = sessionStorage.queryWord
-        if(sessionStorage.type==1){
-            this.searchType = '邀请码'
-        }else if(sessionStorage.type==2){
-            this.searchType = '手机号'
-        }else{
-            this.searchType = '用户ID'
+
+        if(this.$route.query.type==sessionStorage.type && this.$route.query.queryWord==sessionStorage.queryWord){
+            this.queryInfo(this.$route.query.type,this.$route.query.queryWord)
+            this.searchValue = this.$route.query.queryWord
+            if(this.$route.query.type==1){
+                this.searchType = '邀请码'
+            }else if(this.$route.query.type==2){
+                this.searchType = '手机号'
+            }else{
+                this.searchType = '用户ID'
+            }
         }
+        
         
     },
 
@@ -222,7 +226,10 @@ export default {
                 this.loading = false;
                 this.info.push( res.data.data.data )
 
-               
+                if(this.$route.query.type==sessionStorage.type && this.$route.query.queryWord==sessionStorage.queryWord){
+                    this.searchValue = this.$route.query.queryWord
+                }
+                
                 
 
             }).catch( req => {

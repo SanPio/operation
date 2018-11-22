@@ -335,6 +335,10 @@ export default {
         toUserInfo ( ) {
             this.$router.push({
                 path: '/user_info',
+                query:{//通过query 传递参数
+                    type: sessionStorage.type, //需要传递的参数,
+                    queryWord: sessionStorage.queryWord
+                }
             });
         },
 

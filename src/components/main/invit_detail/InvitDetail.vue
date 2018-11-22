@@ -77,7 +77,7 @@
                     {{ index + 1 }}
                 </p>
                 <p class="inviterName"> 
-                    {{ item.inviterName | changeName }}
+                    {{ item.inviterName  }}
                 </p>
                 <p class="registeredDate"> 
                     {{ item.registeredDate}}
@@ -262,6 +262,10 @@ export default {
         returnHis ( ) {
             this.$router.push({
                 path: '/user_info',
+                query:{//通过query 传递参数
+                    type: sessionStorage.type, //需要传递的参数,
+                    queryWord: sessionStorage.queryWord
+                }
             });
         },
 
