@@ -324,9 +324,16 @@ export default {
     },
     filters: {
         changeName( val ) {
-            if( val.length >7 ){
-               return val.substring(0, 7) + '...' 
+            if(val ){
+                if( val.length >7 ){
+                    return val.substring(0, 7) + '...' 
+                }else{
+                    return val
+                } 
+            }else{
+                return ''
             }
+            
         }
     },
     methods: {
