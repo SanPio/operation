@@ -157,9 +157,9 @@ export default {
         }
     },
     watch:{
-        searchType(){
-            this.searchValue = ''
-        }
+        // searchType(){
+        //     this.searchValue = ''
+        // }
         
     },
     filters: {
@@ -179,20 +179,12 @@ export default {
         }
     },
     created () {
-
-        if(this.$route.query.type==sessionStorage.type && this.$route.query.queryWord==sessionStorage.queryWord){
+        if(this.$route.query.type==sessionStorage.type || this.$route.query.queryWord==sessionStorage.queryWord){
             this.queryInfo(this.$route.query.type,this.$route.query.queryWord)
             this.searchValue = this.$route.query.queryWord
-            if(this.$route.query.type==1){
-                this.searchType = '邀请码'
-            }else if(this.$route.query.type==2){
-                this.searchType = '手机号'
-            }else{
-                this.searchType = '用户ID'
-            }
+            this.searchType = this.$route.query.type
+            console.log(this.$route.query.queryWord)
         }
-        
-        
     },
 
     methods: {
@@ -226,10 +218,11 @@ export default {
                 this.loading = false;
                 this.info.push( res.data.data.data )
 
-                if(this.$route.query.type==sessionStorage.type && this.$route.query.queryWord==sessionStorage.queryWord){
-                    this.searchValue = this.$route.query.queryWord
-                }
-                
+                // if(this.$route.query.type==sessionStorage.type || this.$route.query.queryWord==sessionStorage.queryWord){
+                //     this.searchValue = sessionStorage.queryWord
+                //     this.searchType = this.$route.query.type
+                // }
+
                 
 
             }).catch( req => {
@@ -243,7 +236,9 @@ export default {
             this.$router.push({
                 path: '/invitdetail',
                 query:{//通过query 传递参数
-                    userId: userId //需要传递的参数,
+                    userId: userId, //需要传递的参数,
+                    type: this.searchType,
+                    queryWord:this.searchValue
                 }
             });
         },
@@ -253,7 +248,9 @@ export default {
             this.$router.push({
                 path: '/increment',
                 query:{//通过query 传递参数
-                    userId: userId //需要传递的参数,
+                    userId: userId, //需要传递的参数,
+                    type: this.searchType,
+                    queryWord:this.searchValue
                 }
             });
         },
@@ -265,7 +262,9 @@ export default {
                 path: '/collocation',
                 query:{//通过query 传递参数
                     userId: userId, //需要传递的参数,
-                    userName: userName
+                    userName: userName,
+                    type: this.searchType,
+                    queryWord:this.searchValue
                 }
             });
         },
@@ -277,7 +276,9 @@ export default {
                 path: '/accountBindList',
                 query:{//通过query 传递参数
                     userId: userId, //需要传递的参数,
-                    userName: userName
+                    userName: userName,
+                    type: this.searchType,
+                    queryWord:this.searchValue
                 }
             });
         }

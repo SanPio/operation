@@ -132,7 +132,7 @@ export default {
             bigToSmall: require('../../../assets/big_small.png'),
             smallToBig: require('../../../assets/small_big.png'),
             headTop:[
-                '引荐人搜索',
+                '引荐人昵称搜索',
                 '起始日期',
                 '截止日期',
                 '新增（绑定手机数量）',
@@ -151,7 +151,9 @@ export default {
             endTime: '',
             pageNum: 1, 
             pageSize: 15,
-            total: 15
+            total: 15,
+            type:'',
+            queryWord:''
         }
     },
     
@@ -163,6 +165,8 @@ export default {
     
     created () {
         this.userId = this.$route.query.userId;
+        this.type = this.$route.query.type;
+        this.queryWord = this.$route.query.queryWord;
         // console.log(this.userId)
         this.queryInfo( '', '', 1, 15, '', this.userId )
     },
@@ -268,8 +272,8 @@ export default {
             this.$router.push({
                 path: '/user_info',
                 query:{//通过query 传递参数
-                    type: sessionStorage.type, //需要传递的参数,
-                    queryWord: sessionStorage.queryWord
+                    type: this.type, //需要传递的参数,
+                    queryWord: this.queryWord
                 }
             });
         },

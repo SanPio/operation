@@ -236,6 +236,8 @@ export default {
             pageNum: 1, 
             pageSize: 15,
             total: 15,
+            type:'',
+            queryWord:'',
             // vip弹窗
             vipDialogTableVisible: false,
             vipMsgDetail: [
@@ -261,7 +263,9 @@ export default {
     },
     created () {
         this.userId = this.$route.query.userId;
-        this.queryBasics( this.userId, 1, 15 )
+        this.queryBasics( this.userId, 1, 15 );
+        this.type = this.$route.query.type;
+        this.queryWord = this.$route.query.queryWord;
     },
 
     methods: {
@@ -270,8 +274,8 @@ export default {
             this.$router.push({
                 path: '/user_info',
                 query:{//通过query 传递参数
-                    type: sessionStorage.type, //需要传递的参数,
-                    queryWord: sessionStorage.queryWord
+                    type: this.type, //需要传递的参数,
+                    queryWord: this.queryWord
                 }
             });
         },

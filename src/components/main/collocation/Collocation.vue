@@ -280,7 +280,9 @@ export default {
             customOptions: [],
             radio: '',
             customValue: '',
-            optionNameList: ''
+            optionNameList: '',
+            type:'',
+            queryWord:''
         }
     },
 
@@ -295,11 +297,14 @@ export default {
         Store.commit( 'initLocDate' )
         this.starTime = Store.state.initDate;
         this.endTime = Store.state.initDate;
+
             // 初始化信号源
         this.queryOption();
 
             // 初始化数据
-        this.query( this.userId, 1, 15 )
+        this.query( this.userId, 1, 15 );
+        this.type = this.$route.query.type;
+        this.queryWord = this.$route.query.queryWord;
     },
 
     watch: {
@@ -343,8 +348,9 @@ export default {
             this.$router.push({
                 path: '/user_info',
                 query:{//通过query 传递参数
-                    type: sessionStorage.type, //需要传递的参数,
-                    queryWord: sessionStorage.queryWord
+                    type: this.type, //需要传递的参数,
+                    queryWord: this.queryWord,
+
                 }
             });
         },
