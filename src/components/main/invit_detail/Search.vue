@@ -10,6 +10,7 @@
                 <li>
                     <el-input
                         placeholder="请输入内容"
+                        type="number"
                         prefix-icon="el-icon-search"
                         v-model="distributors">
                     </el-input> 

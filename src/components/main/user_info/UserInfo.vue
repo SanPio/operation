@@ -204,7 +204,6 @@ export default {
             
             this.info = [];
             let postData = this.$qs.stringify({
-
                 type: type,
                 queryWord: value
             });

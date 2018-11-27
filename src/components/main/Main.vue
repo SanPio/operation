@@ -3,7 +3,7 @@
         <el-container>
 
             <!-- 左侧导航 -->
-            <el-aside>
+            <el-aside style="width:240px;">
 
                 <!-- logo -->
                 <el-row type="flex" class="row-bg" justify="center">
@@ -343,7 +343,8 @@
     .el-aside {
         background-color: #11183f;
         color: #fff;
-        width: 300px;
+        // width: 300px;
+        width: 240px;
         overflow:-moz-scrollbars-none;
         .el-row {
 
@@ -355,8 +356,8 @@
         }
 
         .el-menu {
-            width: 300px;
-            
+            // width: 300px;
+            width: 240px;
             .yellowColor{
                 color: rgb(255, 208, 75);
             }

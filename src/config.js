@@ -6,6 +6,6 @@ export default {
     // severPath:'http://192.168.0.197:8080/'
 
     // 开发环境（潘）
-    severPath:'http://192.168.1.19:8080/'
+    severPath:'http://192.168.1.4:8080/'
 
   }

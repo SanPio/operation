@@ -132,7 +132,7 @@ export default {
             bigToSmall: require('../../../assets/big_small.png'),
             smallToBig: require('../../../assets/small_big.png'),
             headTop:[
-                '引荐人昵称搜索',
+                '引荐人ID、邀请码搜索',
                 '起始日期',
                 '截止日期',
                 '新增（绑定手机数量）',
@@ -193,8 +193,16 @@ export default {
             this.starTime = params.starTime;
             this.endTime = params.endTime;
             this.loading = params.loading;
+            if(!params.distributors){
+                this.userId = this.$route.query.userId
+                this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName, this.userId);
+            }else{
+                this.userId = this.userName
+                this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName, this.userId);
+            }
             console.log(params)
-            this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName );
+            console.log(this.userId)
+            // this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName, this.userId);
         },
 
         // 分页
@@ -202,7 +210,7 @@ export default {
             this.loading = true;
             this.pageNum = params.pageNum;
             this.pageSize = params.pageSize;
-            this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName );
+            this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName, this.userId );
         },
 
         //数据请求
@@ -212,7 +220,7 @@ export default {
                     startTime: starTime,
                     endTime: endTime,
                     inviterName: userName, 
-                    inviterId: userId,
+                    inputId: userId,
                     pageNum: pageNum,
                     pageSize: pageSize
                 });
