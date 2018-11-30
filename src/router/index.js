@@ -12,6 +12,7 @@ import Increment from "@/components/main/increment/Increment"
 import Collocation from "@/components/main/collocation/Collocation"
 import AccountBindList from "@/components/main/accountBindList/AccountBindList"
 import DataInformation from "@/components/main/dataInformation/DataInformation"
+import SignalInfo from "@/components/main/signal_info/SignalInfo"
 Vue.use(Router)
 
 
@@ -42,6 +43,10 @@ Vue.use(Router)
             component: RoleManage 
           },
 
+          { //信号源基础信息
+            path: '/signal_info',
+            component: SignalInfo 
+          },
           
           { //用户信息
             path: '/user_info',

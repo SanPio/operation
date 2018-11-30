@@ -23,7 +23,7 @@
                         <el-menu-item index="1">
                             <img :src="imgCli[0] ? homeImgCli : homeImg" alt="">
                             <span slot="title">
-                                首页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                首页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </span>
                         </el-menu-item>
 
@@ -31,20 +31,20 @@
                             <template slot="title">
                                 <img :src="imgCli[1] ? backImgCli : backImg" alt="">
                                 <span :class="{'yellowColor':itemChoose == 2}">
-                                    后台管理
+                                    后台管理&nbsp;&nbsp;&nbsp;
                                 </span>
                             </template>     
-                            <el-menu-item index="2-1">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;账号管理
+                            <el-menu-item index="2-1" >
+                                &nbsp;&nbsp;账号管理
                             </el-menu-item>
                             <el-menu-item index="2-2">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;权限管理
+                                &nbsp;&nbsp;权限管理
                             </el-menu-item> 
                             <el-menu-item index="2-3">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;角色管理
+                                &nbsp;&nbsp;角色管理
                             </el-menu-item>
                             <el-menu-item index="2-4">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;操作记录
+                                &nbsp;&nbsp;操作记录
                             </el-menu-item>          
                         </el-submenu>
 
@@ -52,27 +52,45 @@
                             <template slot="title">
                                 <img :src="imgCli[2] ? dataImgCli : dataImg" alt="">
                                 <span :class="{'yellowColor':itemChoose == 3}">
-                                    数据统计
+                                    数据统计&nbsp;&nbsp;&nbsp;
                                 </span>
                             </template>     
                             <el-menu-item index="3-1">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;数据信息
+                                &nbsp;&nbsp;数据信息
                             </el-menu-item>
                         
+                        </el-submenu>
+
+                        <el-submenu index="6">
+                            <template slot="title">
+                                <img :src="imgCli[5] ? signalImgCli :signalImg" alt="">
+                                <span :class="{'yellowColor':itemChoose == 6}">
+                                    信号源管理
+                                </span>
+                            </template>     
+                            <el-menu-item index="6-1" style="text-align:left">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信号源基础信息
+                            </el-menu-item>
+                            <el-menu-item index="6-2" style="text-align:left">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信号源收益详情
+                            </el-menu-item> 
+                            <el-menu-item index="6-3" style="text-align:left">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信号源客流量详情
+                            </el-menu-item> 
                         </el-submenu>
 
                         <el-submenu index="4">
                             <template slot="title">
                                 <img :src="imgCli[3] ? userMangeImgCli :userMangeImg" alt="">
                                 <span :class="{'yellowColor':itemChoose == 4}">
-                                    用户管理
+                                    用户管理&nbsp;&nbsp;&nbsp;
                                 </span>
                             </template>     
                             <el-menu-item index="4-1">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;用户信息
+                                &nbsp;&nbsp;用户信息
                             </el-menu-item>
                             <el-menu-item index="4-2">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;订单信息
+                                &nbsp;&nbsp;订单信息
                             </el-menu-item> 
                         </el-submenu>
 
@@ -80,14 +98,14 @@
                             <template slot="title">
                                 <img :src="imgCli[4] ? channelImgCli : channelImg" alt="">
                                 <span :class="{'yellowColor':itemChoose == 5}">
-                                    渠道运营
+                                    渠道运营&nbsp;&nbsp;&nbsp;
                                 </span>
                             </template>   
                             <el-menu-item index="5-1">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;渠道管理
+                                &nbsp;&nbsp;渠道管理
                             </el-menu-item>    
                             <el-menu-item index="5-2">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;渠道详情
+                                &nbsp;&nbsp;渠道详情
                             </el-menu-item>  
                         </el-submenu>
                     </el-menu>
@@ -186,13 +204,15 @@
                 dataImg: require('../../assets/data.png'),
                 userMangeImg: require('../../assets/user.png'),
                 channelImg: require('../../assets/channel.png'),
+                signalImg: require('../../assets/signal.png'),
                 homeImgCli: require('../../assets/home-page2.png'),
                 backImgCli: require('../../assets/Backstage-2.png'),
                 dataImgCli: require('../../assets/data-2.png'),
                 userMangeImgCli: require('../../assets/user-2.png'),
                 channelImgCli: require('../../assets/channel-2.png'),
+                signalImgCli: require('../../assets/signal-2.png'),
                 userName: '',
-                imgCli: [false,false,false,false,false],
+                imgCli: [false,false,false,false,false,false],
                 uniqueOpened: true, // 展开一个列表
                 version: 'v1.0',    // 版本号码
                 locTitle: '',// 当前位置
@@ -288,6 +308,15 @@
                 }else if ( key == '5-2') {
                     this.routeTo('/channeldetail',4,'渠道运营','渠道详情');
                     this.itemChoose = 5;
+                }else if ( key == '6-1') {
+                    this.routeTo('/signal_info',5,'信号源管理','信号源基础信息');
+                    this.itemChoose = 6;
+                }else if ( key == '6-2') {
+                    this.routeTo('/home',5,'信号源管理','信号源收益详情');
+                    this.itemChoose = 6;
+                }else if ( key == '6-3') {
+                    this.routeTo('/home',5,'信号源管理','信号源客流量详情');
+                    this.itemChoose = 6;
                 }
                 
 
@@ -307,7 +336,7 @@
                 });
 
                 //导航图标变色
-                this.imgCli = [false,false,false,false,false,];
+                this.imgCli = [false,false,false,false,false,false];
                 this.$set(this.imgCli,ind,true);
                 this.locTitle = locTit;
                 this.locDetails = locdeta;
