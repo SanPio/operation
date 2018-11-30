@@ -25,7 +25,7 @@
 
                 <!-- 列表详情 -->
                 <ul class="list-tit clearfix">
-                    <li >
+                    <li>
                         <span>
                             序号
                         </span>
@@ -488,6 +488,7 @@
                 width: 11%;
                 height: 30px;
                 line-height: 30px;
+                
                 span{
                     vertical-align: middle;
                     color: #333;

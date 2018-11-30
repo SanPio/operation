@@ -179,7 +179,9 @@ export default {
         }
     },
     created () {
+        
         if(this.$route.query.type==sessionStorage.type || this.$route.query.queryWord==sessionStorage.queryWord){
+            this.loading = true
             this.queryInfo(this.$route.query.type,this.$route.query.queryWord)
             this.searchValue = this.$route.query.queryWord
             this.searchType = this.$route.query.type

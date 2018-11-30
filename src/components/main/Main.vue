@@ -3,7 +3,7 @@
         <el-container>
 
             <!-- 左侧导航 -->
-            <el-aside style="width:240px;">
+            <el-aside style="width:200px;">
 
                 <!-- logo -->
                 <el-row type="flex" class="row-bg" justify="center">
@@ -103,7 +103,7 @@
                         <span>
                             尊敬的 {{ userName }}，您好
                         </span>
-                        <el-button>
+                        <el-button type="primary" plain @click="changePassword">
                             修改密码
                         </el-button>
                         
@@ -148,6 +148,24 @@
                 </el-main>
             </el-container>
         </el-container>
+        <!-- 修改密码弹窗 -->
+        <el-dialog title="修改密码" :visible.sync="passwordDialogTableVisible" style="width: 1000px;margin:0 auto;">
+            <el-form label-width="80px">
+                <el-form-item label="旧密码">
+                    <el-input v-model="oldPassword" placeholder="请输入旧密码"></el-input>
+                </el-form-item>
+                <el-form-item label="新密码">
+                    <el-input v-model="newPassword" placeholder="请输入新密码"></el-input>
+                </el-form-item>
+                <el-form-item label="确认密码">
+                    <el-input v-model="confirmPassword" placeholder="请输入确认新密码"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="sure" style="margin-bottom: 20px">确认</el-button>
+                    <el-button @click="cancel" style="margin-bottom: 20px">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 
@@ -181,7 +199,11 @@
                 locDetails: '',
                 imgCliInd: 0,
                 navSelected:"1",
-                itemChoose: 0
+                itemChoose: 0,
+                passwordDialogTableVisible:false,
+                oldPassword:'',
+                newPassword:'',
+                confirmPassword:''
             }
         },
 
@@ -252,7 +274,7 @@
                     this.routeTo('/home',1,'后台管理','操作记录');
                     this.itemChoose = 2;
                 }else if ( key == '3-1') {
-                    this.routeTo('/home',2,'数据统计','数据信息');
+                    this.routeTo('/dataInformation',2,'数据统计','数据信息');
                     this.itemChoose = 3;
                 }else if ( key == '4-1') {
                     this.routeTo('/user_info',3,'用户管理','用户信息');
@@ -308,13 +330,59 @@
                     // goodsDetail:需要传递的参数,
                     // }
                 });
+            },
+            // 修改密码
+            changePassword(){
+                this.passwordDialogTableVisible = true;
+            },
+            sure(){
+                if(this.newPassword==this.confirmPassword){
+                    let postData = this.$qs.stringify({
+                        employeeId: sessionStorage.userId,
+                        oldPassword : this.oldPassword,
+                        newPassword : this.newPassword
+                    });
+                    this.$http({
+                        method:'post',
+                        url: this.$path + 'web/emp/updatePassword',
+                        data:postData
+                    }).then(res=>{
+                        console.log(res)
+                        if(res.data.data.code==1){
+                            this.$message({
+                                message: res.data.data.str,
+                                type: 'success'
+                            });
+                            this.oldPassword = "";
+                            this.newPassword = "";
+                            this.confirmPassword = "";
+                            this.passwordDialogTableVisible = false
+                        }else{
+                            this.$message.error(res.data.data.str);
+                            this.oldPassword = "";
+                            this.newPassword = "";
+                            this.confirmPassword = "";
+                        }
+                        
+                        
+                    }).catch(err=>{
+                        console.log(err)
+                    })
+                }else{
+                    this.$message.error('两次新密码两次输入不一致，请重新输入');
+                    this.oldPassword = "";
+                    this.newPassword = "";
+                    this.confirmPassword = "";
+                }
+                
+            },
+            cancel(){
+                this.passwordDialogTableVisible = false
             }
-            
         }
     }
 </script>
 <style lang="scss" scoped>   
-
     #logo{
         cursor:pointer;
     }
@@ -344,7 +412,7 @@
         background-color: #11183f;
         color: #fff;
         // width: 300px;
-        width: 240px;
+        width: 200px;
         overflow:-moz-scrollbars-none;
         .el-row {
 
@@ -357,7 +425,7 @@
 
         .el-menu {
             // width: 300px;
-            width: 240px;
+            width: 200px;
             .yellowColor{
                 color: rgb(255, 208, 75);
             }

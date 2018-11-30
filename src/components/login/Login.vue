@@ -108,7 +108,7 @@ export default {
                     console.log(res)
                     sessionStorage.setItem("token", "TRUE");
                     sessionStorage.setItem("userName", this.account);
-                    sessionStorage.setItem("userId", res.data.data);
+                    sessionStorage.setItem("userId", res.data.data.data);
                     this.$router.push({
                         path: '/' ,
                         // query:{//通过query 传递参数

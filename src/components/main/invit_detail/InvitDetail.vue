@@ -168,7 +168,7 @@ export default {
         this.type = this.$route.query.type;
         this.queryWord = this.$route.query.queryWord;
         // console.log(this.userId)
-        this.queryInfo( '', '', 1, 15, '', this.userId )
+        this.queryInfo( '', '', 1, 15, '', this.userId );
     },
     filters: {
         changeName( val ) {
@@ -200,8 +200,8 @@ export default {
                 this.userId = this.userName
                 this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName, this.userId);
             }
-            console.log(params)
-            console.log(this.userId)
+            // console.log(params)
+            // console.log(this.userId)
             // this.queryInfo(  this.starTime, this.endTime, this.pageNum, this.pageSize, this.userName, this.userId);
         },
 

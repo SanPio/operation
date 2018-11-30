@@ -11,6 +11,7 @@ import InvitDetail from "@/components/main/invit_detail/InvitDetail"
 import Increment from "@/components/main/increment/Increment"
 import Collocation from "@/components/main/collocation/Collocation"
 import AccountBindList from "@/components/main/accountBindList/AccountBindList"
+import DataInformation from "@/components/main/dataInformation/DataInformation"
 Vue.use(Router)
 
 
@@ -75,7 +76,12 @@ Vue.use(Router)
           { //渠道详情
             path: '/channeldetail',
             component: ChannelDetail 
-          }
+          },
+
+           { //数据信息
+              path: '/dataInformation',
+              component:DataInformation
+           } 
       ]
     }
   ]
