@@ -100,15 +100,15 @@
                     星级
                 </span>
             </li>
-            <li class="name left">
+            <li class="profit left">
                 <span>
                     收益率
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort( 0, 'addTime' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort( 0, 'addTime' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort( 0, 'addTime' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort( 0, 'rateOfReturn' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort( 0, 'rateOfReturn' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort( 0, 'rateOfReturn' )">
             </li>
-            <li class="profit left">
+            <li class="left">
                 <span>
                     跟随获利（当前/历史）
                 </span>
@@ -123,33 +123,33 @@
                 <span>
                     当前跟随人数
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort( 1, 'lotsType' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort( 1, 'lotsType' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort( 1, 'lotsType' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort( 1, 'nowFollowNumber' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort( 1, 'nowFollowNumber' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort( 1, 'nowFollowNumber' )">
             </li>
             <li class="left">
                 <span>
                     历史跟随人数
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 2, 'stopLoss' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 2, 'stopLoss' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort( 2, 'stopLoss' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort( 2, 'historyFollowNumber' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort( 2, 'historyFollowNumber' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort( 2, 'historyFollowNumber' )">
             </li>
             <li class="left">
                 <span>
                     付费人数
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort( 3, 'takeProfits' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort( 3, 'takeProfits' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort( 3, 'takeProfits' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 3, 'numberOfPeoplePaying' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 3, 'numberOfPeoplePaying' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort( 3, 'numberOfPeoplePaying' )">
             </li>
             <li class="left">
                 <span>
                     付费金额
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 4, 'stopLoss' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 4, 'stopLoss' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort( 4, 'stopLoss' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[4] === 0" @click="bigToSmallSort( 4, 'money' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[4] === 1" @click="toSort( 4, 'money' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[4] === 2" @click="toSort( 4, 'money' )">
             </li>
             
         </ul>
@@ -160,38 +160,38 @@
                 <p class="num left">
                     {{ index + 1 }}
                 <p class="left">
-                    小铭跟单001
+                    {{ item.signalName }}
                 </p>
                 <p class="star left">
-                    三星
+                    {{ item.signalLevels }}
                 </p>
                 <p class="profit left">
-                   36%
+                    {{ item.rateOfReturn + '%' }}
                 </p>
                 <p class="left">
-                   $222/$2131
+                    {{ "$" + item.nowProfit }}/{{ "$" + item.historyProfit }}
                 </p>
                 <p class="left">
-                   正常
+                    {{ item.status }}
                 </p>
                 <p class="left">
-                    10
+                    {{ item.nowFollowNumber }}
                 </p>
                 <p class="left">
-                    20
+                    {{ item.historyFollowNumber }}
                 </p>
                 <p class="left">
-                    30
+                    {{ item.numberOfPeoplePaying }}
                 </p>
                 <p class="left">
-                        40
+                    {{ item.money }}
                 </p>
                 
             </li>
         </ul> 
 
             <!-- 分页 -->
-        <pageing @pageChang='pageChang'   :total='total'></pageing>
+        <!-- <pageing @pageChang='pageChang'   :total='total'></pageing> -->
 
     </div>
 </template>
@@ -209,33 +209,33 @@ export default {
             starTime: '',
             endTime: '',
             starOptions: [{
-                    value: '3',
+                    value: 3,
                     label: '三星'
                 }, {
-                    value: '4',
+                    value: 4,
                     label: '四星'
                 }, {
                     value: '5',
                     label: '五星'
                 }],
             statusOptions: [{
-                    value: '0',
+                    value: 0,
                     label: '正常'
                 }, {
-                    value: '1',
+                    value: 1,
                     label: '警告'
                 }, {
-                    value: '2',
+                    value: 2,
                     label: '收尾'
                 }, {
-                    value: '3',
+                    value: 3,
                     label: '下架'
                 }],
-            star: '',
-            status: '',
+            star: [],
+            status: [],
             searchValue: '',
             sortImgShow: [ 0, 0, 0, 0, 0 ],
-            info: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+            info: [ ],
             pageNum: '', 
             pageSize: '',
             total:0
@@ -285,13 +285,86 @@ export default {
         },
 
         query(){
+            let postData = ''
+            if( this.star.length == 0 && this.status.length != 0){
+                postData = this.$qs.stringify({
+                    queryWord: this.searchValue,
+                    startTime: this.starTime,
+                    endTime: this.endTime,
+                    // level:  this.star,
+                    // status: this.status
+                    level: null,
+                    status: JSON.stringify(this.status)
+                });
+            }else if( this.star.length != 0 && this.status.length == 0 ){
+                 postData = this.$qs.stringify({
+                    queryWord: this.searchValue,
+                    startTime: this.starTime,
+                    endTime: this.endTime,
+                    // level:  this.star,
+                    // status: this.status
+                    level: JSON.stringify(this.star),
+                    status: null
+                });
+            }else if( this.star.length == 0 && this.status.length == 0){
+                 postData = this.$qs.stringify({
+                    queryWord: this.searchValue,
+                    startTime: this.starTime,
+                    endTime: this.endTime,
+                    // level:  this.star,
+                    // status: this.status
+                    level: null,
+                    status: null
+                });
+            }else{
+                 postData = this.$qs.stringify({
 
+                    queryWord: this.searchValue,
+                    startTime: this.starTime,
+                    endTime: this.endTime,
+                    // level:  this.star,
+                    // status: this.status
+                    level:  JSON.stringify(this.star),
+                    status: JSON.stringify(this.status)
+
+                });
+            }
+            
+            console.log(this.star.length)
+            this.$http({
+
+                method: 'post',
+                url: this.$path +'web/option/optionBaseInfo',
+                data:postData
+
+            }).then( res => {
+                this.info = [];
+                let data = res.data.data.data;
+                this.info = data;
+                console.log( data )
+               
+
+            }).catch( req => {
+                console.log( req )
+            }) 
+        },
+
+        // 分页
+        pageChang( params ) {
+            // this.loading = true;
+            // this.pageNum = params.pageNum;
+            // this.pageSize = params.pageSize;
+            // if( this.radio == 0 ) {
+            //     this.query( this.userId, this.starTime, this.endTime, 0, '', this.pageNum, this.pageSize ); 
+            // }else if ( this.radio == 1 ) {
+            //     this.query( this.userId, this.starTime, this.endTime, 1, this.pageNum, this.pageSize ); 
+            // }
         },
 
         // 默认反向排序
             bigToSmallSort ( ind, key) {
 
-                this.sortImgShow = [ 0, 0, 0, 0 ];
+                this.sortImgShow = [ 0, 0, 0, 0, 0 ];
                 this.$set( this.sortImgShow, ind, 1 );
                 this.toSort(ind,key);
             },
@@ -302,54 +375,26 @@ export default {
             toSort ( ind, key ) {
                 if ( this.sortImgShow[ ind ] === 1) {
 
-                    this.sortImgShow = [ 0, 0, 0, 0 ];
+                    this.sortImgShow = [ 0, 0, 0, 0, 0 ];
                     this.$set( this.sortImgShow, ind, 2);
                     
-                    if( key == "addTime" ){
-                       
-                        this.isDate(key,1);
-                    }else if(key == "lotsType" ){
-                        this.info = []
-                        
-                        this.info = this.fixedList.concat(this.proportList) 
-                
-                    }else{
+                    
                         this.info = this.ZtoAsort(this.info, key);
-                    }
+                   
                 
                 }else if ( this.sortImgShow[ ind ] === 2 ) {
                     
-                    this.sortImgShow = [ 0, 0, 0, 0 ];
+                    this.sortImgShow = [ 0, 0, 0, 0, 0 ];
                     this.$set( this.sortImgShow, ind, 1 );
 
-                    if( key == "addTime" ){
-                        this.isDate(key,2);
-                        
-                    }else if(key == "lotsType" ){
-                        this.info = []
-                        
-                        this.info = this.proportList.concat(this.fixedList) 
-                  fixedList
-                    }else{
+                   
                         this.info = this.AtoZsort(this.info, key);
-                    }          
+                            
                     
                 }
             },
 
-            // 日期排序
-            isDate(key,val){
-                
-                if( val === 1){
-                    this.info = this.infoStandby
-                }else{
-                    this.info = []
-                    for( let i = 0; i < this.infoStandby.length; i ++) {
-                        this.info.unshift( this.infoStandby[i] )
-                    }
-                    
-                } 
-            },
+           
 
             // 正向排序
             AtoZsort( arr, key ) {
