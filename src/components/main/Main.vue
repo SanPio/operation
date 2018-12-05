@@ -312,7 +312,7 @@
                     this.routeTo('/signal_info',5,'信号源管理','信号源基础信息');
                     this.itemChoose = 6;
                 }else if ( key == '6-2') {
-                    this.routeTo('/home',5,'信号源管理','信号源收益详情');
+                    this.routeTo('/signal_profit',5,'信号源管理','信号源收益详情');
                     this.itemChoose = 6;
                 }else if ( key == '6-3') {
                     this.routeTo('/home',5,'信号源管理','信号源客流量详情');

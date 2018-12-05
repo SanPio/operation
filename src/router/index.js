@@ -13,6 +13,7 @@ import Collocation from "@/components/main/collocation/Collocation"
 import AccountBindList from "@/components/main/accountBindList/AccountBindList"
 import DataInformation from "@/components/main/dataInformation/DataInformation"
 import SignalInfo from "@/components/main/signal_info/SignalInfo"
+import SignalProfit from "@/components/main/signal_profit/SignalProfit"
 Vue.use(Router)
 
 
@@ -46,6 +47,11 @@ Vue.use(Router)
           { //信号源基础信息
             path: '/signal_info',
             component: SignalInfo 
+          },
+
+          { //信号源收益详情
+            path: '/signal_profit',
+            component: SignalProfit
           },
           
           { //用户信息

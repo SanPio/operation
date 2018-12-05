@@ -28,41 +28,8 @@
                 placeholder="选择日期">
                 </el-date-picker>
             </div>
-            <div class="left clearfix he-right" style="margin-left:30px">
-                <p class="left">
-                    星级范围：
-                </p>
-                <div class="right block">
-                    <el-select v-model="star" multiple placeholder="全部" size="mini">
-                        <el-option
-                        v-for="item in starOptions"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                        >
-                        </el-option>
-                    </el-select> 
-                </div>
-                
-            </div>
-            <div class="left clearfix he-right">
-                <p class="left">
-                    状态：
-                </p>
-                <div class="right block">
-                     <el-select v-model="status" multiple placeholder="全部" size="mini">
-                        <el-option
-                        v-for="item in statusOptions"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                        >
-                        </el-option>
-                    </el-select> 
-                    
-                </div>
-                
-            </div>
+           
+            
             <div class="left he-right">
                 <el-input
                     placeholder="请输入信号源名称"
@@ -70,7 +37,7 @@
                     v-model="searchValue">
                 </el-input> 
             </div>
-            <div class="left he-right">
+            <div class="left he-right" style="margin-left:0">
                 <el-button type="primary" plain @click="query">
                     查询
                 </el-button>
@@ -92,36 +59,21 @@
             </li>
             <li class=" left">
                 <span>
-                    信号源名称
+                    日期
                 </span>
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort( 0, 'deta' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort( 0, 'deta' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort( 0, 'deta' )">
             </li>
             <li class="star left">
                 <span>
-                    星级
+                    信号源名称
                 </span>
             </li>
-            <li class="profit left">
-                <span>
-                    收益率
-                </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort( 0, 'rateOfReturn' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort( 0, 'rateOfReturn' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort( 0, 'rateOfReturn' )">
-            </li>
+            
             <li class="left">
                 <span>
-                    跟随获利（当前/历史）
-                </span>
-                
-            </li>
-            <li class=" left">
-                <span>
-                    当前状态
-                </span>
-            </li>
-            <li class="left">
-                <span>
-                    当前跟随人数
+                    付费人数
                 </span>
                 <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort( 1, 'nowFollowNumber' )">
                 <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort( 1, 'nowFollowNumber' )">
@@ -129,7 +81,7 @@
             </li>
             <li class="left">
                 <span>
-                    历史跟随人数
+                    应付金额
                 </span>
                 <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort( 2, 'historyFollowNumber' )">
                 <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort( 2, 'historyFollowNumber' )">
@@ -137,7 +89,7 @@
             </li>
             <li class="left">
                 <span>
-                    付费人数
+                    实付金额
                 </span>
                 <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 3, 'numberOfPeoplePaying' )">
                 <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 3, 'numberOfPeoplePaying' )">
@@ -145,11 +97,9 @@
             </li>
             <li class="left">
                 <span>
-                    付费金额
+                    操作
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[4] === 0" @click="bigToSmallSort( 4, 'money' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[4] === 1" @click="toSort( 4, 'money' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[4] === 2" @click="toSort( 4, 'money' )">
+               
             </li>
             
         </ul>
@@ -159,43 +109,35 @@
             <li class="info-list clearfix" v-for="(item, index) in info" :key="index">
                 <p class="num left">
                     {{ index + 1 }}
-                </p>    
                 <p class="left">
-                    {{ item.signalName }}
-                </p>
-                <p class="star left">
-                    {{ item.signalLevels }}
-                </p>
-                <p class="profit left">
-                    {{ item.rateOfReturn + '%' }}
+                    <span class="deta pointer" @click="toDetails()">
+                        2012/04
+                    </span>
+                    
                 </p>
                 <p class="left">
-                    {{ "$" + item.nowProfit }}/{{ "$" + item.historyProfit }}
+                  信号源001
                 </p>
                 <p class="left">
-                    <span style="color:#307eff" v-if="item.status === 0">正常</span>
-                    <span style="color:#ff8830" v-if="item.status === 1">警告</span>
-                    <span style="color:red" v-if="item.status === 2">收尾</span>
-                    <span style="color:#9a9a9a" v-if="item.status === 3">下架</span>
+                   30
                 </p>
                 <p class="left">
-                    {{ item.nowFollowNumber }}
+                  17940
                 </p>
                 <p class="left">
-                    {{ item.historyFollowNumber }}
+                   655641456
                 </p>
                 <p class="left">
-                    {{ item.numberOfPeoplePaying }}
-                </p>
-                <p class="left">
-                    {{ item.money }}
+                    <button class="details pointer" @click="toDetails()">
+                        查看详情
+                    </button>
                 </p>
                 
             </li>
         </ul> 
 
             <!-- 分页 -->
-        <!-- <pageing @pageChang='pageChang'   :total='total'></pageing> -->
+        <pageing @pageChang='pageChang'   :total='total'></pageing>
 
     </div>
 </template>
@@ -203,7 +145,7 @@
 import Store from '@/store'
 import Pageing from "@/components/public/Pageing";
 export default {
-    name: 'SignalInfo',
+    name: 'SignalProfit',
     
     data() {
         return {
@@ -238,8 +180,8 @@ export default {
             star: [],
             status: [],
             searchValue: '',
-            sortImgShow: [ 0, 0, 0, 0, 0 ],
-            info: [ ],
+            sortImgShow: [ 0, 0, 0, 0 ],
+            info: [ 1, 2, 3],
             pageNum: '', 
             pageSize: '',
             total:0
@@ -321,36 +263,36 @@ export default {
             //         status: null
             //     });
             // }else{
-                let postData = this.$qs.stringify({
+            //     let postData = this.$qs.stringify({
 
-                    queryWord: this.searchValue,
-                    startTime: this.starTime,
-                    endTime: this.endTime,
-                    // level:  this.star,
-                    // status: this.status
-                    level:  JSON.stringify(this.star),
-                    status: JSON.stringify(this.status)
+            //         queryWord: this.searchValue,
+            //         startTime: this.starTime,
+            //         endTime: this.endTime,
+            //         // level:  this.star,
+            //         // status: this.status
+            //         level:  JSON.stringify(this.star),
+            //         status: JSON.stringify(this.status)
 
-                });
-            // }
+            //     });
+            // // }
             
-            console.log(this.star.length)
-            this.$http({
+            // console.log(this.star.length)
+            // this.$http({
 
-                method: 'post',
-                url: this.$path +'web/option/optionBaseInfo',
-                data:postData
+            //     method: 'post',
+            //     url: this.$path +'web/option/optionBaseInfo',
+            //     data:postData
 
-            }).then( res => {
-                this.info = [];
-                let data = res.data.data.data;
-                this.info = data;
-                console.log( data )
+            // }).then( res => {
+            //     this.info = [];
+            //     let data = res.data.data.data;
+            //     this.info = data;
+            //     console.log( data )
                
 
-            }).catch( req => {
-                console.log( req )
-            }) 
+            // }).catch( req => {
+            //     console.log( req )
+            // }) 
         },
 
         // 分页
@@ -368,7 +310,7 @@ export default {
         // 默认反向排序
             bigToSmallSort ( ind, key) {
 
-                this.sortImgShow = [ 0, 0, 0, 0, 0 ];
+                this.sortImgShow = [ 0, 0, 0, 0 ];
                 this.$set( this.sortImgShow, ind, 1 );
                 this.toSort(ind,key);
             },
@@ -379,26 +321,42 @@ export default {
             toSort ( ind, key ) {
                 if ( this.sortImgShow[ ind ] === 1) {
 
-                    this.sortImgShow = [ 0, 0, 0, 0, 0 ];
+                    this.sortImgShow = [ 0, 0, 0, 0 ];
                     this.$set( this.sortImgShow, ind, 2);
                     
-                    
+                    if( key == "deta" ){                    
+                        this.isDate(key,1);
+                    }else{
                         this.info = this.ZtoAsort(this.info, key);
-                   
+                    }
                 
                 }else if ( this.sortImgShow[ ind ] === 2 ) {
                     
-                    this.sortImgShow = [ 0, 0, 0, 0, 0 ];
+                    this.sortImgShow = [ 0, 0, 0, 0 ];
                     this.$set( this.sortImgShow, ind, 1 );
 
-                   
+                    if( key == "deta" ){
+                        this.isDate(key,2);
+                    }else{
                         this.info = this.AtoZsort(this.info, key);
-                            
+                    }          
                     
                 }
             },
 
-           
+            // 日期排序
+            isDate(key,val){
+                
+                if( val === 1){
+                    this.info = this.infoStandby
+                }else{
+                    this.info = []
+                    for( let i = 0; i < this.infoStandby.length; i ++) {
+                        this.info.unshift( this.infoStandby[i] )
+                    }
+                    
+                } 
+            },
 
             // 正向排序
             AtoZsort( arr, key ) {
@@ -436,6 +394,19 @@ export default {
                  this.info = []
                 return arr
             },
+            
+            // 查看详情
+            toDetails( val ) {
+
+            }
+
+          
+
+           
+
+            
+
+         
     }
 }
 </script>
@@ -470,8 +441,7 @@ export default {
 
         }
         .he-right{
-            margin-top: 10px;
-            margin-right: 20px;
+            margin:10px 20px 0 20px;
             .left{
                 line-height: 28px;
             }
@@ -481,22 +451,9 @@ export default {
                 width: 80px;
             }
         } 
-        .title,.contant{
-
-            .num{
-                width: 8%;
-            }
-
-            .star{
-                width: 8%;
-            }
-
-            .profit{
-                width: 14%;
-            }
-        }
+       
         .title li,.contant p{
-            width: 10%;
+            width: 14%;
         }
         .title{
             
@@ -522,10 +479,21 @@ export default {
                     line-height: 26px;
                 }
             }
+            .deta{
+                color: #307eff;
+                text-decoration: underline;
+            }
         }
-      
+        .details{
+            width: 100px;
+            height:22px;
+            background-color: #307eff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            outline: none;
+        }
 
     }
     
 </style>
-
