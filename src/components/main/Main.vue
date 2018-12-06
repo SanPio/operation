@@ -121,10 +121,9 @@
                         <span>
                             尊敬的 {{ userName }}，您好
                         </span>
-                        <el-button type="primary" plain @click="changePassword">
+                        <el-button @click="changePassword">
                             修改密码
                         </el-button>
-                        
                         <el-button @click="logOut">
                             注销
                         </el-button>

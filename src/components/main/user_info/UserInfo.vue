@@ -319,7 +319,11 @@ export default {
             margin-top: 20px;
             .list_tit{
                 color: #000;
-                
+                li{
+                    overflow: hidden;
+                    text-overflow:ellipsis;
+                    white-space: nowrap;
+                }
             }
             .list-contant{
                 height: 40px;
