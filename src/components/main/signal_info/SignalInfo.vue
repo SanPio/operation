@@ -289,39 +289,39 @@ export default {
         },
 
         query(){
-            // let postData = ''
-            // if( this.star.length == 0 && this.status.length != 0){
-            //     postData = this.$qs.stringify({
-            //         queryWord: this.searchValue,
-            //         startTime: this.starTime,
-            //         endTime: this.endTime,
-            //         // level:  this.star,
-            //         // status: this.status
-            //         level: null,
-            //         status: JSON.stringify(this.status)
-            //     });
-            // }else if( this.star.length != 0 && this.status.length == 0 ){
-            //      postData = this.$qs.stringify({
-            //         queryWord: this.searchValue,
-            //         startTime: this.starTime,
-            //         endTime: this.endTime,
-            //         // level:  this.star,
-            //         // status: this.status
-            //         level: JSON.stringify(this.star),
-            //         status: null
-            //     });
-            // }else if( this.star.length == 0 && this.status.length == 0){
-            //      postData = this.$qs.stringify({
-            //         queryWord: this.searchValue,
-            //         startTime: this.starTime,
-            //         endTime: this.endTime,
-            //         // level:  this.star,
-            //         // status: this.status
-            //         level: null,
-            //         status: null
-            //     });
-            // }else{
-                let postData = this.$qs.stringify({
+            let postData = ''
+            if( this.star.length == 0 && this.status.length != 0){
+                postData = this.$qs.stringify({
+                    queryWord: this.searchValue,
+                    startTime: this.starTime,
+                    endTime: this.endTime,
+                    // level:  this.star,
+                    // status: this.status
+                    level: null,
+                    status: JSON.stringify(this.status)
+                });
+            }else if( this.star.length != 0 && this.status.length == 0 ){
+                 postData = this.$qs.stringify({
+                    queryWord: this.searchValue,
+                    startTime: this.starTime,
+                    endTime: this.endTime,
+                    // level:  this.star,
+                    // status: this.status
+                    level: JSON.stringify(this.star),
+                    status: null
+                });
+            }else if( this.star.length == 0 && this.status.length == 0){
+                 postData = this.$qs.stringify({
+                    queryWord: this.searchValue,
+                    startTime: this.starTime,
+                    endTime: this.endTime,
+                    // level:  this.star,
+                    // status: this.status
+                    level: null,
+                    status: null
+                });
+            }else{
+                postData = this.$qs.stringify({
 
                     queryWord: this.searchValue,
                     startTime: this.starTime,
@@ -332,7 +332,7 @@ export default {
                     status: JSON.stringify(this.status)
 
                 });
-            // }
+            }
             
             console.log(this.star.length)
             this.$http({
