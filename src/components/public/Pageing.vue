@@ -6,6 +6,7 @@
             <el-row>
                 <el-col :span="12" :offset='5'> 
                     <el-pagination
+                    v-if="paginationShow"
                     background
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
@@ -26,15 +27,22 @@
 
         data() {
             return {
-                pageNum: 1,
+                pageNum:1,
                 pageSize: 15,
                 // currentPage: 1,// 分页   
                 // total:100    
             }
         },
-        
+     
 
         props: {
+            paginationShow: {
+                
+                default: function () {
+                    return true   
+                                
+                }
+            },
             total: {
                 type: Number,
                 default: function () {

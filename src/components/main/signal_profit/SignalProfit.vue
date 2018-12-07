@@ -38,7 +38,7 @@
                 </el-input> 
             </div>
             <div class="left he-right" style="margin-left:0">
-                <el-button type="primary" plain @click="query">
+                <el-button type="primary" plain @click="query(1,15)">
                     查询
                 </el-button>
             </div>
@@ -61,9 +61,9 @@
                 <span>
                     日期
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort( 0, 'deta' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort( 0, 'deta' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort( 0, 'deta' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[0] === 0" @click="bigToSmallSort( 0, 'day' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[0] === 1" @click="toSort( 0, 'day' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[0] === 2" @click="toSort( 0, 'day' )">
             </li>
             <li class="star left">
                 <span>
@@ -75,25 +75,25 @@
                 <span>
                     付费人数
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort( 1, 'nowFollowNumber' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort( 1, 'nowFollowNumber' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort( 1, 'nowFollowNumber' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[1] === 0" @click="bigToSmallSort( 1, 'numberOfPeoplePaying' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[1] === 1" @click="toSort( 1, 'numberOfPeoplePaying' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[1] === 2" @click="toSort( 1, 'numberOfPeoplePaying' )">
             </li>
             <li class="left">
                 <span>
                     应付金额
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort( 2, 'historyFollowNumber' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort( 2, 'historyFollowNumber' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort( 2, 'historyFollowNumber' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort( 2, 'amountPayable' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort( 2, 'amountPayable' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort( 2, 'amountPayable' )">
             </li>
             <li class="left">
                 <span>
                     实付金额
                 </span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 3, 'numberOfPeoplePaying' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 3, 'numberOfPeoplePaying' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort( 3, 'numberOfPeoplePaying' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 3, 'actualAmountPaid' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 3, 'actualAmountPaid' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort( 3, 'actualAmountPaid' )">
             </li>
             <li class="left">
                 <span>
@@ -110,25 +110,25 @@
                 <p class="num left">
                     {{ index + 1 }}
                 <p class="left">
-                    <span class="deta pointer" @click="toDetails()">
-                        2012/04
+                    <span class="deta pointer" @click="toDetails(item.optionId)">
+                        {{ item.day }}
                     </span>
                     
                 </p>
                 <p class="left">
-                  信号源001
+                    {{ item.optionName }}
                 </p>
                 <p class="left">
-                   30
+                    {{ item.numberOfPeoplePaying}}
                 </p>
                 <p class="left">
-                  17940
+                    {{ item.amountPayable }}
                 </p>
                 <p class="left">
-                   655641456
+                    {{ item.actualAmountPaid }}
                 </p>
                 <p class="left">
-                    <button class="details pointer" @click="toDetails()">
+                    <button class="details pointer" @click="toDetails(item.optionId)">
                         查看详情
                     </button>
                 </p>
@@ -137,7 +137,7 @@
         </ul> 
 
             <!-- 分页 -->
-        <pageing @pageChang='pageChang'   :total='total'></pageing>
+        <pageing @pageChang='pageChang'   :total='total'  :paginationShow='paginationShow'></pageing>
 
     </div>
 </template>
@@ -181,10 +181,12 @@ export default {
             status: [],
             searchValue: '',
             sortImgShow: [ 0, 0, 0, 0 ],
-            info: [ 1, 2, 3],
-            pageNum: '', 
-            pageSize: '',
-            total:0
+            info: [],
+            infoStandby: [ ],
+            pageNum: 1, 
+            pageSize: 15,
+            total:0,
+            paginationShow: true
         }
     }, 
 
@@ -197,7 +199,13 @@ export default {
         this.starTime = Store.state.initDate;
         this.endTime = Store.state.initDate;
     },
-
+    watch:{
+        starTime( newVal, oldVal ) {
+            if(newVal != oldVal){
+                this.pageNum = 1
+            }
+        }
+    },
     methods: {
         // 开始日期
         starChoose ( val ) {
@@ -230,81 +238,49 @@ export default {
             }
         },
 
-        query(){
-            // let postData = ''
-            // if( this.star.length == 0 && this.status.length != 0){
-            //     postData = this.$qs.stringify({
-            //         queryWord: this.searchValue,
-            //         startTime: this.starTime,
-            //         endTime: this.endTime,
-            //         // level:  this.star,
-            //         // status: this.status
-            //         level: null,
-            //         status: JSON.stringify(this.status)
-            //     });
-            // }else if( this.star.length != 0 && this.status.length == 0 ){
-            //      postData = this.$qs.stringify({
-            //         queryWord: this.searchValue,
-            //         startTime: this.starTime,
-            //         endTime: this.endTime,
-            //         // level:  this.star,
-            //         // status: this.status
-            //         level: JSON.stringify(this.star),
-            //         status: null
-            //     });
-            // }else if( this.star.length == 0 && this.status.length == 0){
-            //      postData = this.$qs.stringify({
-            //         queryWord: this.searchValue,
-            //         startTime: this.starTime,
-            //         endTime: this.endTime,
-            //         // level:  this.star,
-            //         // status: this.status
-            //         level: null,
-            //         status: null
-            //     });
-            // }else{
-            //     let postData = this.$qs.stringify({
+        query(pageNum,pageSize){
+            if(pageNum == 1) {
+                this.paginationShow = false
+            } 
+                
+                let postData = this.$qs.stringify({
 
-            //         queryWord: this.searchValue,
-            //         startTime: this.starTime,
-            //         endTime: this.endTime,
-            //         // level:  this.star,
-            //         // status: this.status
-            //         level:  JSON.stringify(this.star),
-            //         status: JSON.stringify(this.status)
+                    queryWord: this.searchValue,
+                    startTime: this.starTime,
+                    endTime: this.endTime,
+                    pageNum: pageNum,
+                    pageSize: pageSize
 
-            //     });
-            // // }
+                });
+         
             
-            // console.log(this.star.length)
-            // this.$http({
+            
+            this.$http({
 
-            //     method: 'post',
-            //     url: this.$path +'web/option/optionBaseInfo',
-            //     data:postData
+                method: 'post',
+                url: this.$path +'web/option/optionBenefit',
+                data:postData
 
-            // }).then( res => {
-            //     this.info = [];
-            //     let data = res.data.data.data;
-            //     this.info = data;
-            //     console.log( data )
-               
+            }).then( res => {
 
-            // }).catch( req => {
-            //     console.log( req )
-            // }) 
+                this.info = [];
+                this.total = res.data.data.data.total;
+                let data = res.data.data.data.data;
+                this.info = data
+                this.infoStandby = data
+                this.paginationShow = true;
+            }).catch( req => {
+                console.log( req )
+            }) 
         },
 
         // 分页
         pageChang( params ) {
             // this.loading = true;
-            // this.pageNum = params.pageNum;
-            // this.pageSize = params.pageSize;
-            // if( this.radio == 0 ) {
-            //     this.query( this.userId, this.starTime, this.endTime, 0, '', this.pageNum, this.pageSize ); 
-            // }else if ( this.radio == 1 ) {
-            //     this.query( this.userId, this.starTime, this.endTime, 1, this.pageNum, this.pageSize ); 
-            // }
+            this.pageNum = Number(params.pageNum) ;
+            this.pageSize = params.pageSize;
+            console.log(params)
+            this.query(this.pageNum, this.pageSize)
         },
 
         // 默认反向排序
@@ -324,7 +300,7 @@ export default {
                     this.sortImgShow = [ 0, 0, 0, 0 ];
                     this.$set( this.sortImgShow, ind, 2);
                     
-                    if( key == "deta" ){                    
+                    if( key == "day" ){                    
                         this.isDate(key,1);
                     }else{
                         this.info = this.ZtoAsort(this.info, key);
@@ -335,7 +311,7 @@ export default {
                     this.sortImgShow = [ 0, 0, 0, 0 ];
                     this.$set( this.sortImgShow, ind, 1 );
 
-                    if( key == "deta" ){
+                    if( key == "day" ){
                         this.isDate(key,2);
                     }else{
                         this.info = this.AtoZsort(this.info, key);
@@ -343,20 +319,57 @@ export default {
                     
                 }
             },
-
             // 日期排序
-            isDate(key,val){
+        isDate(key,val){
+            let newArr = [];
+            for( let i = 0; i < this.info.length; i ++){
+  
+                let obj ={
+                  
+					"actualAmountPaid":this.info[i].actualAmountPaid.toFixed(2),
+					"amountPayable":this.info[i].amountPayable.toFixed(2),
+					"day":new Date(this.info[i].day),
+					"numberOfPeoplePaying":this.info[i].numberOfPeoplePaying,
+					"optionId":this.info[i].optionId,
+					"optionName":this.info[i].optionName  
+                }
+                newArr.push( obj );
+            }
+            if( val == 1){
+                newArr = this.ZtoAsort(newArr, 'day');
+            }else{
+                newArr = this.AtoZsort(newArr, 'day');
+            }
+
+            for (let i = 0; i < newArr.length; i++ ) {
+                let obj = {
+                    "actualAmountPaid": newArr[i].actualAmountPaid.toFixed(2),
+					"amountPayable":newArr[i].amountPayable.toFixed(2),
+					
+					"numberOfPeoplePaying":newArr[i].numberOfPeoplePaying,
+					"optionId":newArr[i].optionId,
+					"optionName":newArr[i].optionName , 
+
+					"day": newArr[i].day.getFullYear() + '-' +(newArr[i].day.getMonth() > 8 ? newArr[i].day.getMonth()+1 : '0' +(newArr[i].day.getMonth()+1) ) + '-' +(newArr[i].day.getDate() > 9 ? newArr[i].day.getDate() : '0' + newArr[i].day.getDate()),
+					
+                }
+                this.info.push(obj);
+            } 
+        },
+
+            // // 日期排序
+            // isDate(key,val){
                 
-                if( val === 1){
-                    this.info = this.infoStandby
-                }else{
-                    this.info = []
-                    for( let i = 0; i < this.infoStandby.length; i ++) {
-                        this.info.unshift( this.infoStandby[i] )
-                    }
+            //     if( val === 1){
+            //         this.info = this.infoStandby
+            //     }else{
+            //         this.info = []
+            //         for( let i = 0; i < this.infoStandby.length; i ++) {
+            //             this.info.unshift( this.infoStandby[i] )
+            //         }
                     
-                } 
-            },
+            //     } 
+            // },
 
             // 正向排序
             AtoZsort( arr, key ) {
@@ -397,7 +410,7 @@ export default {
             
             // 查看详情
             toDetails( val ) {
-
+                alert(val)
             }
 
           
