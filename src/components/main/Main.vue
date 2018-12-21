@@ -72,10 +72,13 @@
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信号源基础信息
                             </el-menu-item>
                             <el-menu-item index="6-2" style="text-align:left">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信号源收益详情
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信号源效益汇总
                             </el-menu-item> 
                             <el-menu-item index="6-3" style="text-align:left">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信号源客流量详情
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信号源效益详情
+                            </el-menu-item>
+                            <el-menu-item index="6-4" style="text-align:left">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;信号源跟随详情
                             </el-menu-item> 
                         </el-submenu>
 
@@ -311,10 +314,13 @@
                     this.routeTo('/signal_info',5,'信号源管理','信号源基础信息');
                     this.itemChoose = 6;
                 }else if ( key == '6-2') {
-                    this.routeTo('/signal_profit',5,'信号源管理','信号源收益详情');
+                    this.routeTo('/signal_profit',5,'信号源管理','信号源效益汇总');
                     this.itemChoose = 6;
                 }else if ( key == '6-3') {
-                    this.routeTo('/home',5,'信号源管理','信号源客流量详情');
+                    this.routeTo('/home',5,'信号源管理','信号源效益详情');
+                    this.itemChoose = 6;
+                }else if ( key == '6-4') {
+                    this.routeTo('/follow_details',5,'信号源管理','信号源跟随详情');
                     this.itemChoose = 6;
                 }
                 

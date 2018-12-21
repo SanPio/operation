@@ -14,6 +14,7 @@ import AccountBindList from "@/components/main/accountBindList/AccountBindList"
 import DataInformation from "@/components/main/dataInformation/DataInformation"
 import SignalInfo from "@/components/main/signal_info/SignalInfo"
 import SignalProfit from "@/components/main/signal_profit/SignalProfit"
+import followDetails from "@/components/main/follow_details/followDetails"
 Vue.use(Router)
 
 
@@ -52,6 +53,11 @@ Vue.use(Router)
           { //信号源收益详情
             path: '/signal_profit',
             component: SignalProfit
+          },
+
+          { //信号源跟随详情
+            path: '/follow_details',
+            component: followDetails
           },
           
           { //用户信息

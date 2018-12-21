@@ -72,7 +72,7 @@
                 </li> -->
                 <li><span>{{ headBot.newUserNum }}</span></li>
                 <li><span>{{ headBot.countFollowByTime }} ( {{ headBot.countSimulationByTime }} ) </span></li>
-                <li><span>{{ headBot.bindMT4TotalNum }}</span> / <b>{{ headBot.bindMT4UpNum }}</b> / <a>{{ headBot.bindMT4DownNum }}</a></li>
+                <li><span>{{ headBot.bindMT4TotalNum }}</span> / <a>{{ headBot.bindMT4UpNum }}</a> / <b>{{ headBot.bindMT4DownNum }}</b></li>
                 <li><a>{{ headBot.firstPayPeopleNum }}</a>+<b>{{ headBot.renewalPeopleNum }}</b>=<span>{{ headBot.totalPeopleNum }}</span></li>
                 <li><a>￥{{ headBot.firstPayMoneyNum |plus }}</a>+<b>￥{{ headBot.renewalMoneyNum | plus }}</b>=<span>￥{{ headBot.totalMoneyNum | plus}}</span></li>
                 <li>
@@ -399,7 +399,7 @@ export default {
 
             for (let i = 0; i < newArr.length; i++ ) {
                 let obj = {
-                    date: this.info[i].date,
+                    date: newArr[i].date,
                     newUserNum: newArr[i].newUserNum,
                     countSimulationByTime: newArr[i].countSimulationByTime,
                     dabindMT4TotalNumte: newArr[i].bindMT4TotalNum,
