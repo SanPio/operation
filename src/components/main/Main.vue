@@ -317,7 +317,7 @@
                     this.routeTo('/signal_profit',5,'信号源管理','信号源效益汇总');
                     this.itemChoose = 6;
                 }else if ( key == '6-3') {
-                    this.routeTo('/home',5,'信号源管理','信号源效益详情');
+                    this.routeTo('/signal_benefit',5,'信号源管理','信号源效益详情');
                     this.itemChoose = 6;
                 }else if ( key == '6-4') {
                     this.routeTo('/follow_details',5,'信号源管理','信号源跟随详情');

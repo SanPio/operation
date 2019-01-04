@@ -43,15 +43,15 @@
             </li>
             <li>
                 <span>固定跟随</span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort( 2,'lots')">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort( 2, 'lots' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort( 2, 'lots')">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[2] === 0" @click="bigToSmallSort( 2,'shoushu')">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[2] === 1" @click="toSort( 2, 'shoushu' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[2] === 2" @click="toSort( 2, 'shoushu')">
             </li>
             <li>
                 <span>比例跟随</span>
-                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 3, 'lots' )">
-                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 3, 'lots' )">
-                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort( 3, 'lots' )">
+                <img :src="defaultSort" alt="" class="pointer" v-if="sortImgShow[3] === 0" @click="bigToSmallSort( 3, 'beishu' )">
+                <img :src="bigToSmall" alt="" class="pointer" v-if="sortImgShow[3] === 1" @click="toSort( 3, 'beishu' )">
+                <img :src="smallToBig" alt="" class="pointer" v-if="sortImgShow[3] === 2" @click="toSort( 3, 'beishu' )">
             </li>
             <li>
                 <span>累计跟随时长</span>
@@ -86,8 +86,8 @@
 
                 <!-- <p><span v-if="item.lotstype==1">{{item.lots}}手</span><span v-if="item.lotstype==0">--</span></p>
                 <p><span v-if="item.lotstype==0">{{item.lots}}倍</span><span v-if="item.lotstype==1">--</span></p> -->
-                <p><span>--</span></p>
-                <p><span>--</span></p>
+                <p><span>{{item.shoushu}}</span></p>
+                <p><span>{{item.beishu}}</span></p>
 
                 <p><span>{{item.days}}天</span></p>
 

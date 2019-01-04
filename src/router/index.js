@@ -15,6 +15,7 @@ import DataInformation from "@/components/main/dataInformation/DataInformation"
 import SignalInfo from "@/components/main/signal_info/SignalInfo"
 import SignalProfit from "@/components/main/signal_profit/SignalProfit"
 import followDetails from "@/components/main/follow_details/followDetails"
+import signalBenefit from "@/components/main/signal_benefit/signalBenefit"
 Vue.use(Router)
 
 
@@ -58,6 +59,11 @@ Vue.use(Router)
           { //信号源跟随详情
             path: '/follow_details',
             component: followDetails
+          },
+
+          { //信号源效益详情
+            path: '/signal_benefit',
+            component: signalBenefit
           },
           
           { //用户信息
